@@ -52,9 +52,21 @@
         <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline shrink-0">Cambiar</button>
       </div>
 
+      <!-- Botón Principal: Registrar Factura de Viaje (cuando el pasajero no escanea QR) -->
+      <button id="btnAbrirModalNuevaFactura" type="button" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.99] text-white rounded-2xl p-4 shadow-lg border border-emerald-400/30 flex items-center justify-between transition">
+        <div class="text-left">
+          <div class="text-[10px] font-black uppercase tracking-wider text-emerald-100">¿Pasajero sin QR o apurado?</div>
+          <div class="text-base font-black text-white">+ Registrar Factura de Viaje</div>
+          <div class="text-[11px] text-emerald-50/90">Envía los datos directo a la Central S.A.C.</div>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-xl font-black shrink-0">
+          +
+        </div>
+      </button>
+
       <!-- Alerta Cola Offline Global -->
       <div id="colaOfflineBox" class="hidden bg-amber-950/90 border border-amber-500/60 rounded-2xl p-3 text-xs text-amber-200 flex items-center justify-between">
-        <span>Tienes <b id="countOffline">0</b> factura(s) guardadas sin señal.</span>
+        <span>Tienes <b id="countOffline">0</b> registro(s) guardados sin señal.</span>
         <button id="btnSincronizarAhora" type="button" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">Sincronizar</button>
       </div>
 
@@ -64,7 +76,7 @@
           1. Mi Turno y Deuda
         </button>
         <button type="button" data-chofer-tab="tabSubirFactura" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700/70 transition flex items-center justify-center gap-1.5">
-          <span>2. Subir Factura</span>
+          <span>2. Subir Grifo/Taller</span>
           <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-1.5 py-0.2 rounded-md">Foto</span>
         </button>
       </div>
@@ -174,7 +186,7 @@
               <span id="statSolTotal" class="text-sm font-black text-white">0</span>
             </div>
             <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2">
-              <span class="text-[10px] text-amber-300 block">Pendientes</span>
+              <span class="text-[10px] text-amber-300 block">En Proceso</span>
               <span id="statSolPendientes" class="text-sm font-black text-amber-400">0</span>
             </div>
             <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
@@ -186,7 +198,7 @@
           <!-- Filtros rápidos -->
           <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-[11px] font-bold">
             <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white">Todas</button>
-            <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Pendientes</button>
+            <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">En Proceso</button>
             <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Emitidas</button>
           </div>
 
@@ -324,6 +336,133 @@
     </div>
   </div>
 
+  <!-- ====================================================================== -->
+  <!-- MODAL: REGISTRAR FACTURA DE VIAJE POR EL CONDUCTOR (MODALIDAD A)       -->
+  <!-- ====================================================================== -->
+  <div id="modalNuevaFacturaViaje" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-slate-800 border border-slate-700 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden my-auto">
+      <div class="bg-slate-950 px-5 py-4 flex items-center justify-between border-b border-slate-800">
+        <div>
+          <span id="modalFacUnidadTag" class="text-[10px] font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
+          <h3 class="text-base font-black text-white">Registrar Factura de Viaje</h3>
+          <p class="text-[11px] text-slate-400">La Central S.A.C. enviará la constancia y el PDF al cliente</p>
+        </div>
+        <button id="btnCerrarModalNuevaFactura" type="button" class="text-slate-400 hover:text-white text-lg font-black px-2">✕</button>
+      </div>
+
+      <!-- Formulario de captura rápida -->
+      <div id="formNuevaFacturaBody" class="p-5 space-y-3.5 max-h-[80vh] overflow-y-auto">
+        <div>
+          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">1. Empresa o Mina a Facturar</label>
+          <select id="choferEmpresaSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-semibold text-white">
+            <option value="20114915026|COMPAÑIA MINERA ANTAPACCAY S.A.">Compañía Minera Antapaccay S.A. (20114915026)</option>
+            <option value="20538428524|MINERA LAS BAMBAS S.A.">Minera Las Bambas S.A. (20538428524)</option>
+            <option value="20511165181|HUDBAY PERU S.A.C.">Hudbay Perú S.A.C. (20511165181)</option>
+            <option value="20503329032|STRACON S.A.">Stracon S.A. (20503329032)</option>
+            <option value="20100027292|FERREYROS S.A.">Ferreyros S.A. (20100027292)</option>
+            <option value="20389230724|CONFIPETROL ANDINA S.A.">Confipetrol Andina S.A. (20389230724)</option>
+            <option value="20507852549|SODEXO PERU S.A.C.">Sodexo Perú S.A.C. (20507852549)</option>
+            <option value="OTRO">Otro (Escribir RUC 11 dígitos)</option>
+          </select>
+
+          <div id="choferOtroEmpresaBox" class="hidden mt-2 space-y-2 p-3 bg-slate-900 rounded-xl border border-slate-700">
+            <div class="relative">
+              <input id="choferCustomRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos" class="w-full rounded-lg bg-slate-800 border border-slate-600 px-3 py-2 text-xs font-bold text-white pr-16" />
+              <button id="btnChoferBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded">
+                Buscar
+              </button>
+            </div>
+            <p id="choferRucMsg" class="hidden text-[11px] font-semibold"></p>
+            <input id="choferCustomRazon" type="text" placeholder="Razón Social (se llena sola con el RUC)" class="w-full rounded-lg bg-slate-800 border border-slate-600 px-3 py-2 text-xs text-white" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">2. WhatsApp o Correo del Pasajero</label>
+          <input id="choferContactoInput" type="text" placeholder="Ej. 984123456 o correo@empresa.com" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">3. Monto (S/)</label>
+            <input id="choferMontoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-sm font-black text-amber-400" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">4. Ruta</label>
+            <select id="choferRutaSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-2.5 py-2.5 text-xs text-white">
+              <option value="Espinar - Garita Mina Antapaccay">Espinar ↔ Garita Antapaccay</option>
+              <option value="Espinar - Campamento Tintaya / Coroccohuayco">Espinar ↔ Tintaya</option>
+              <option value="Espinar - Aeropuerto Cusco">Espinar ↔ Cusco</option>
+              <option value="Espinar - Aeropuerto Arequipa">Espinar ↔ Arequipa</option>
+              <option value="Servicio Local dentro de Espinar">Local Espinar</option>
+              <option value="OTRO">Otra ruta...</option>
+            </select>
+          </div>
+        </div>
+
+        <input id="choferCustomRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-xs text-white" />
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">5. Concepto</label>
+          <select id="choferConceptoSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-xs text-white">
+            <option value="Servicio de transporte privado ejecutivo">Transporte privado ejecutivo</option>
+            <option value="Movilidad corporativa y tiempo de espera">Movilidad corporativa y espera</option>
+            <option value="Traslado de personal técnico a operación">Traslado de personal técnico</option>
+            <option value="Servicio de movilidad por horas">Movilidad por horas / disponibilidad</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">6. ¿Dónde pagó el pasajero?</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="cursor-pointer">
+              <input type="radio" name="choferMetodoPago" value="conductor" checked class="peer sr-only" />
+              <div class="p-2.5 rounded-xl border border-slate-600 bg-slate-900 peer-checked:border-amber-400 peer-checked:bg-amber-500/15 text-center transition">
+                <div class="text-xs font-bold text-white">Me pagó a mí</div>
+                <div class="text-[10px] text-slate-400">Efectivo / Yape chofer</div>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="choferMetodoPago" value="empresa" class="peer sr-only" />
+              <div class="p-2.5 rounded-xl border border-slate-600 bg-slate-900 peer-checked:border-emerald-400 peer-checked:bg-emerald-500/15 text-center transition">
+                <div class="text-xs font-bold text-white">Cuenta S.A.C.</div>
+                <div class="text-[10px] text-slate-400">Yape / BCP Empresa</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <p id="choferFacturaError" class="hidden text-xs font-semibold text-red-400 bg-red-950/70 border border-red-500/40 rounded-xl px-3 py-2"></p>
+
+        <div class="flex gap-2 pt-1">
+          <button id="btnCancelarNuevaFactura" type="button" class="w-1/3 py-3 rounded-xl border border-slate-600 text-xs font-bold text-slate-300">
+            Cancelar
+          </button>
+          <button id="btnEnviarFacturaChofer" type="button" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-lg">
+            Enviar a Central S.A.C.
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirmación limpia (sin WhatsApp del conductor: la empresa envía la constancia) -->
+      <div id="exitoNuevaFacturaBody" class="hidden p-6 text-center space-y-4">
+        <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-2xl font-black">
+          ✓
+        </div>
+        <div class="space-y-1">
+          <h4 class="text-base font-black text-white">Datos enviados a la Central S.A.C.</h4>
+          <p class="text-xs text-slate-300">
+            La Central de <b>Señor de Huanca Espinar S.A.C.</b> enviará la constancia de recepción y la factura PDF directamente al WhatsApp/correo del cliente.
+          </p>
+        </div>
+        <div id="resumenChoferFactura" class="bg-slate-900 border border-slate-700 rounded-2xl p-3 text-left text-xs text-slate-300 space-y-1"></div>
+        <button id="btnListoNuevaFactura" type="button" class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">
+          Listo, volver a mi turno
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script type="module">
     import {
       db, doc, onSnapshot, addDoc, collection, serverTimestamp,
@@ -350,6 +489,7 @@
     let unsubViajes = null;
     let unsubGastos = null;
     let ultimoRucGastoConsultado = "";
+    let ultimoRucChoferConsultado = "";
     let fotoFacturaBase64 = "";
 
     // Cambio entre pestañas del conductor
@@ -399,7 +539,193 @@
       });
     });
 
-    // Consulta RUC SUNAT para el formulario de subir factura del chofer
+    // =========================================================================
+    // MODAL: REGISTRAR FACTURA DE VIAJE POR EL CONDUCTOR (MODALIDAD A)
+    // =========================================================================
+    const modalNuevaFactura = document.getElementById("modalNuevaFacturaViaje");
+    const choferEmpresaSelect = document.getElementById("choferEmpresaSelect");
+    const choferOtroEmpresaBox = document.getElementById("choferOtroEmpresaBox");
+    const choferCustomRuc = document.getElementById("choferCustomRuc");
+    const choferCustomRazon = document.getElementById("choferCustomRazon");
+    const choferRucMsg = document.getElementById("choferRucMsg");
+    const choferRutaSelect = document.getElementById("choferRutaSelect");
+    const choferCustomRuta = document.getElementById("choferCustomRuta");
+
+    function abrirModalNuevaFactura() {
+      if (!unidadActiva) return;
+      document.getElementById("modalFacUnidadTag").textContent = `UNIDAD #${unidadActiva.numero} • ${unidadActiva.placa}`;
+      document.getElementById("formNuevaFacturaBody").classList.remove("hidden");
+      document.getElementById("exitoNuevaFacturaBody").classList.add("hidden");
+      document.getElementById("choferFacturaError").classList.add("hidden");
+      modalNuevaFactura.classList.remove("hidden");
+    }
+
+    function cerrarModalNuevaFactura() {
+      modalNuevaFactura.classList.add("hidden");
+    }
+
+    document.getElementById("btnAbrirModalNuevaFactura").addEventListener("click", abrirModalNuevaFactura);
+    document.getElementById("btnCerrarModalNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
+    document.getElementById("btnCancelarNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
+    document.getElementById("btnListoNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
+
+    choferEmpresaSelect.addEventListener("change", () => {
+      const esOtro = choferEmpresaSelect.value === "OTRO";
+      choferOtroEmpresaBox.classList.toggle("hidden", !esOtro);
+      if (esOtro) choferCustomRuc.focus();
+    });
+
+    choferRutaSelect.addEventListener("change", () => {
+      choferCustomRuta.classList.toggle("hidden", choferRutaSelect.value !== "OTRO");
+    });
+
+    async function buscarRucChoferViaje(forzar = false) {
+      const ruc = choferCustomRuc.value.replace(/\D/g, "");
+      choferCustomRuc.value = ruc;
+      if (ruc.length !== 11) {
+        choferRucMsg.classList.add("hidden");
+        return;
+      }
+      if (!forzar && ruc === ultimoRucChoferConsultado) return;
+      ultimoRucChoferConsultado = ruc;
+
+      choferRucMsg.textContent = "Consultando RUC en SUNAT...";
+      choferRucMsg.className = "text-[11px] font-semibold text-amber-400";
+      choferRucMsg.classList.remove("hidden");
+
+      try {
+        const resp = await fetch(`/api/ruc?numero=${ruc}`);
+        if (!resp.ok) throw new Error("Sin respuesta");
+        const data = await resp.json();
+        if (data && data.ok && data.razonSocial) {
+          choferCustomRazon.value = data.razonSocial;
+          choferRucMsg.textContent = "✓ Entidad encontrada en SUNAT";
+          choferRucMsg.className = "text-[11px] font-bold text-emerald-400";
+        } else {
+          choferRucMsg.textContent = "No se obtuvo automático. Escribe la Razón Social abajo:";
+          choferRucMsg.className = "text-[11px] font-semibold text-slate-400";
+          choferCustomRazon.focus();
+        }
+      } catch (e) {
+        choferRucMsg.textContent = "Sin conexión SUNAT. Escribe la Razón Social abajo:";
+        choferRucMsg.className = "text-[11px] font-semibold text-slate-400";
+        choferCustomRazon.focus();
+      }
+    }
+
+    choferCustomRuc.addEventListener("input", () => buscarRucChoferViaje(false));
+    document.getElementById("btnChoferBuscarRuc").addEventListener("click", () => buscarRucChoferViaje(true));
+
+    document.getElementById("btnEnviarFacturaChofer").addEventListener("click", async () => {
+      if (!unidadActiva) return;
+      const errEl = document.getElementById("choferFacturaError");
+      errEl.classList.add("hidden");
+
+      let ruc = "", razonSocial = "";
+      if (choferEmpresaSelect.value === "OTRO") {
+        ruc = choferCustomRuc.value.trim();
+        razonSocial = choferCustomRazon.value.trim();
+        if (!/^\d{11}$/.test(ruc)) {
+          errEl.textContent = "Ingresa un RUC válido de 11 dígitos.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+        if (razonSocial.length < 3) {
+          errEl.textContent = "Ingresa la Razón Social de la empresa.";
+          errEl.classList.remove("hidden");
+          return;
+        }
+      } else {
+        [ruc, razonSocial] = choferEmpresaSelect.value.split("|");
+      }
+
+      const contacto = document.getElementById("choferContactoInput").value.trim();
+      if (!contacto) {
+        errEl.textContent = "Ingresa el WhatsApp o correo del pasajero para que la Central le envíe su constancia y PDF.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+
+      const monto = parseFloat(document.getElementById("choferMontoInput").value);
+      if (isNaN(monto) || monto <= 0) {
+        errEl.textContent = "Ingresa un monto válido para la factura.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+
+      const ruta = choferRutaSelect.value === "OTRO" ? choferCustomRuta.value.trim() : choferRutaSelect.value;
+      if (!ruta) {
+        errEl.textContent = "Indica la ruta del trayecto.";
+        errEl.classList.remove("hidden");
+        return;
+      }
+
+      const concepto = document.getElementById("choferConceptoSelect").value;
+      const metodoPago = document.querySelector('input[name="choferMetodoPago"]:checked').value;
+
+      const btn = document.getElementById("btnEnviarFacturaChofer");
+      btn.disabled = true;
+      btn.textContent = "Enviando a Central...";
+
+      const registro = {
+        ruc,
+        razonSocial,
+        contacto,
+        concepto,
+        ruta,
+        monto,
+        metodoPago,
+        unidadId: unidadActiva.id,
+        unidadNumero: unidadActiva.numero,
+        placa: unidadActiva.placa,
+        chofer: unidadActiva.chofer,
+        registradoPor: "conductor",
+        estado: "pendiente",
+        fechaTexto: new Date().toLocaleString("es-PE"),
+        createdAt: isFirebaseConfigured ? serverTimestamp() : Date.now()
+      };
+
+      try {
+        if (isFirebaseConfigured && db) {
+          await addDoc(collection(db, "solicitudes"), registro);
+        } else {
+          const prev = JSON.parse(localStorage.getItem("sh_solicitudes") || "[]");
+          prev.unshift({ id: "LOC-" + Date.now(), ...registro });
+          localStorage.setItem("sh_solicitudes", JSON.stringify(prev));
+          todasSolicitudes = prev;
+          renderMisViajes();
+        }
+
+        document.getElementById("resumenChoferFactura").innerHTML = `
+          <div><b>Empresa:</b> ${razonSocial} (RUC ${ruc})</div>
+          <div><b>Monto:</b> S/ ${monto.toFixed(2)} (${metodoPago === 'conductor' ? 'Cobrado por conductor' : 'Cuenta S.A.C.'})</div>
+          <div><b>Ruta:</b> ${ruta}</div>
+          <div><b>Destino Constancia/PDF:</b> ${contacto}</div>
+        `;
+
+        // Limpiar campos
+        choferCustomRuc.value = "";
+        choferCustomRazon.value = "";
+        choferRucMsg.classList.add("hidden");
+        ultimoRucChoferConsultado = "";
+        document.getElementById("choferContactoInput").value = "";
+        document.getElementById("choferMontoInput").value = "";
+        choferCustomRuta.value = "";
+
+        document.getElementById("formNuevaFacturaBody").classList.add("hidden");
+        document.getElementById("exitoNuevaFacturaBody").classList.remove("hidden");
+      } catch (e) {
+        errEl.textContent = "Error al enviar solicitud: " + e.message;
+        errEl.classList.remove("hidden");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Enviar a Central S.A.C.";
+      }
+    });
+
+    // =========================================================================
+    // CONSULTA RUC SUNAT PARA SUBIR FACTURAS DE GRIFO / TALLER
+    // =========================================================================
     const gastoRucInput = document.getElementById("gastoRuc");
     const gastoProveedorInput = document.getElementById("gastoProveedor");
     const gastoRucStatus = document.getElementById("gastoRucStatus");
@@ -631,16 +957,28 @@
       cont.innerHTML = filtrados.map(v => {
         const monto = Number(v.monto || 0);
         const esEmitida = v.estado === "emitida";
+        const esConstancia = v.estado === "constancia_enviada";
         const pagoChofer = v.metodoPago === "conductor";
         const retencion = +(monto * (pctRet / 100)).toFixed(2);
 
+        let badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300">⏳ EN CENTRAL (PENDIENTE)</span>`;
+        let borderClass = "border-amber-500/30";
+        if (esEmitida) {
+          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300">✓ FACTURA EMITIDA SUNAT</span>`;
+          borderClass = "border-emerald-500/30";
+        } else if (esConstancia) {
+          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-sky-500/20 text-sky-300">📩 CONSTANCIA ENVIADA POR SAC</span>`;
+          borderClass = "border-sky-500/40";
+        }
+
         return `
-          <div class="bg-slate-900 border ${esEmitida ? 'border-emerald-500/30' : 'border-amber-500/30'} rounded-2xl p-3 space-y-2">
+          <div class="bg-slate-900 border ${borderClass} rounded-2xl p-3 space-y-2">
             <div class="flex items-start justify-between gap-2">
               <div>
-                <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black ${esEmitida ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
-                  ${esEmitida ? '✓ FACTURA EMITIDA SUNAT' : '⏳ PENDIENTE DE EMISIÓN'}
-                </span>
+                <div class="flex flex-wrap items-center gap-1">
+                  ${badgeHtml}
+                  ${v.registradoPor === 'conductor' ? `<span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Vía Chofer</span>` : ''}
+                </div>
                 <div class="font-bold text-white text-xs mt-1">${v.razonSocial}</div>
                 <div class="text-[10px] text-slate-400">RUC: ${v.ruc}</div>
               </div>
@@ -853,7 +1191,6 @@
           alert("✓ Factura y foto enviadas correctamente a Gerencia y Contabilidad.");
         }
 
-        // Limpiar formulario
         gastoRucInput.value = "";
         gastoProveedorInput.value = "";
         gastoRucStatus.classList.add("hidden");

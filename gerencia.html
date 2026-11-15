@@ -82,13 +82,21 @@
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-sm font-black text-slate-900 uppercase tracking-wide">Solicitudes de Factura Electrónica (Tiempo Real)</h2>
-          <span id="badgeSolicitudes" class="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">0</span>
+      <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <h2 class="text-sm font-black text-slate-900 uppercase tracking-wide">Solicitudes de Factura Electrónica (Tiempo Real)</h2>
+            <span id="badgeSolicitudes" class="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">0</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+            <button type="button" data-sol-filtro="todas" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-900 text-white">Todas</button>
+            <button type="button" data-sol-filtro="pendiente" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Sin Constancia</button>
+            <button type="button" data-sol-filtro="constancia_enviada" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Constancia Enviada</button>
+            <button type="button" data-sol-filtro="emitida" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Emitidas</button>
+          </div>
         </div>
         <div id="listaSolicitudes" class="space-y-3">
-          <p class="text-xs text-slate-500">Esperando solicitudes desde los códigos QR de los vehículos...</p>
+          <p class="text-xs text-slate-500">Esperando solicitudes desde los códigos QR o conductores...</p>
         </div>
       </div>
     </div>
@@ -163,6 +171,35 @@
     </div>
   </div>
 
+  <!-- MODAL 1: ENVIAR CONSTANCIA DE RECEPCIÓN DESDE WHATSAPP OFICIAL DE LA EMPRESA (MODALIDAD A) -->
+  <div id="modalConstancia" class="hidden fixed inset-0 bg-slate-950/75 z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl">
+      <div class="border-b border-slate-200 pb-3 flex justify-between items-start">
+        <div>
+          <span class="text-[10px] font-black uppercase tracking-wider text-sky-700">Paso 1 • Confirmación Corporativa</span>
+          <h3 class="font-black text-base text-slate-900">Enviar Constancia de Recepción</h3>
+          <p id="constanciaSubtitulo" class="text-xs text-slate-500">Desde el WhatsApp oficial de Señor de Huanca S.A.C.</p>
+        </div>
+        <button onclick="document.getElementById('modalConstancia').classList.add('hidden')" type="button" class="text-slate-400 hover:text-slate-700 font-black px-2">✕</button>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
+        <span class="text-[10px] font-bold uppercase text-slate-400 block">Mensaje oficial listo para el pasajero:</span>
+        <pre id="textoConstanciaPreview" class="whitespace-pre-wrap font-sans text-xs text-slate-800 leading-relaxed"></pre>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2">
+        <button id="btnCopiarConstancia" type="button" class="sm:w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-xs font-bold text-slate-700">
+          Copiar texto
+        </button>
+        <a id="btnAbrirWaConstancia" href="#" target="_blank" class="sm:w-2/3 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-black text-center shadow">
+          Abrir WhatsApp Empresa y Enviar
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: EMITIR FACTURA ELECTRÓNICA SUNAT -->
   <div id="modalFactura" class="hidden fixed inset-0 bg-slate-950/75 z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl">
       <div class="border-b border-slate-200 pb-3 flex justify-between items-start">
@@ -176,12 +213,13 @@
       <div class="flex gap-2">
         <button id="btnCerrarModalFact" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold">Cerrar</button>
         <a id="btnEnviarWhatsappCliente" href="#" target="_blank" class="w-2/3 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold text-center">
-          Enviar Constancia por WhatsApp
+          Enviar Factura por WhatsApp
         </a>
       </div>
     </div>
   </div>
 
+  <!-- MODAL 3: VISOR DE FOTO DE COMPROBANTE DE GRIFO/TALLER -->
   <div id="modalFotoGasto" class="hidden fixed inset-0 bg-slate-950/80 z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-3xl p-5 space-y-3 shadow-2xl">
       <div class="flex items-start justify-between gap-2 border-b border-slate-200 pb-2.5">
@@ -211,6 +249,7 @@
     let retornos = [];
     let gastos = [];
     let unidades = [...FLOTA_INICIAL];
+    let filtroSolicitudes = "todas";
 
     document.getElementById("btnEntrarGerencia").addEventListener("click", async () => {
       const clave = document.getElementById("inputClave").value.trim();
@@ -241,6 +280,17 @@
         btn.className = "tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-slate-900 text-white";
         document.querySelectorAll(".tabPanel").forEach(p => p.classList.add("hidden"));
         document.getElementById(btn.dataset.tab).classList.remove("hidden");
+      });
+    });
+
+    document.querySelectorAll(".gerFiltroSolBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        filtroSolicitudes = btn.dataset.solFiltro;
+        document.querySelectorAll(".gerFiltroSolBtn").forEach(b => {
+          b.className = "gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
+        });
+        btn.className = "gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-900 text-white";
+        renderSolicitudes();
       });
     });
 
@@ -330,36 +380,58 @@
     function renderSolicitudes() {
       const cont = document.getElementById("listaSolicitudes");
       document.getElementById("badgeSolicitudes").textContent = solicitudes.length;
-      if (!solicitudes.length) {
-        cont.innerHTML = `<p class="text-xs text-slate-500">Esperando solicitudes desde los códigos QR de los vehículos...</p>`;
+
+      const filtradas = solicitudes.filter(s => {
+        if (filtroSolicitudes === "todas") return true;
+        const est = s.estado || "pendiente";
+        return est === filtroSolicitudes;
+      });
+
+      if (!filtradas.length) {
+        cont.innerHTML = `<p class="text-xs text-slate-500">No hay solicitudes en esta vista.</p>`;
         return;
       }
       const pctRet = parseFloat(document.getElementById("inputRetencion").value) || 22;
 
-      cont.innerHTML = solicitudes.map(s => {
+      cont.innerHTML = filtradas.map(s => {
         const monto = Number(s.monto || 0);
         const retencion = +(monto * (pctRet / 100)).toFixed(2);
+        const est = s.estado || "pendiente";
+
+        let badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">PENDIENTE CONSTANCIA</span>`;
+        if (est === "constancia_enviada") {
+          badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800">CONSTANCIA ENVIADA</span>`;
+        } else if (est === "emitida") {
+          badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">FACTURA EMITIDA</span>`;
+        }
+
+        const origenBadge = s.registradoPor === "conductor"
+          ? `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-100 text-purple-800">Vía Chofer</span>`
+          : `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 text-slate-700">Vía QR</span>`;
+
         return `
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50/70">
+          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-50/70">
             <div class="space-y-1 text-xs">
               <div class="flex flex-wrap items-center gap-2">
                 <span class="bg-slate-900 text-amber-400 font-black px-2 py-0.5 rounded-md">Unidad #${s.unidadNumero} (${s.placa})</span>
+                ${origenBadge}
                 <span class="font-extrabold text-slate-900">${s.razonSocial}</span>
                 <span class="text-slate-500">RUC: ${s.ruc}</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${s.estado === 'emitida' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
-                  ${s.estado === 'emitida' ? 'FACTURA EMITIDA' : 'PENDIENTE SUNAT'}
-                </span>
+                ${badgeEstado}
               </div>
               <p class="text-slate-600"><b>Ruta:</b> ${s.ruta} • <b>Concepto:</b> ${s.concepto}</p>
               <p class="text-slate-500"><b>Contacto:</b> ${s.contacto} • <b>Pago:</b> ${s.metodoPago === 'conductor' ? 'Al conductor' : 'Cuenta SAC'} • <b>Retención SAC (${pctRet}%):</b> S/ ${retencion.toFixed(2)}</p>
             </div>
-            <div class="flex items-center gap-3">
-              <div class="text-right">
+            <div class="flex flex-wrap items-center justify-between lg:justify-end gap-2.5 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-200">
+              <div class="text-left lg:text-right mr-1">
                 <span class="text-[10px] text-slate-400 block">Total Factura</span>
                 <span class="text-lg font-black text-slate-900">S/ ${monto.toFixed(2)}</span>
               </div>
-              <button onclick="window.emitirFactura('${s.id}')" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs shadow">
-                Emitir Factura
+              <button onclick="window.enviarConstancia('${s.id}')" type="button" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-3 py-2.5 rounded-xl text-xs shadow">
+                1. Enviar Constancia
+              </button>
+              <button onclick="window.emitirFactura('${s.id}')" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2.5 rounded-xl text-xs shadow">
+                2. Emitir Factura
               </button>
             </div>
           </div>
@@ -367,6 +439,70 @@
       }).join("");
     }
 
+    // PASO 1: ENVIAR CONSTANCIA OFICIAL DESDE LA EMPRESA (MODALIDAD A)
+    window.enviarConstancia = async (id) => {
+      const s = solicitudes.find(x => x.id === id);
+      if (!s) return;
+
+      const monto = Number(s.monto || 0);
+      const mensajeConstancia =
+        `*TRANSPORTES SEÑOR DE HUANCA ESPINAR S.A.C.*
+` +
+        `RUC: 20612345678 • Central Corporativa
+
+` +
+        `Estimado cliente, confirmamos la *recepción de sus datos* para emisión de Factura Electrónica:
+` +
+        `• *Empresa:* ${s.razonSocial}
+` +
+        `• *RUC:* ${s.ruc}
+` +
+        `• *Servicio:* ${s.concepto} (${s.ruta})
+` +
+        `• *Unidad:* #${s.unidadNumero} (${s.placa})
+` +
+        `• *Importe Total:* S/ ${monto.toFixed(2)}
+
+` +
+        `En breve recibirá su comprobante PDF por este medio. Si desea programar su *unidad de retorno*, respóndanos por este chat.`;
+
+      document.getElementById("constanciaSubtitulo").textContent = `Destino: ${s.contacto} • Unidad #${s.unidadNumero}`;
+      document.getElementById("textoConstanciaPreview").textContent = mensajeConstancia;
+
+      const tel = String(s.contacto || "").replace(/\D/g, "");
+      const waNum = tel.length === 9 ? "51" + tel : (tel.length >= 11 ? tel : "");
+      const btnWa = document.getElementById("btnAbrirWaConstancia");
+      if (waNum) {
+        btnWa.href = `https://wa.me/${waNum}?text=${encodeURIComponent(mensajeConstancia)}`;
+        btnWa.textContent = `Abrir WhatsApp (${s.contacto}) y Enviar`;
+      } else {
+        btnWa.href = `mailto:${encodeURIComponent(s.contacto)}?subject=${encodeURIComponent("Constancia de Solicitud de Factura - Señor de Huanca Espinar S.A.C.")}&body=${encodeURIComponent(mensajeConstancia)}`;
+        btnWa.textContent = `Enviar por Correo (${s.contacto})`;
+      }
+
+      document.getElementById("btnCopiarConstancia").onclick = () => {
+        navigator.clipboard.writeText(mensajeConstancia);
+        document.getElementById("btnCopiarConstancia").textContent = "¡Copiado! ✓";
+        setTimeout(() => {
+          document.getElementById("btnCopiarConstancia").textContent = "Copiar texto";
+        }, 2000);
+      };
+
+      document.getElementById("modalConstancia").classList.remove("hidden");
+
+      // Actualizar estado a constancia_enviada (si aún no está emitida)
+      if ((s.estado || "pendiente") === "pendiente") {
+        if (isFirebaseConfigured && db) {
+          await updateDoc(doc(db, "solicitudes", id), { estado: "constancia_enviada" });
+        } else {
+          s.estado = "constancia_enviada";
+          localStorage.setItem("sh_solicitudes", JSON.stringify(solicitudes));
+          renderSolicitudes();
+        }
+      }
+    };
+
+    // PASO 2: EMITIR FACTURA ELECTRÓNICA SUNAT
     window.emitirFactura = async (id) => {
       const s = solicitudes.find(x => x.id === id);
       if (!s) return;
@@ -410,9 +546,17 @@
         <div class="flex justify-between text-sm text-emerald-700 pt-1"><span>IMPORTE TOTAL:</span><b>S/ ${monto.toFixed(2)}</b></div>
       `;
 
-      const tel = s.contacto.replace(/\D/g, "");
+      const tel = String(s.contacto || "").replace(/\D/g, "");
       const waNum = tel.length === 9 ? "51" + tel : EMPRESA_CONFIG.whatsappCentral;
-      const msg = encodeURIComponent(`*SEÑOR DE HUANCA ESPINAR S.A.C.*\nRUC: 20612345678\n\nEstimado cliente, su Factura Electrónica ha sido emitida:\n• *Cliente:* ${s.razonSocial} (RUC ${s.ruc})\n• *Servicio:* ${s.concepto} - ${s.ruta}\n• *Total:* S/ ${monto.toFixed(2)} (IGV incluido)\n\nGracias por viajar con nosotros.`);
+      const msg = encodeURIComponent(`*SEÑOR DE HUANCA ESPINAR S.A.C.*
+RUC: 20612345678
+
+Estimado cliente, su Factura Electrónica ha sido emitida:
+• *Cliente:* ${s.razonSocial} (RUC ${s.ruc})
+• *Servicio:* ${s.concepto} - ${s.ruta}
+• *Total:* S/ ${monto.toFixed(2)} (IGV incluido)
+
+Gracias por viajar con nosotros.`);
       document.getElementById("btnEnviarWhatsappCliente").href = `https://wa.me/${waNum}?text=${msg}`;
       document.getElementById("modalFactura").classList.remove("hidden");
     };
@@ -529,11 +673,12 @@
     document.getElementById("selectRegimen").addEventListener("change", recalcularFinanzas);
 
     document.getElementById("btnExportarCsv").addEventListener("click", () => {
-      const filas = [["Fecha", "Unidad", "Placa", "Chofer", "RUC Cliente", "Razon Social", "Ruta", "Monto Total", "IGV", "Estado"]];
+      const filas = [["Fecha", "Origen", "Unidad", "Placa", "Chofer", "RUC Cliente", "Razon Social", "Ruta", "Monto Total", "IGV", "Estado"]];
       solicitudes.forEach(s => {
         const m = Number(s.monto || 0);
         const igv = (m - m / 1.18).toFixed(2);
-        filas.push([s.fechaTexto, s.unidadNumero, s.placa, s.chofer, s.ruc, `"${s.razonSocial}"`, `"${s.ruta}"`, m.toFixed(2), igv, s.estado]);
+        const orig = s.registradoPor === "conductor" ? "Chofer" : "QR";
+        filas.push([s.fechaTexto, orig, s.unidadNumero, s.placa, s.chofer, s.ruc, `"${s.razonSocial}"`, `"${s.ruta}"`, m.toFixed(2), igv, s.estado]);
       });
       const csv = filas.map(r => r.join(",")).join("\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
