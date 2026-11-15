@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Señor de Huanca Espinar S.A.C. | Solicitud de Factura</title>
+  <link rel="manifest" href="/manifest.json" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center py-4 px-3">
+
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+    <div class="bg-slate-900 text-white px-5 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Unidad Verificada
+          </span>
+          <h1 class="text-lg font-extrabold tracking-tight mt-1">Señor de Huanca Espinar</h1>
+          <p class="text-xs text-slate-400">Transporte Corporativo • Facturación Electrónica SUNAT</p>
+        </div>
+        <div class="text-right bg-slate-800 border border-slate-700 px-3 py-2 rounded-2xl">
+          <div class="text-[10px] text-slate-400 uppercase font-semibold">Unidad</div>
+          <div id="badgeUnidad" class="text-xl font-black text-amber-400">#01</div>
+        </div>
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-800 grid grid-cols-2 gap-2 text-xs">
+        <div>
+          <span class="text-slate-400 block text-[11px]">Conductor asignado</span>
+          <span id="infoChofer" class="font-semibold text-white">Cargando...</span>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-400 block text-[11px]">Placa y Vehículo</span>
+          <span id="infoVehiculo" class="font-semibold text-amber-300">Cargando...</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="bannerModo" class="hidden bg-amber-50 border-b border-amber-200 px-4 py-2 text-[11px] text-amber-800">
+      Modo prueba local activo.
+    </div>
+
+    <div id="formContainer" class="p-5 space-y-4">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1">
+          1. Empresa o Mina a Facturar (RUC)
+        </label>
+        <select id="empresaSelect" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-medium focus:border-slate-900 focus:bg-white focus:outline-none">
+          <option value="20114915026|COMPAÑIA MINERA ANTAPACCAY S.A.">Compañía Minera Antapaccay S.A. (20114915026)</option>
+          <option value="20538428524|MINERA LAS BAMBAS S.A.">Minera Las Bambas S.A. (20538428524)</option>
+          <option value="20511165181|HUDBAY PERU S.A.C.">Hudbay Perú S.A.C. (20511165181)</option>
+          <option value="20503329032|STRACON S.A.">Stracon S.A. (20503329032)</option>
+          <option value="20100027292|FERREYROS S.A.">Ferreyros S.A. (20100027292)</option>
+          <option value="20389230724|CONFIPETROL ANDINA S.A.">Confipetrol Andina S.A. (20389230724)</option>
+          <option value="20507852549|SODEXO PERU S.A.C.">Sodexo Perú S.A.C. (20507852549)</option>
+          <option value="OTRO">Otro (Ingresar RUC y Razón Social manualmente)</option>
+        </select>
+
+        <div id="otroEmpresaBox" class="hidden mt-2.5 space-y-2 p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <input id="customRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos (ej. 20601234567)" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          <input id="customRazon" type="text" placeholder="Razón Social completa de la empresa" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1">
+          2. WhatsApp o Correo para recibir el PDF
+        </label>
+        <input id="contactoInput" type="text" placeholder="Ej. 984123456 o ingeniero@empresa.com" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm focus:border-slate-900 focus:bg-white focus:outline-none" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1">
+          3. Concepto en la Factura
+        </label>
+        <select id="conceptoSelect" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-medium focus:border-slate-900 focus:bg-white focus:outline-none">
+          <option value="Servicio de transporte privado ejecutivo">Transporte privado ejecutivo</option>
+          <option value="Movilidad corporativa y tiempo de espera">Movilidad corporativa y espera</option>
+          <option value="Traslado de personal técnico a operación">Traslado de personal técnico</option>
+          <option value="Servicio de movilidad por horas">Movilidad por horas / disponibilidad</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1">
+          4. Ruta del Trayecto
+        </label>
+        <select id="rutaSelect" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm font-medium focus:border-slate-900 focus:bg-white focus:outline-none">
+          <option value="Espinar - Garita Mina Antapaccay">Espinar ↔ Garita Mina Antapaccay</option>
+          <option value="Espinar - Campamento Tintaya / Coroccohuayco">Espinar ↔ Campamento Tintaya</option>
+          <option value="Espinar - Aeropuerto Cusco">Espinar ↔ Aeropuerto Cusco</option>
+          <option value="Espinar - Aeropuerto Arequipa">Espinar ↔ Aeropuerto Arequipa</option>
+          <option value="Servicio Local dentro de Espinar">Servicio Local dentro de Espinar</option>
+          <option value="OTRO">Otros (Escribir ruta personalizada)</option>
+        </select>
+        <input id="customRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden mt-2 w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm" />
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1">
+          5. Monto de la Factura (S/)
+        </label>
+        <div class="relative">
+          <span class="absolute left-3.5 top-2.5 text-slate-500 font-bold">S/</span>
+          <input id="montoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl border border-slate-300 bg-slate-50 pl-10 pr-4 py-2.5 text-base font-extrabold text-slate-900 focus:border-slate-900 focus:bg-white focus:outline-none" />
+        </div>
+        <div id="alertaBancarizacion" class="hidden mt-2 p-2.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900">
+          <b>Ley de Bancarización SUNAT:</b> Al ser desde S/ 2,000.00, el pago debe realizarse obligatoriamente por transferencia bancaria o Yape a nombre de la empresa.
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wide text-slate-700 mb-1.5">
+          6. Modalidad de Pago
+        </label>
+        <div class="grid grid-cols-2 gap-2.5">
+          <label class="cursor-pointer">
+            <input type="radio" name="metodoPago" value="conductor" checked class="peer sr-only" />
+            <div class="p-3 rounded-xl border-2 border-slate-200 peer-checked:border-slate-900 peer-checked:bg-slate-900 peer-checked:text-white transition text-center">
+              <div class="text-xs font-bold">Pago al Conductor</div>
+              <div class="text-[10px] opacity-80 mt-0.5">Efectivo o Yape chofer</div>
+            </div>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="metodoPago" value="empresa" class="peer sr-only" />
+            <div class="p-3 rounded-xl border-2 border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-600 peer-checked:text-white transition text-center">
+              <div class="text-xs font-bold">Cuenta de la S.A.C.</div>
+              <div class="text-[10px] opacity-90 mt-0.5">Transferencia / Yape SAC</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <p id="errorMsg" class="hidden text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl px-3 py-2"></p>
+
+      <button id="btnContinuarPago" type="button" class="w-full bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white font-bold py-3.5 rounded-2xl shadow-lg transition text-sm">
+        Aceptar y Ver Datos de Pago
+      </button>
+    </div>
+
+    <div id="exitoContainer" class="hidden p-6 text-center space-y-4">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl font-black">
+        ✓
+      </div>
+      <div>
+        <h2 class="text-lg font-extrabold text-slate-900">Datos registrados con éxito</h2>
+        <p class="text-xs text-slate-600 mt-1">
+          Solicitud recibida en la Central de <b>Señor de Huanca Espinar S.A.C.</b> Tu factura electrónica llegará en breve a tu WhatsApp/correo.
+        </p>
+      </div>
+      <div id="resumenFacturaBox" class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 text-left text-xs space-y-1"></div>
+      <button id="btnAceptarExito" type="button" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl shadow-md transition text-sm">
+        Aceptar
+      </button>
+    </div>
+  </div>
+
+  <div id="modalPago" class="hidden fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden">
+      <div class="bg-slate-900 text-white px-5 py-4">
+        <h3 id="modalPagoTitulo" class="font-extrabold text-base">Datos para realizar el pago</h3>
+        <p class="text-xs text-slate-300 mt-0.5">Verifica el monto y confirma el envío de tu factura</p>
+      </div>
+      <div class="p-5 space-y-4">
+        <div id="modalPagoDetalle" class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm space-y-2"></div>
+        <div class="flex gap-2.5">
+          <button id="btnCerrarModalPago" type="button" class="w-1/3 py-3 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs">
+            Volver
+          </button>
+          <button id="btnEnviarFacturaFinal" type="button" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md">
+            Aceptar y Enviar Solicitud de Factura
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalRetorno" class="hidden fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden">
+      <div class="bg-amber-500 text-slate-950 px-5 py-4">
+        <h3 class="font-black text-base">¿Necesitas recojo o retorno?</h3>
+        <p class="text-xs font-medium mt-0.5">Reserva tu unidad de vuelta con anticipación y evita esperas</p>
+      </div>
+      <div class="p-5 space-y-3">
+        <div id="opcionesRetornoBotones" class="space-y-2.5">
+          <button id="btnAbrirFormRetorno" type="button" class="w-full py-3 px-4 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800 transition">
+            Reservar retorno ahora (3 datos rápidos)
+          </button>
+          <a id="linkWhatsappCentral" href="#" target="_blank" class="block w-full text-center py-3 px-4 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition">
+            Hablar con el WhatsApp de la Central
+          </a>
+          <button id="btnCerrarRetorno" type="button" class="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-600 font-semibold text-xs hover:bg-slate-50">
+            No deseo / Cerrar
+          </button>
+        </div>
+
+        <div id="formRetornoRapido" class="hidden space-y-2.5 pt-1">
+          <input id="retOrigen" type="text" placeholder="1. ¿Dónde te recogemos? (Ej. Garita Mina)" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+          <input id="retDestino" type="text" placeholder="2. ¿Hacia dónde vas? (Ej. Plaza Espinar)" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+          <input id="retHora" type="text" placeholder="3. Hora aproximada y WhatsApp" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs" />
+          <div class="flex gap-2 pt-1">
+            <button id="btnCancelarFormRetorno" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-600">Atrás</button>
+            <button id="btnGuardarRetorno" type="button" class="w-2/3 py-2.5 rounded-xl bg-amber-500 text-slate-950 text-xs font-black">Confirmar Retorno</button>
+          </div>
+        </div>
+
+        <div id="retornoConfirmadoMsg" class="hidden text-center py-3 space-y-2">
+          <p class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
+            ✓ Reserva de retorno enviada a la Central y al grupo de conductores.
+          </p>
+          <button id="btnFinalizarTodo" type="button" class="w-full py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Listo, cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      db, doc, getDoc, addDoc, collection, serverTimestamp,
+      isFirebaseConfigured, EMPRESA_CONFIG, FLOTA_INICIAL
+    } from "./firebase-config.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const rawU = (params.get("u") || "01").padStart(2, "0");
+    const unitId = "U" + rawU;
+
+    let unidadActual = FLOTA_INICIAL.find(u => u.id === unitId) || FLOTA_INICIAL[0];
+    let ultimaSolicitud = null;
+
+    if (!isFirebaseConfigured) {
+      document.getElementById("bannerModo").classList.remove("hidden");
+    }
+
+    async function cargarUnidad() {
+      if (isFirebaseConfigured && db) {
+        try {
+          const snap = await getDoc(doc(db, "unidades", unitId));
+          if (snap.exists()) {
+            unidadActual = snap.data();
+          }
+        } catch (e) {
+          console.warn("Usando datos base de unidad:", e);
+        }
+      }
+      document.getElementById("badgeUnidad").textContent = "#" + unidadActual.numero;
+      document.getElementById("infoChofer").textContent = unidadActual.chofer;
+      document.getElementById("infoVehiculo").textContent = `${unidadActual.placa} • ${unidadActual.vehiculo}`;
+    }
+
+    cargarUnidad();
+
+    const empresaSelect = document.getElementById("empresaSelect");
+    const otroEmpresaBox = document.getElementById("otroEmpresaBox");
+    empresaSelect.addEventListener("change", () => {
+      otroEmpresaBox.classList.toggle("hidden", empresaSelect.value !== "OTRO");
+    });
+
+    const rutaSelect = document.getElementById("rutaSelect");
+    const customRuta = document.getElementById("customRuta");
+    rutaSelect.addEventListener("change", () => {
+      customRuta.classList.toggle("hidden", rutaSelect.value !== "OTRO");
+    });
+
+    const montoInput = document.getElementById("montoInput");
+    const alertaBancarizacion = document.getElementById("alertaBancarizacion");
+    montoInput.addEventListener("input", () => {
+      const val = parseFloat(montoInput.value) || 0;
+      alertaBancarizacion.classList.toggle("hidden", val < 2000);
+    });
+
+    function mostrarError(msg) {
+      const el = document.getElementById("errorMsg");
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+
+    function obtenerDatosFormulario() {
+      document.getElementById("errorMsg").classList.add("hidden");
+      let ruc = "", razonSocial = "";
+      if (empresaSelect.value === "OTRO") {
+        ruc = document.getElementById("customRuc").value.trim();
+        razonSocial = document.getElementById("customRazon").value.trim();
+        if (!/^\d{11}$/.test(ruc)) {
+          mostrarError("Ingresa un RUC válido de 11 dígitos.");
+          return null;
+        }
+        if (razonSocial.length < 3) {
+          mostrarError("Ingresa la Razón Social de la empresa.");
+          return null;
+        }
+      } else {
+        [ruc, razonSocial] = empresaSelect.value.split("|");
+      }
+
+      const contacto = document.getElementById("contactoInput").value.trim();
+      if (!contacto) {
+        mostrarError("Ingresa tu WhatsApp o correo para enviarte la factura PDF.");
+        return null;
+      }
+
+      const concepto = document.getElementById("conceptoSelect").value;
+      const ruta = rutaSelect.value === "OTRO" ? customRuta.value.trim() : rutaSelect.value;
+      if (!ruta) {
+        mostrarError("Indica la ruta del trayecto.");
+        return null;
+      }
+
+      const monto = parseFloat(montoInput.value);
+      if (isNaN(monto) || monto <= 0) {
+        mostrarError("Ingresa un monto válido para la factura.");
+        return null;
+      }
+
+      const metodoPago = document.querySelector('input[name="metodoPago"]:checked').value;
+      return { ruc, razonSocial, contacto, concepto, ruta, monto, metodoPago };
+    }
+
+    document.getElementById("btnContinuarPago").addEventListener("click", () => {
+      const datos = obtenerDatosFormulario();
+      if (!datos) return;
+
+      const detalle = document.getElementById("modalPagoDetalle");
+      if (datos.metodoPago === "conductor") {
+        document.getElementById("modalPagoTitulo").textContent = "Pago Directo al Conductor";
+        detalle.innerHTML = `
+          <div class="flex justify-between border-b border-slate-200 pb-2">
+            <span class="text-slate-500">Monto a pagar:</span>
+            <span class="font-black text-slate-900 text-base">S/ ${datos.monto.toFixed(2)}</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 block">Yape del Conductor (${unidadActual.chofer}):</span>
+            <span class="font-extrabold text-purple-700 text-base">${unidadActual.yape}</span>
+          </div>
+          <p class="text-[11px] text-slate-500">También puedes abonar en efectivo directamente al conductor antes de bajar.</p>
+        `;
+      } else {
+        document.getElementById("modalPagoTitulo").textContent = "Transferencia / Yape a la Empresa";
+        detalle.innerHTML = `
+          <div class="flex justify-between border-b border-slate-200 pb-2">
+            <span class="text-slate-500">Monto a transferir:</span>
+            <span class="font-black text-emerald-700 text-base">S/ ${datos.monto.toFixed(2)}</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 block">Yape Corporativo S.A.C.:</span>
+            <span class="font-extrabold text-slate-900 text-xs">${EMPRESA_CONFIG.yapeEmpresa}</span>
+          </div>
+          <div>
+            <span class="text-xs text-slate-500 block">Cuenta Bancaria S.A.C.:</span>
+            <span class="font-bold text-slate-800 text-xs">${EMPRESA_CONFIG.cuentaBCP}</span>
+          </div>
+        `;
+      }
+
+      document.getElementById("modalPago").classList.remove("hidden");
+    });
+
+    document.getElementById("btnCerrarModalPago").addEventListener("click", () => {
+      document.getElementById("modalPago").classList.add("hidden");
+    });
+
+    document.getElementById("btnEnviarFacturaFinal").addEventListener("click", async () => {
+      const datos = obtenerDatosFormulario();
+      if (!datos) return;
+
+      const btn = document.getElementById("btnEnviarFacturaFinal");
+      btn.disabled = true;
+      btn.textContent = "Enviando a Central...";
+
+      const registro = {
+        ...datos,
+        unidadId: unidadActual.id,
+        unidadNumero: unidadActual.numero,
+        placa: unidadActual.placa,
+        chofer: unidadActual.chofer,
+        estado: "pendiente",
+        fechaTexto: new Date().toLocaleString("es-PE"),
+        createdAt: isFirebaseConfigured ? serverTimestamp() : Date.now()
+      };
+
+      try {
+        if (isFirebaseConfigured && db) {
+          await addDoc(collection(db, "solicitudes"), registro);
+        } else {
+          const prev = JSON.parse(localStorage.getItem("sh_solicitudes") || "[]");
+          prev.unshift({ id: "LOC-" + Date.now(), ...registro });
+          localStorage.setItem("sh_solicitudes", JSON.stringify(prev));
+        }
+      } catch (e) {
+        alert("Error al guardar: " + e.message);
+      }
+
+      ultimaSolicitud = registro;
+      document.getElementById("modalPago").classList.add("hidden");
+      document.getElementById("formContainer").classList.add("hidden");
+      document.getElementById("exitoContainer").classList.remove("hidden");
+      document.getElementById("resumenFacturaBox").innerHTML = `
+        <div><b>Empresa:</b> ${registro.razonSocial} (RUC ${registro.ruc})</div>
+        <div><b>Ruta:</b> ${registro.ruta}</div>
+        <div><b>Monto Factura:</b> S/ ${registro.monto.toFixed(2)}</div>
+        <div><b>Envío PDF a:</b> ${registro.contacto}</div>
+      `;
+
+      const waText = encodeURIComponent(`Hola Central Señor de Huanca Espinar, acabo de viajar en la Unidad #${unidadActual.numero} (${unidadActual.placa}) y deseo coordinar un recojo o retorno.`);
+      document.getElementById("linkWhatsappCentral").href = `https://wa.me/${EMPRESA_CONFIG.whatsappCentral}?text=${waText}`;
+
+      btn.disabled = false;
+      btn.textContent = "Aceptar y Enviar Solicitud de Factura";
+    });
+
+    document.getElementById("btnAceptarExito").addEventListener("click", () => {
+      document.getElementById("modalRetorno").classList.remove("hidden");
+    });
+
+    document.getElementById("btnAbrirFormRetorno").addEventListener("click", () => {
+      document.getElementById("opcionesRetornoBotones").classList.add("hidden");
+      document.getElementById("formRetornoRapido").classList.remove("hidden");
+    });
+
+    document.getElementById("btnCancelarFormRetorno").addEventListener("click", () => {
+      document.getElementById("formRetornoRapido").classList.add("hidden");
+      document.getElementById("opcionesRetornoBotones").classList.remove("hidden");
+    });
+
+    document.getElementById("btnGuardarRetorno").addEventListener("click", async () => {
+      const origen = document.getElementById("retOrigen").value.trim();
+      const destino = document.getElementById("retDestino").value.trim();
+      const horaContacto = document.getElementById("retHora").value.trim();
+      if (!origen || !destino || !horaContacto) {
+        alert("Completa los 3 datos rápidos para reservar tu unidad.");
+        return;
+      }
+
+      const retornoData = {
+        origen,
+        destino,
+        horaContacto,
+        empresa: ultimaSolicitud ? ultimaSolicitud.razonSocial : "Pasajero QR",
+        unidadOrigen: unidadActual.numero,
+        unidadAsignada: "Por asignar",
+        estado: "pendiente",
+        fechaTexto: new Date().toLocaleString("es-PE"),
+        createdAt: isFirebaseConfigured ? serverTimestamp() : Date.now()
+      };
+
+      if (isFirebaseConfigured && db) {
+        await addDoc(collection(db, "retornos"), retornoData);
+      } else {
+        const prev = JSON.parse(localStorage.getItem("sh_retornos") || "[]");
+        prev.unshift({ id: "RET-" + Date.now(), ...retornoData });
+        localStorage.setItem("sh_retornos", JSON.stringify(prev));
+      }
+
+      document.getElementById("formRetornoRapido").classList.add("hidden");
+      document.getElementById("retornoConfirmadoMsg").classList.remove("hidden");
+    });
+
+    const cerrarTodo = () => {
+      document.getElementById("modalRetorno").classList.add("hidden");
+    };
+    document.getElementById("btnCerrarRetorno").addEventListener("click", cerrarTodo);
+    document.getElementById("btnFinalizarTodo").addEventListener("click", cerrarTodo);
+  </script>
+</body>
+</html>

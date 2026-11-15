@@ -1,0 +1,15 @@
+{
+  "name": "Se\u00f1or de Huanca Espinar S.A.C.",
+  "short_name": "Huanca Taxi",
+  "start_url": "/chofer",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
