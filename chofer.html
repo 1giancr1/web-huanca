@@ -375,7 +375,7 @@
             <span>Efectivo</span>
           </button>
           <button id="btnPopupAceptarConductor" type="button" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-xs shadow-lg transition">
-            Aceptar
+            ✓ Yape Conductor (Aceptar)
           </button>
         </div>
       </div>
@@ -409,7 +409,7 @@
         </div>
 
         <button id="btnPopupAceptarSac" type="button" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-xs shadow-lg transition">
-          Aceptar
+          ✓ Confirmar Cuenta S.A.C.
         </button>
       </div>
     </div>
@@ -491,10 +491,13 @@
           </select>
         </div>
 
-        <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1.5">6. Modalidad de pago</label>
+        <div id="bloqueModalidadPago" class="rounded-2xl p-2 -mx-2 transition">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-[11px] font-bold uppercase text-slate-300">6. Modalidad de pago <span class="text-rose-400">*</span></label>
+            <span class="text-[10px] font-bold text-amber-400">Obligatorio elegir</span>
+          </div>
           <div class="grid grid-cols-2 gap-2">
-            <button id="btnModCuentaConductor" type="button" class="p-2.5 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-center transition hover:bg-amber-500/20 active:scale-[0.99]">
+            <button id="btnModCuentaConductor" type="button" class="p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-amber-400/70 hover:bg-amber-500/10 active:scale-[0.99]">
               <div class="text-xs font-extrabold text-white">Cuenta Conductor</div>
               <div class="text-[10px] text-amber-300/90 mt-0.5">QR Yape / Efectivo</div>
             </button>
@@ -503,9 +506,9 @@
               <div class="text-[10px] text-slate-400 mt-0.5">QR Yape / Cuenta Empresa</div>
             </button>
           </div>
-          <div id="badgeModalidadConfirmada" class="mt-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700 flex items-center justify-between text-[11px]">
-            <span class="text-slate-400">Seleccionado:</span>
-            <span id="txtModalidadConfirmada" class="font-bold text-amber-300">Cuenta Conductor (Yape QR)</span>
+          <div id="badgeModalidadConfirmada" class="mt-2 px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-center justify-between text-[11px]">
+            <span id="lblEstadoModalidad" class="text-slate-400">Estado:</span>
+            <span id="txtModalidadConfirmada" class="font-bold text-amber-400">⚠️ Falta elegir modalidad de pago</span>
           </div>
         </div>
 
@@ -628,9 +631,9 @@
     const choferRutaSelect = document.getElementById("choferRutaSelect");
     const choferCustomRuta = document.getElementById("choferCustomRuta");
 
-    // Estado de Modalidad de Pago y pestaña emergente
-    let metodoPagoSeleccionado = "conductor"; // "conductor" | "empresa"
-    let subModalidadSeleccionada = "yape_conductor"; // "yape_conductor" | "efectivo" | "cuenta_sac"
+    // Estado de Modalidad de Pago y pestaña emergente (inicia vacío: obligatorio elegir)
+    let metodoPagoSeleccionado = null; // null | "conductor" | "empresa"
+    let subModalidadSeleccionada = null; // null | "yape_conductor" | "efectivo" | "cuenta_sac"
 
     const modalDetallePago = document.getElementById("modalDetalleModalidadPago");
     const vistaPagoConductor = document.getElementById("vistaPagoConductor");
@@ -669,8 +672,40 @@
       return `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=6&color=4c1d95&bgcolor=ffffff&data=${payload}`;
     }
 
+    function limpiarAvisoModalidadPago() {
+      const bloqueMod = document.getElementById("bloqueModalidadPago");
+      if (bloqueMod) {
+        bloqueMod.classList.remove("ring-2", "ring-red-500", "bg-red-950/20");
+      }
+      const errEl = document.getElementById("choferFacturaError");
+      if (errEl && errEl.textContent.includes("modalidad de pago")) {
+        errEl.classList.add("hidden");
+      }
+    }
+
     function actualizarUiModalidadPago() {
       const txtEl = document.getElementById("txtModalidadConfirmada");
+      const lblEstado = document.getElementById("lblEstadoModalidad");
+      const badgeEl = document.getElementById("badgeModalidadConfirmada");
+
+      if (!metodoPagoSeleccionado || !subModalidadSeleccionada) {
+        btnModCuentaConductor.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-amber-400/70 hover:bg-amber-500/10 active:scale-[0.99]";
+        btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-emerald-400/70 hover:bg-emerald-500/10 active:scale-[0.99]";
+        if (badgeEl) {
+          badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-center justify-between text-[11px]";
+        }
+        if (lblEstado) lblEstado.textContent = "Estado:";
+        txtEl.textContent = "⚠️ Falta elegir modalidad de pago";
+        txtEl.className = "font-bold text-amber-400";
+        return;
+      }
+
+      limpiarAvisoModalidadPago();
+      if (badgeEl) {
+        badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700 flex items-center justify-between text-[11px]";
+      }
+      if (lblEstado) lblEstado.textContent = "Seleccionado:";
+
       if (metodoPagoSeleccionado === "conductor") {
         btnModCuentaConductor.className = "p-2.5 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-center transition hover:bg-amber-500/20 active:scale-[0.99]";
         btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-emerald-400/70 hover:bg-emerald-500/10 active:scale-[0.99]";
@@ -772,8 +807,9 @@
 
     function abrirModalNuevaFactura() {
       if (!unidadActiva) return;
-      metodoPagoSeleccionado = "conductor";
-      subModalidadSeleccionada = "yape_conductor";
+      metodoPagoSeleccionado = null;
+      subModalidadSeleccionada = null;
+      limpiarAvisoModalidadPago();
       actualizarUiModalidadPago();
       document.getElementById("modalFacUnidadTag").textContent = `UNIDAD #${unidadActiva.numero} • ${unidadActiva.placa}`;
       document.getElementById("formNuevaFacturaBody").classList.remove("hidden");
@@ -882,6 +918,17 @@
         return;
       }
 
+      if (!metodoPagoSeleccionado || !subModalidadSeleccionada) {
+        errEl.textContent = "⚠️ Falta elegir la modalidad de pago. Selecciona Cuenta Conductor (Yape o Efectivo) o Cuenta S.A.C. antes de continuar.";
+        errEl.classList.remove("hidden");
+        const bloqueMod = document.getElementById("bloqueModalidadPago");
+        if (bloqueMod) {
+          bloqueMod.classList.add("ring-2", "ring-red-500", "bg-red-950/20");
+          bloqueMod.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        return;
+      }
+
       const concepto = document.getElementById("choferConceptoSelect").value;
       const metodoPago = metodoPagoSeleccionado;
       const subModalidadPago = subModalidadSeleccionada;
@@ -939,6 +986,9 @@
         document.getElementById("choferContactoInput").value = "";
         document.getElementById("choferMontoInput").value = "";
         choferCustomRuta.value = "";
+        metodoPagoSeleccionado = null;
+        subModalidadSeleccionada = null;
+        actualizarUiModalidadPago();
 
         document.getElementById("formNuevaFacturaBody").classList.add("hidden");
         document.getElementById("exitoNuevaFacturaBody").classList.remove("hidden");
