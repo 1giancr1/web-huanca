@@ -3,61 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transportes Señor de Huanca S.A.C. | Sistema Corporativo</title>
+  <title>Señor de Huanca Espinar S.A.C. | Plataforma en Línea</title>
   <link rel="manifest" href="/manifest.json" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between items-center px-4 py-8 selection:bg-emerald-500 selection:text-white">
 
-  <div class="w-full max-w-md bg-slate-800 border border-slate-700 rounded-3xl p-6 shadow-2xl space-y-6">
-    <div class="text-center space-y-1.5">
-      <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Plataforma en Línea
-      </span>
-      <h1 class="text-2xl font-black text-white tracking-tight pt-1">Señor de Huanca Espinar S.A.C.</h1>
-      <p class="text-xs text-slate-400">Gestión de Flota, Facturación Electrónica SUNAT y Central</p>
-    </div>
+  <!-- Contenedor principal centrado -->
+  <div class="w-full max-w-md my-auto space-y-8">
 
-    <div class="space-y-3">
-      <a href="/qr?u=01" class="block w-full bg-white hover:bg-slate-100 text-slate-900 rounded-2xl p-4 transition shadow-md">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-xs font-black uppercase text-emerald-700">1. Portal del Pasajero</div>
-            <div class="text-base font-extrabold mt-0.5">Solicitar Factura / Retorno</div>
-            <div class="text-[11px] text-slate-500 mt-0.5">Vista que abre el cliente al escanear el QR del taxi</div>
+    <!-- 1. Encabezado Institucional -->
+    <header class="text-center space-y-2">
+      <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 shadow-inner mb-1">
+        <span class="text-xl font-black tracking-tighter text-amber-400">SH</span>
+      </div>
+      <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white">
+        Señor de Huanca Espinar S.A.C.
+      </h1>
+      <p class="text-xs text-slate-400 font-medium">
+        Gestión de flota • Facturación electrónica • SUNAT Central
+      </p>
+    </header>
+
+    <!-- 2. Bloque Central: Solo 2 Opciones Principales Claramente Diferenciadas -->
+    <main class="space-y-4">
+
+      <!-- Opción 1: Portal del Pasajero (Énfasis Cliente - Esmeralda) -->
+      <a href="./qr.html"
+         class="group block w-full rounded-3xl bg-gradient-to-br from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.99] p-6 shadow-xl shadow-emerald-950/50 border border-emerald-400/40 transition-all duration-200">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0 text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="text-left">
+              <h2 class="text-lg font-black text-white leading-tight">
+                Portal del Pasajero
+              </h2>
+              <p class="text-xs font-medium text-emerald-50/90 mt-1">
+                Solicitar factura y retorno
+              </p>
+            </div>
           </div>
-          <span class="text-xl font-black text-slate-400">→</span>
+          <div class="w-9 h-9 rounded-full bg-white/15 group-hover:translate-x-0.5 flex items-center justify-center text-white font-bold transition-transform shrink-0">
+            →
+          </div>
         </div>
       </a>
 
-      <a href="/chofer" class="block w-full bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-2xl p-4 transition shadow-md">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-xs font-black uppercase text-slate-900/80">2. App del Taxista</div>
-            <div class="text-base font-extrabold mt-0.5">Turno, Deuda y Grifos</div>
-            <div class="text-[11px] text-slate-900/80 mt-0.5">Prueba con Unidad #01 y DNI: <b>41234501</b></div>
+      <!-- Opción 2: Portal del Conductor (Énfasis Operativo - Oscuro / Ámbar) -->
+      <a href="./chofer.html"
+         class="group block w-full rounded-3xl bg-slate-900 hover:bg-slate-800/90 active:scale-[0.99] p-6 shadow-xl border-2 border-amber-500/40 hover:border-amber-400 transition-all duration-200">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 text-amber-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h8m-8 5h8m-4 5v-5m-7 8h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="text-left">
+              <h2 class="text-lg font-black text-white leading-tight">
+                Portal del Conductor
+              </h2>
+              <p class="text-xs font-medium text-amber-300/85 mt-1">
+                Facturas y gestión
+              </p>
+            </div>
           </div>
-          <span class="text-xl font-black text-slate-900">→</span>
+          <div class="w-9 h-9 rounded-full bg-slate-800 group-hover:bg-amber-500/20 group-hover:translate-x-0.5 flex items-center justify-center text-amber-400 font-bold transition-all shrink-0">
+            →
+          </div>
         </div>
       </a>
 
-      <a href="/gerencia" class="block w-full bg-slate-900 hover:bg-slate-950 border border-slate-700 text-white rounded-2xl p-4 transition shadow-md">
-        <div class="flex items-center justify-between">
-          <div>
-            <div class="text-xs font-black uppercase text-amber-400">3. Administradores / Central</div>
-            <div class="text-base font-extrabold mt-0.5">Panel Gerencia y SUNAT</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">Clave maestra de prueba: <b>2026</b></div>
-          </div>
-          <span class="text-xl font-black text-slate-500">→</span>
-        </div>
-      </a>
-    </div>
+    </main>
 
-    <p class="text-center text-[11px] text-slate-500">
-      Espinar, Cusco • Sistema sincronizado con Firebase
-    </p>
   </div>
+
+  <!-- 3. Pie de Pantalla: Acceso Discreto de Administración -->
+  <footer class="w-full max-w-md pt-6 pb-2 text-center">
+    <a href="./gerencia.html"
+       class="inline-block text-[11px] text-slate-500 hover:text-slate-300 transition-colors">
+      ¿Eres administrador?
+    </a>
+  </footer>
 
 </body>
 </html>
