@@ -3,96 +3,163 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel Subgerente | Señor de Huanca Espinar S.A.C.</title>
+  <title>Panel Gerencia | Señor de Huanca Espinar S.A.C.</title>
   <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    @media print {
+      body { background: #ffffff !important; }
+      #mainApp > *:not(#tabQr) { display: none !important; }
+      #tabQr { display: block !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+      #tabQr button { display: none !important; }
+    }
+  </style>
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen">
+<body class="bg-[#f4f7f7] text-[#082022] min-h-screen selection:bg-[#082022] selection:text-white">
 
-  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-900">
-    <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl space-y-4">
-      <div class="text-center">
-        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Acceso Restringido</span>
-        <h1 class="text-xl font-black text-slate-900 mt-1">Señor de Huanca Espinar</h1>
-        <p class="text-xs text-slate-500">Panel Subgerente y Contabilidad</p>
+  <!-- ====================================================================== -->
+  <!-- PANTALLA DE ACCESO ADMINISTRATIVO                                      -->
+  <!-- ====================================================================== -->
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-[#082022]">
+    <div class="bg-white w-full max-w-sm rounded-3xl p-7 shadow-2xl border border-[#194347] space-y-5">
+      <div class="text-center space-y-2.5">
+        <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden bg-[#082022] border border-[#c5b496]/40 shadow-md flex items-center justify-center">
+          <img src="./logo.png" alt="Logo Transportes Sr. de Huanca"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               class="w-full h-full object-contain" />
+          <div style="display:none" class="w-full h-full flex-col items-center justify-center px-1 text-center">
+            <span class="text-[7px] tracking-[0.18em] text-white/90 font-semibold">TAXI SERVICE</span>
+            <span class="text-[9px] font-extrabold text-[#c5b496] leading-tight mt-0.5">SR. DE HUANCA</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-[#082022] bg-[#082022]/8 px-2.5 py-0.5 rounded-full">
+            Acceso Administrativo
+          </span>
+          <h1 class="text-xl font-extrabold text-[#082022] mt-1.5">Señor de Huanca Espinar</h1>
+          <p class="text-xs text-slate-500">Panel de Gerencia, Central y Contabilidad</p>
+        </div>
       </div>
+
       <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Clave Maestra de Gerencia</label>
-        <input id="inputClave" type="password" placeholder="Ingresa la clave (Por defecto: 2026)" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm" />
+        <label class="block text-xs font-bold text-slate-700 mb-1.5">Clave Maestra de Gerencia</label>
+        <input id="inputClave" type="password" placeholder="Ingresa la clave (Por defecto: 2026)"
+               class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
       </div>
-      <p id="authError" class="hidden text-xs text-red-600 font-semibold"></p>
-      <button id="btnEntrarGerencia" type="button" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl text-sm">
-        Ingresar a la Central
+
+      <p id="authError" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 font-semibold"></p>
+
+      <button id="btnEntrarGerencia" type="button"
+              class="w-full bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold py-3.5 rounded-2xl text-sm shadow-lg transition">
+        Ingresar a la Central →
       </button>
+
+      <div class="text-center pt-1">
+        <a href="./index.html" class="text-[11px] font-semibold text-slate-400 hover:text-[#082022] transition">
+          ← Volver al inicio
+        </a>
+      </div>
     </div>
   </div>
 
+  <!-- ====================================================================== -->
+  <!-- PANEL PRINCIPAL DE GERENCIA                                            -->
+  <!-- ====================================================================== -->
   <div id="mainApp" class="hidden max-w-6xl mx-auto px-4 py-5 space-y-5">
-    <div class="bg-slate-900 text-white rounded-3xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-lg">
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Central En Vivo • SUNAT</span>
+
+    <!-- Cabecera Institucional Verde Bosque -->
+    <header class="bg-[#082022] text-white rounded-3xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 shadow-xl shadow-[#082022]/15 border border-[#163a3d]">
+      <div class="flex items-center gap-3.5">
+        <a href="./index.html" title="Ir al Inicio"
+           class="w-12 h-12 rounded-2xl overflow-hidden bg-[#0c2b2e] border border-[#c5b496]/35 flex items-center justify-center shrink-0">
+          <img src="./logo.png" alt="Logo"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               class="w-full h-full object-contain" />
+          <span style="display:none" class="text-xs font-extrabold text-[#c5b496]">SH</span>
+        </a>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#c5b496]">Central En Vivo • SUNAT</span>
+          </div>
+          <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white mt-0.5">Señor de Huanca Espinar S.A.C.</h1>
+          <p class="text-xs text-slate-300">Facturación Electrónica, Control de Flota (20 Unidades) y Crédito Fiscal</p>
         </div>
-        <h1 class="text-xl font-black mt-0.5">Señor de Huanca Espinar S.A.C.</h1>
-        <p class="text-xs text-slate-400">Gestión de Facturación Electrónica, Flota de 20 Unidades y Crédito Fiscal</p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl px-3.5 py-2 text-xs">
-          <span class="text-slate-400 block text-[10px]">Retención SAC (%)</span>
-          <input id="inputRetencion" type="number" min="5" max="50" value="22" class="w-16 bg-transparent font-black text-amber-400 text-sm focus:outline-none" />
+      <!-- Controles Financieros Rápidos -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        <div class="bg-white/10 border border-white/15 rounded-2xl px-3.5 py-2 text-xs">
+          <span class="text-[#c5b496] block text-[10px] font-bold uppercase">Retención SAC (%)</span>
+          <input id="inputRetencion" type="number" min="5" max="50" value="22"
+                 class="w-16 bg-transparent font-extrabold text-white text-sm focus:outline-none" />
         </div>
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl px-3.5 py-2 text-xs">
-          <span class="text-slate-400 block text-[10px]">Régimen Renta</span>
-          <select id="selectRegimen" class="bg-slate-800 font-bold text-white text-xs focus:outline-none">
+        <div class="bg-white/10 border border-white/15 rounded-2xl px-3.5 py-2 text-xs">
+          <span class="text-[#c5b496] block text-[10px] font-bold uppercase">Régimen Renta</span>
+          <select id="selectRegimen" class="bg-[#082022] font-bold text-white text-xs focus:outline-none rounded">
             <option value="0.01">MYPE (1.0%)</option>
             <option value="0.015">Especial RER (1.5%)</option>
           </select>
         </div>
-        <button id="btnExportarCsv" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2.5 rounded-2xl text-xs shadow">
-          Exportar Excel (.CSV)
+        <button id="btnExportarCsv" type="button"
+                class="bg-white hover:bg-[#f4f7f7] text-[#082022] font-extrabold px-4 py-3 rounded-2xl text-xs shadow-sm transition flex items-center gap-1.5">
+          <span>Exportar Excel (.CSV)</span>
         </button>
       </div>
-    </div>
+    </header>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
-      <button data-tab="tabCentral" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-slate-900 text-white">
+    <!-- Navegación Principal por Pestañas -->
+    <nav class="grid grid-cols-2 md:grid-cols-4 gap-2 bg-white p-1.5 rounded-2xl border border-slate-200/90 shadow-sm">
+      <button data-tab="tabCentral" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-[#082022] text-white shadow-xs transition">
         1. Central En Vivo
       </button>
-      <button data-tab="tabFlota" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-600 hover:bg-slate-100">
+      <button data-tab="tabFlota" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-[#f4f7f7] transition">
         2. Flota (20 Taxis)
       </button>
-      <button data-tab="tabFiscal" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-600 hover:bg-slate-100">
+      <button data-tab="tabFiscal" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-[#f4f7f7] transition">
         3. Crédito Fiscal IGV
       </button>
-      <button data-tab="tabQr" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-600 hover:bg-slate-100">
+      <button data-tab="tabQr" class="tabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-[#f4f7f7] transition">
         4. Tarjetas QR (20)
       </button>
-    </div>
+    </nav>
 
+    <!-- ==================================================================== -->
+    <!-- PESTAÑA 1: CENTRAL EN VIVO (RETORNOS Y SOLICITUDES DE FACTURA)       -->
+    <!-- ==================================================================== -->
     <div id="tabCentral" class="tabPanel space-y-5">
-      <div class="bg-amber-50 border border-amber-300 rounded-3xl p-5">
+
+      <!-- Reservas de Recojo / Retorno -->
+      <div class="bg-amber-50/75 border border-amber-200/90 rounded-3xl p-5 shadow-xs">
         <div class="flex items-center justify-between mb-3">
-          <h2 class="text-sm font-black text-amber-950 uppercase tracking-wide">Reservas de Recojo / Retorno (QR y WhatsApp)</h2>
-          <span id="badgeRetornos" class="text-xs font-bold bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full">0</span>
+          <div>
+            <h2 class="text-sm font-extrabold text-[#082022] uppercase tracking-wide">Reservas de Recojo / Retorno (QR y WhatsApp)</h2>
+            <p class="text-[11px] text-amber-900/80">Asigna una unidad habilitada a los pasajeros que solicitan movilidad</p>
+          </div>
+          <span id="badgeRetornos" class="text-xs font-extrabold bg-[#082022] text-[#c5b496] px-3 py-0.5 rounded-full">0</span>
         </div>
         <div id="listaRetornos" class="grid md:grid-cols-2 gap-3 text-xs">
-          <p class="text-amber-800">Sin reservas de retorno pendientes.</p>
+          <p class="text-amber-900/80">Sin reservas de retorno pendientes.</p>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <h2 class="text-sm font-black text-slate-900 uppercase tracking-wide">Solicitudes de Factura Electrónica (Tiempo Real)</h2>
-            <span id="badgeSolicitudes" class="text-xs font-bold bg-slate-900 text-white px-2.5 py-0.5 rounded-full">0</span>
+      <!-- Solicitudes de Factura Electrónica -->
+      <div class="bg-white border border-slate-200/90 rounded-3xl p-5 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2.5">
+            <h2 class="text-sm font-extrabold text-[#082022] uppercase tracking-wide">Solicitudes de Factura Electrónica (Tiempo Real)</h2>
+            <span id="badgeSolicitudes" class="text-xs font-extrabold bg-[#082022] text-[#c5b496] px-2.5 py-0.5 rounded-full">0</span>
           </div>
           <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
-            <button type="button" data-sol-filtro="todas" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-900 text-white">Todas</button>
-            <button type="button" data-sol-filtro="pendiente" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Sin Constancia</button>
-            <button type="button" data-sol-filtro="constancia_enviada" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Constancia Enviada</button>
-            <button type="button" data-sol-filtro="emitida" class="gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200">Emitidas</button>
+            <button type="button" data-sol-filtro="todas" class="gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#082022] text-white transition">Todas</button>
+            <button type="button" data-sol-filtro="pendiente" class="gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#f4f7f7] text-slate-600 hover:bg-slate-200/70 transition">Sin Constancia</button>
+            <button type="button" data-sol-filtro="constancia_enviada" class="gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#f4f7f7] text-slate-600 hover:bg-slate-200/70 transition">Constancia Enviada</button>
+            <button type="button" data-sol-filtro="emitida" class="gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#f4f7f7] text-slate-600 hover:bg-slate-200/70 transition">Emitidas</button>
           </div>
         </div>
         <div id="listaSolicitudes" class="space-y-3">
@@ -101,16 +168,19 @@
       </div>
     </div>
 
-    <div id="tabFlota" class="tabPanel hidden bg-white border border-slate-200 rounded-3xl p-5 shadow-sm">
+    <!-- ==================================================================== -->
+    <!-- PESTAÑA 2: CONTROL DE FLOTA (20 UNIDADES)                            -->
+    <!-- ==================================================================== -->
+    <div id="tabFlota" class="tabPanel hidden bg-white border border-slate-200/90 rounded-3xl p-5 shadow-sm">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
         <div>
-          <h2 class="text-sm font-black text-slate-900 uppercase">Control de Flota (20 Unidades) y Bloqueo Automático (&gt; S/ 100)</h2>
-          <p class="text-xs text-slate-500">Registra los abonos recibidos de los conductores para desbloquear unidades.</p>
+          <h2 class="text-sm font-extrabold text-[#082022] uppercase tracking-wide">Control de Flota (20 Unidades) y Bloqueo Automático (&gt; S/ 100)</h2>
+          <p class="text-xs text-slate-500">Registra los abonos recibidos de los conductores para mantener sus unidades habilitadas.</p>
         </div>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs">
-          <thead class="bg-slate-100 text-slate-700 uppercase text-[11px]">
+          <thead class="bg-[#f4f7f7] text-[#082022] uppercase text-[11px] font-extrabold">
             <tr>
               <th class="p-3 rounded-l-xl">Unidad</th>
               <th class="p-3">Conductor / Placa</th>
@@ -125,45 +195,51 @@
       </div>
     </div>
 
+    <!-- ==================================================================== -->
+    <!-- PESTAÑA 3: CRÉDITO FISCAL IGV Y GASTOS DE FLOTA                      -->
+    <!-- ==================================================================== -->
     <div id="tabFiscal" class="tabPanel hidden space-y-5">
-      <div class="grid md:grid-cols-4 gap-3">
-        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+      <div class="grid md:grid-cols-4 gap-3.5">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
           <span class="text-[11px] text-slate-500 font-bold uppercase">Total Facturado (Ventas)</span>
-          <div id="kpiVentas" class="text-xl font-black text-slate-900 mt-1">S/ 0.00</div>
-          <span id="kpiIgvVentas" class="text-xs text-slate-500">IGV Cobrado: S/ 0.00</span>
+          <div id="kpiVentas" class="text-xl font-extrabold text-[#082022] mt-1">S/ 0.00</div>
+          <span id="kpiIgvVentas" class="text-xs text-slate-500 font-medium">IGV Cobrado: S/ 0.00</span>
         </div>
-        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
           <span class="text-[11px] text-slate-500 font-bold uppercase">Facturas Grifo/Taller</span>
-          <div id="kpiCompras" class="text-xl font-black text-emerald-700 mt-1">S/ 0.00</div>
-          <span id="kpiIgvCompras" class="text-xs text-emerald-600">Crédito Fiscal: S/ 0.00</span>
+          <div id="kpiCompras" class="text-xl font-extrabold text-emerald-700 mt-1">S/ 0.00</div>
+          <span id="kpiIgvCompras" class="text-xs text-emerald-700 font-semibold">Crédito Fiscal: S/ 0.00</span>
         </div>
-        <div class="bg-white border border-slate-200 rounded-2xl p-4">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
           <span class="text-[11px] text-slate-500 font-bold uppercase">IGV Neto a SUNAT</span>
-          <div id="kpiIgvNeto" class="text-xl font-black text-amber-600 mt-1">S/ 0.00</div>
-          <span id="kpiSaldoFavor" class="text-xs text-slate-500">Saldo a favor: S/ 0.00</span>
+          <div id="kpiIgvNeto" class="text-xl font-extrabold text-amber-700 mt-1">S/ 0.00</div>
+          <span id="kpiSaldoFavor" class="text-xs text-slate-500 font-medium">Saldo a favor: S/ 0.00</span>
         </div>
-        <div class="bg-slate-900 text-white rounded-2xl p-4">
-          <span class="text-[11px] text-slate-400 font-bold uppercase">Renta Mensual + Retención</span>
-          <div id="kpiRenta" class="text-xl font-black text-emerald-400 mt-1">S/ 0.00</div>
-          <span id="kpiGananciaNeta" class="text-xs text-slate-300">Ganancia SAC estimada: S/ 0.00</span>
+        <div class="bg-[#082022] text-white rounded-2xl p-4 shadow-md border border-[#194347]">
+          <span class="text-[11px] text-[#c5b496] font-bold uppercase">Renta Mensual + Retención</span>
+          <div id="kpiRenta" class="text-xl font-extrabold text-white mt-1">S/ 0.00</div>
+          <span id="kpiGananciaNeta" class="text-xs text-emerald-300 font-semibold">Ganancia SAC estimada: S/ 0.00</span>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-3xl p-5">
-        <h3 class="text-sm font-black text-slate-900 uppercase mb-3">Comprobantes de Combustible y Mantenimiento Registrados por Choferes</h3>
-        <div id="listaGastos" class="space-y-2 text-xs">
+      <div class="bg-white border border-slate-200/90 rounded-3xl p-5 shadow-sm">
+        <h3 class="text-sm font-extrabold text-[#082022] uppercase tracking-wide mb-3">Comprobantes de Combustible y Mantenimiento Registrados por Choferes</h3>
+        <div id="listaGastos" class="space-y-2.5 text-xs">
           <p class="text-slate-500">Aún no se han registrado facturas de combustible o taller.</p>
         </div>
       </div>
     </div>
 
-    <div id="tabQr" class="tabPanel hidden bg-white border border-slate-200 rounded-3xl p-5 space-y-4">
+    <!-- ==================================================================== -->
+    <!-- PESTAÑA 4: TARJETAS QR OFICIALES POR UNIDAD (01 - 20)                -->
+    <!-- ==================================================================== -->
+    <div id="tabQr" class="tabPanel hidden bg-white border border-slate-200/90 rounded-3xl p-5 shadow-sm space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h2 class="text-sm font-black text-slate-900 uppercase">Códigos QR Oficiales por Unidad (01 al 20)</h2>
-          <p class="text-xs text-slate-500">Cada QR apunta automáticamente a la dirección web real de tu dominio con su número de unidad.</p>
+          <h2 class="text-sm font-extrabold text-[#082022] uppercase tracking-wide">Códigos QR Oficiales por Unidad (01 al 20)</h2>
+          <p class="text-xs text-slate-500">Cada QR apunta automáticamente a tu portal web con el número de unidad asignado.</p>
         </div>
-        <button onclick="window.print()" type="button" class="bg-slate-900 text-white font-bold px-4 py-2 rounded-xl text-xs">
+        <button onclick="window.print()" type="button" class="bg-[#082022] hover:bg-[#0e3336] text-white font-extrabold px-4 py-2.5 rounded-xl text-xs shadow-sm transition">
           Imprimir Tarjetas QR
         </button>
       </div>
@@ -171,70 +247,82 @@
     </div>
   </div>
 
-  <!-- MODAL 1: ENVIAR CONSTANCIA DE RECEPCIÓN DESDE WHATSAPP OFICIAL DE LA EMPRESA (MODALIDAD A) -->
-  <div id="modalConstancia" class="hidden fixed inset-0 bg-slate-950/75 z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl">
-      <div class="border-b border-slate-200 pb-3 flex justify-between items-start">
+  <!-- ====================================================================== -->
+  <!-- MODAL 1: ENVIAR CONSTANCIA DE RECEPCIÓN DESDE WHATSAPP OFICIAL         -->
+  <!-- ====================================================================== -->
+  <div id="modalConstancia" class="hidden fixed inset-0 bg-[#082022]/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl">
+      <div class="bg-[#082022] px-6 py-4 flex justify-between items-start">
         <div>
-          <span class="text-[10px] font-black uppercase tracking-wider text-sky-700">Paso 1 • Confirmación Corporativa</span>
-          <h3 class="font-black text-base text-slate-900">Enviar Constancia de Recepción</h3>
-          <p id="constanciaSubtitulo" class="text-xs text-slate-500">Desde el WhatsApp oficial de Señor de Huanca S.A.C.</p>
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#c5b496]">Paso 1 • Confirmación Corporativa</span>
+          <h3 class="font-extrabold text-base text-white mt-0.5">Enviar Constancia de Recepción</h3>
+          <p id="constanciaSubtitulo" class="text-xs text-slate-300">Desde el WhatsApp oficial de Señor de Huanca S.A.C.</p>
         </div>
-        <button onclick="document.getElementById('modalConstancia').classList.add('hidden')" type="button" class="text-slate-400 hover:text-slate-700 font-black px-2">✕</button>
+        <button onclick="document.getElementById('modalConstancia').classList.add('hidden')" type="button" class="text-slate-300 hover:text-white font-extrabold px-2">✕</button>
       </div>
 
-      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
-        <span class="text-[10px] font-bold uppercase text-slate-400 block">Mensaje oficial listo para el pasajero:</span>
-        <pre id="textoConstanciaPreview" class="whitespace-pre-wrap font-sans text-xs text-slate-800 leading-relaxed"></pre>
-      </div>
+      <div class="p-6 space-y-4">
+        <div class="bg-[#f8fafa] border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
+          <span class="text-[10px] font-bold uppercase text-slate-500 block">Mensaje oficial listo para el pasajero:</span>
+          <pre id="textoConstanciaPreview" class="whitespace-pre-wrap font-sans text-xs text-[#082022] leading-relaxed"></pre>
+        </div>
 
-      <div class="flex flex-col sm:flex-row gap-2">
-        <button id="btnCopiarConstancia" type="button" class="sm:w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-xs font-bold text-slate-700">
-          Copiar texto
-        </button>
-        <a id="btnAbrirWaConstancia" href="#" target="_blank" class="sm:w-2/3 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-black text-center shadow">
-          Abrir WhatsApp Empresa y Enviar
-        </a>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <button id="btnCopiarConstancia" type="button" class="sm:w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-bold text-[#082022] transition">
+            Copiar texto
+          </button>
+          <a id="btnAbrirWaConstancia" href="#" target="_blank" class="sm:w-2/3 py-2.5 px-3 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white text-xs font-extrabold text-center shadow transition">
+            Abrir WhatsApp Empresa y Enviar
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: EMITIR FACTURA ELECTRÓNICA SUNAT -->
-  <div id="modalFactura" class="hidden fixed inset-0 bg-slate-950/75 z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl">
-      <div class="border-b border-slate-200 pb-3 flex justify-between items-start">
+  <!-- ====================================================================== -->
+  <!-- MODAL 2: EMITIR FACTURA ELECTRÓNICA SUNAT                              -->
+  <!-- ====================================================================== -->
+  <div id="modalFactura" class="hidden fixed inset-0 bg-[#082022]/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl">
+      <div class="bg-[#082022] px-6 py-4 flex justify-between items-start">
         <div>
-          <h3 class="font-black text-base text-slate-900">SEÑOR DE HUANCA ESPINAR S.A.C.</h3>
-          <p class="text-xs text-slate-500">RUC: 20612345678 • Espinar, Cusco</p>
+          <h3 class="font-extrabold text-base text-white">SEÑOR DE HUANCA ESPINAR S.A.C.</h3>
+          <p class="text-xs text-[#c5b496]">RUC: 20612345678 • Espinar, Cusco</p>
         </div>
-        <span class="bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-lg">FACTURA ELECTRÓNICA</span>
+        <span class="bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 text-[10px] font-extrabold px-2.5 py-1 rounded-lg">FACTURA ELECTRÓNICA</span>
       </div>
-      <div id="detalleFacturaModal" class="text-xs space-y-1.5 bg-slate-50 p-4 rounded-2xl border border-slate-200"></div>
-      <div class="flex gap-2">
-        <button id="btnCerrarModalFact" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold">Cerrar</button>
-        <a id="btnEnviarWhatsappCliente" href="#" target="_blank" class="w-2/3 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold text-center">
-          Enviar Factura por WhatsApp
-        </a>
+      <div class="p-6 space-y-4">
+        <div id="detalleFacturaModal" class="text-xs space-y-1.5 bg-[#f8fafa] p-4 rounded-2xl border border-slate-200 text-slate-700"></div>
+        <div class="flex gap-2">
+          <button id="btnCerrarModalFact" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-bold text-[#082022]">Cerrar</button>
+          <a id="btnEnviarWhatsappCliente" href="#" target="_blank" class="w-2/3 py-2.5 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white text-xs font-extrabold text-center shadow">
+            Enviar Factura por WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 3: VISOR DE FOTO DE COMPROBANTE DE GRIFO/TALLER -->
-  <div id="modalFotoGasto" class="hidden fixed inset-0 bg-slate-950/80 z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-3xl p-5 space-y-3 shadow-2xl">
-      <div class="flex items-start justify-between gap-2 border-b border-slate-200 pb-2.5">
+  <!-- ====================================================================== -->
+  <!-- MODAL 3: VISOR DE FOTO DE COMPROBANTE DE GRIFO/TALLER                  -->
+  <!-- ====================================================================== -->
+  <div id="modalFotoGasto" class="hidden fixed inset-0 bg-[#082022]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl">
+      <div class="bg-[#082022] px-5 py-3.5 flex items-start justify-between gap-2">
         <div>
-          <h3 id="fotoGastoTitulo" class="font-black text-sm text-slate-900">Foto de Factura</h3>
-          <p id="fotoGastoSubtitulo" class="text-xs text-slate-500"></p>
+          <h3 id="fotoGastoTitulo" class="font-extrabold text-sm text-white">Foto de Factura</h3>
+          <p id="fotoGastoSubtitulo" class="text-xs text-[#c5b496]"></p>
         </div>
-        <button onclick="document.getElementById('modalFotoGasto').classList.add('hidden')" type="button" class="text-slate-400 hover:text-slate-700 font-black text-base px-2">✕</button>
+        <button onclick="document.getElementById('modalFotoGasto').classList.add('hidden')" type="button" class="text-slate-300 hover:text-white font-extrabold text-base px-2">✕</button>
       </div>
-      <div class="bg-slate-900 rounded-2xl p-2 flex items-center justify-center">
-        <img id="imgFotoGastoModal" src="" alt="Comprobante" class="max-h-[65vh] object-contain rounded-xl" />
-      </div>
-      <div class="flex gap-2">
-        <button onclick="document.getElementById('modalFotoGasto').classList.add('hidden')" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold">Cerrar</button>
-        <a id="btnDescargarFotoGasto" href="#" download="factura.jpg" class="w-2/3 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold text-center">Descargar Imagen</a>
+      <div class="p-5 space-y-3">
+        <div class="bg-[#f4f7f7] border border-slate-200 rounded-2xl p-2 flex items-center justify-center">
+          <img id="imgFotoGastoModal" src="" alt="Comprobante" class="max-h-[65vh] object-contain rounded-xl" />
+        </div>
+        <div class="flex gap-2">
+          <button onclick="document.getElementById('modalFotoGasto').classList.add('hidden')" type="button" class="w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-bold text-[#082022]">Cerrar</button>
+          <a id="btnDescargarFotoGasto" href="#" download="factura.jpg" class="w-2/3 py-2.5 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white text-xs font-extrabold text-center shadow">Descargar Imagen</a>
+        </div>
       </div>
     </div>
   </div>
@@ -275,9 +363,9 @@
     document.querySelectorAll(".tabBtn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".tabBtn").forEach(b => {
-          b.className = "tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-600 hover:bg-slate-100";
+          b.className = "tabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-[#f4f7f7] transition";
         });
-        btn.className = "tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-slate-900 text-white";
+        btn.className = "tabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-[#082022] text-white shadow-xs transition";
         document.querySelectorAll(".tabPanel").forEach(p => p.classList.add("hidden"));
         document.getElementById(btn.dataset.tab).classList.remove("hidden");
       });
@@ -287,9 +375,9 @@
       btn.addEventListener("click", () => {
         filtroSolicitudes = btn.dataset.solFiltro;
         document.querySelectorAll(".gerFiltroSolBtn").forEach(b => {
-          b.className = "gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200";
+          b.className = "gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#f4f7f7] text-slate-600 hover:bg-slate-200/70 transition";
         });
-        btn.className = "gerFiltroSolBtn px-3 py-1 rounded-lg bg-slate-900 text-white";
+        btn.className = "gerFiltroSolBtn px-3 py-1.5 rounded-xl bg-[#082022] text-white transition";
         renderSolicitudes();
       });
     });
@@ -339,25 +427,25 @@
       const cont = document.getElementById("listaRetornos");
       document.getElementById("badgeRetornos").textContent = retornos.length;
       if (!retornos.length) {
-        cont.innerHTML = `<p class="text-amber-800">Sin reservas de retorno pendientes.</p>`;
+        cont.innerHTML = `<p class="text-amber-900/80">Sin reservas de retorno pendientes.</p>`;
         return;
       }
       cont.innerHTML = retornos.map(r => `
-        <div class="bg-white border border-amber-200 rounded-2xl p-3.5 shadow-sm flex flex-col justify-between gap-2">
+        <div class="bg-white border border-amber-200/90 rounded-2xl p-3.5 shadow-xs flex flex-col justify-between gap-2.5">
           <div>
-            <div class="flex justify-between items-center">
-              <span class="font-black text-slate-900">${r.origen} → ${r.destino}</span>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${r.estado === 'asignado' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+            <div class="flex justify-between items-center gap-2">
+              <span class="font-extrabold text-[#082022]">${r.origen} → ${r.destino}</span>
+              <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0 ${r.estado === 'asignado' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
                 ${r.estado === 'asignado' ? 'Unidad #' + r.unidadAsignada : 'Pendiente'}
               </span>
             </div>
             <p class="text-slate-600 mt-1"><b>Hora/Contacto:</b> ${r.horaContacto} • <b>Cliente:</b> ${r.empresa}</p>
           </div>
           <div class="flex items-center gap-2 pt-1">
-            <select id="selRet-${r.id}" class="flex-1 rounded-lg border border-slate-300 px-2 py-1 text-xs">
+            <select id="selRet-${r.id}" class="flex-1 rounded-xl bg-[#f8fafa] border border-slate-300 px-2.5 py-1.5 text-xs font-semibold text-[#082022]">
               ${unidades.filter(u => Number(u.deuda) <= 100).map(u => `<option value="${u.numero}">Unidad #${u.numero} (${u.chofer})</option>`).join("")}
             </select>
-            <button onclick="window.asignarRetorno('${r.id}')" type="button" class="bg-slate-900 text-white font-bold px-3 py-1 rounded-lg text-xs">
+            <button onclick="window.asignarRetorno('${r.id}')" type="button" class="bg-[#082022] hover:bg-[#0e3336] text-white font-bold px-3.5 py-1.5 rounded-xl text-xs transition">
               Asignar
             </button>
           </div>
@@ -398,11 +486,11 @@
         const retencion = +(monto * (pctRet / 100)).toFixed(2);
         const est = s.estado || "pendiente";
 
-        let badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">PENDIENTE CONSTANCIA</span>`;
+        let badgeEstado = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800">PENDIENTE CONSTANCIA</span>`;
         if (est === "constancia_enviada") {
-          badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800">CONSTANCIA ENVIADA</span>`;
+          badgeEstado = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-100 text-sky-800">CONSTANCIA ENVIADA</span>`;
         } else if (est === "emitida") {
-          badgeEstado = `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">FACTURA EMITIDA</span>`;
+          badgeEstado = `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">FACTURA EMITIDA</span>`;
         }
 
         const origenBadge = s.registradoPor === "conductor"
@@ -410,27 +498,27 @@
           : `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-200 text-slate-700">Vía QR</span>`;
 
         return `
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-slate-50/70">
+          <div class="border border-slate-200/90 rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-[#f8fafa]">
             <div class="space-y-1 text-xs">
               <div class="flex flex-wrap items-center gap-2">
-                <span class="bg-slate-900 text-amber-400 font-black px-2 py-0.5 rounded-md">Unidad #${s.unidadNumero} (${s.placa})</span>
+                <span class="bg-[#082022] text-[#c5b496] font-extrabold px-2.5 py-0.5 rounded-lg">Unidad #${s.unidadNumero} (${s.placa})</span>
                 ${origenBadge}
-                <span class="font-extrabold text-slate-900">${s.razonSocial}</span>
-                <span class="text-slate-500">RUC: ${s.ruc}</span>
+                <span class="font-extrabold text-[#082022]">${s.razonSocial}</span>
+                <span class="text-slate-500 font-medium">RUC: ${s.ruc}</span>
                 ${badgeEstado}
               </div>
-              <p class="text-slate-600"><b>Ruta:</b> ${s.ruta} • <b>Concepto:</b> ${s.concepto}</p>
+              <p class="text-slate-700"><b>Ruta:</b> ${s.ruta} • <b>Concepto:</b> ${s.concepto}</p>
               <p class="text-slate-500"><b>Contacto:</b> ${s.contacto} • <b>Pago:</b> ${s.metodoPago === 'conductor' ? 'Al conductor' : 'Cuenta SAC'} • <b>Retención SAC (${pctRet}%):</b> S/ ${retencion.toFixed(2)}</p>
             </div>
             <div class="flex flex-wrap items-center justify-between lg:justify-end gap-2.5 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-200">
               <div class="text-left lg:text-right mr-1">
-                <span class="text-[10px] text-slate-400 block">Total Factura</span>
-                <span class="text-lg font-black text-slate-900">S/ ${monto.toFixed(2)}</span>
+                <span class="text-[10px] text-slate-500 block">Total Factura</span>
+                <span class="text-lg font-extrabold text-[#082022]">S/ ${monto.toFixed(2)}</span>
               </div>
-              <button onclick="window.enviarConstancia('${s.id}')" type="button" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-3 py-2.5 rounded-xl text-xs shadow">
+              <button onclick="window.enviarConstancia('${s.id}')" type="button" class="bg-sky-700 hover:bg-sky-600 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs shadow-xs transition">
                 1. Enviar Constancia
               </button>
-              <button onclick="window.emitirFactura('${s.id}')" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2.5 rounded-xl text-xs shadow">
+              <button onclick="window.emitirFactura('${s.id}')" type="button" class="bg-[#082022] hover:bg-[#0e3336] text-white font-extrabold px-3.5 py-2.5 rounded-xl text-xs shadow-xs transition">
                 2. Emitir Factura
               </button>
             </div>
@@ -439,31 +527,21 @@
       }).join("");
     }
 
-    // PASO 1: ENVIAR CONSTANCIA OFICIAL DESDE LA EMPRESA (MODALIDAD A)
+    // PASO 1: ENVIAR CONSTANCIA OFICIAL DESDE LA EMPRESA
     window.enviarConstancia = async (id) => {
       const s = solicitudes.find(x => x.id === id);
       if (!s) return;
 
       const monto = Number(s.monto || 0);
       const mensajeConstancia =
-        `*TRANSPORTES SEÑOR DE HUANCA ESPINAR S.A.C.*
-` +
-        `RUC: 20612345678 • Central Corporativa
-
-` +
-        `Estimado cliente, confirmamos la *recepción de sus datos* para emisión de Factura Electrónica:
-` +
-        `• *Empresa:* ${s.razonSocial}
-` +
-        `• *RUC:* ${s.ruc}
-` +
-        `• *Servicio:* ${s.concepto} (${s.ruta})
-` +
-        `• *Unidad:* #${s.unidadNumero} (${s.placa})
-` +
-        `• *Importe Total:* S/ ${monto.toFixed(2)}
-
-` +
+        `*TRANSPORTES SEÑOR DE HUANCA ESPINAR S.A.C.*\n` +
+        `RUC: 20612345678 • Central Corporativa\n\n` +
+        `Estimado cliente, confirmamos la *recepción de sus datos* para emisión de Factura Electrónica:\n` +
+        `• *Empresa:* ${s.razonSocial}\n` +
+        `• *RUC:* ${s.ruc}\n` +
+        `• *Servicio:* ${s.concepto} (${s.ruta})\n` +
+        `• *Unidad:* #${s.unidadNumero} (${s.placa})\n` +
+        `• *Importe Total:* S/ ${monto.toFixed(2)}\n\n` +
         `En breve recibirá su comprobante PDF por este medio. Si desea programar su *unidad de retorno*, respóndanos por este chat.`;
 
       document.getElementById("constanciaSubtitulo").textContent = `Destino: ${s.contacto} • Unidad #${s.unidadNumero}`;
@@ -490,7 +568,6 @@
 
       document.getElementById("modalConstancia").classList.remove("hidden");
 
-      // Actualizar estado a constancia_enviada (si aún no está emitida)
       if ((s.estado || "pendiente") === "pendiente") {
         if (isFirebaseConfigured && db) {
           await updateDoc(doc(db, "solicitudes", id), { estado: "constancia_enviada" });
@@ -543,7 +620,7 @@
         <hr class="my-2 border-slate-200" />
         <div class="flex justify-between"><span>Op. Gravada:</span><b>S/ ${base.toFixed(2)}</b></div>
         <div class="flex justify-between"><span>IGV (18%):</span><b>S/ ${igv.toFixed(2)}</b></div>
-        <div class="flex justify-between text-sm text-emerald-700 pt-1"><span>IMPORTE TOTAL:</span><b>S/ ${monto.toFixed(2)}</b></div>
+        <div class="flex justify-between text-sm text-[#082022] pt-1"><span>IMPORTE TOTAL:</span><b>S/ ${monto.toFixed(2)}</b></div>
       `;
 
       const tel = String(s.contacto || "").replace(/\D/g, "");
@@ -571,21 +648,21 @@ Gracias por viajar con nosotros.`);
         const deuda = Number(u.deuda || 0);
         const bloq = deuda > EMPRESA_CONFIG.limiteDeudaBloqueo || u.activo === false;
         return `
-          <tr class="hover:bg-slate-50">
-            <td class="p-3 font-black text-slate-900">#${u.numero}</td>
+          <tr class="hover:bg-[#f8fafa] transition-colors">
+            <td class="p-3 font-extrabold text-[#082022]">#${u.numero}</td>
             <td class="p-3">
-              <div class="font-bold text-slate-800">${u.chofer}</div>
+              <div class="font-bold text-[#082022]">${u.chofer}</div>
               <div class="text-[11px] text-slate-500">${u.placa} • ${u.vehiculo}</div>
             </td>
             <td class="p-3 font-semibold text-purple-700">${u.yape}</td>
-            <td class="p-3 font-black ${bloq ? 'text-red-600' : 'text-slate-900'}">S/ ${deuda.toFixed(2)}</td>
+            <td class="p-3 font-extrabold ${bloq ? 'text-rose-600' : 'text-[#082022]'}">S/ ${deuda.toFixed(2)}</td>
             <td class="p-3">
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-black ${bloq ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${bloq ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-800'}">
                 ${bloq ? 'BLOQUEADO (>S/100)' : 'ACTIVO'}
               </span>
             </td>
             <td class="p-3 text-right">
-              <button onclick="window.liquidarDeuda('${u.id}')" type="button" class="bg-slate-900 hover:bg-slate-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px]">
+              <button onclick="window.liquidarDeuda('${u.id}')" type="button" class="bg-[#082022] hover:bg-[#0e3336] text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition">
                 Liquidar a S/ 0
               </button>
             </td>
@@ -610,16 +687,16 @@ Gracias por viajar con nosotros.`);
         return;
       }
       cont.innerHTML = gastos.map(g => `
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded-2xl bg-[#f8fafa] border border-slate-200/90">
           <div>
-            <span class="font-bold text-slate-900">Unidad #${g.unidadNumero} (${g.chofer})</span> — <span class="text-slate-700">${g.tipo}: ${g.proveedor}</span>
-            <div class="text-[11px] text-slate-500">${g.ruc ? `RUC: <b>${g.ruc}</b> • ` : ''}Factura: <b>${g.serie}</b> • Fecha: ${g.fechaTexto}</div>
+            <span class="font-extrabold text-[#082022]">Unidad #${g.unidadNumero} (${g.chofer})</span> — <span class="text-slate-700 font-medium">${g.tipo}: ${g.proveedor}</span>
+            <div class="text-[11px] text-slate-500 mt-0.5">${g.ruc ? `RUC: <b>${g.ruc}</b> • ` : ''}Factura: <b>${g.serie}</b> • Fecha: ${g.fechaTexto}</div>
           </div>
           <div class="flex items-center justify-between sm:justify-end gap-3">
-            ${g.fotoBase64 ? `<button onclick="window.verFotoGasto('${g.id}')" type="button" class="bg-slate-900 hover:bg-slate-700 text-white font-bold px-3 py-1.5 rounded-lg text-[11px]">Ver Foto</button>` : ''}
+            ${g.fotoBase64 ? `<button onclick="window.verFotoGasto('${g.id}')" type="button" class="bg-[#082022] hover:bg-[#0e3336] text-white font-bold px-3 py-1.5 rounded-xl text-[11px] transition">Ver Foto</button>` : ''}
             <div class="text-right">
-              <div class="font-black text-slate-900">S/ ${Number(g.monto).toFixed(2)}</div>
-              <div class="text-[11px] font-bold text-emerald-600">IGV Crédito: S/ ${Number(g.igv).toFixed(2)}</div>
+              <div class="font-extrabold text-[#082022]">S/ ${Number(g.monto).toFixed(2)}</div>
+              <div class="text-[11px] font-bold text-emerald-700">IGV Crédito: S/ ${Number(g.igv).toFixed(2)}</div>
             </div>
           </div>
         </div>
@@ -694,14 +771,18 @@ Gracias por viajar con nosotros.`);
       const baseUrl = window.location.origin + "/qr";
       grid.innerHTML = unidades.map(u => {
         const targetUrl = `${baseUrl}?u=${u.numero}`;
-        const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(targetUrl)}`;
+        const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&color=082022&bgcolor=ffffff&data=${encodeURIComponent(targetUrl)}`;
         return `
-          <div class="border-2 border-slate-900 rounded-2xl p-3 text-center bg-white flex flex-col items-center justify-between">
-            <div class="text-[10px] font-black uppercase tracking-wider text-slate-500">Señor de Huanca Espinar</div>
-            <div class="text-sm font-black text-slate-900">UNIDAD #${u.numero} • ${u.placa}</div>
-            <img src="${qrImg}" alt="QR Unidad ${u.numero}" class="w-32 h-32 my-2" />
-            <div class="text-[11px] font-bold text-emerald-700">Escanea para pedir tu Factura</div>
-            <div class="text-[9px] text-slate-400 break-all mt-1">${targetUrl}</div>
+          <div class="border-2 border-[#082022] rounded-2xl overflow-hidden text-center bg-white flex flex-col items-center justify-between shadow-xs">
+            <div class="w-full bg-[#082022] py-1.5 px-2">
+              <div class="text-[9px] font-extrabold uppercase tracking-wider text-[#c5b496]">Señor de Huanca Espinar</div>
+            </div>
+            <div class="p-3 flex flex-col items-center">
+              <div class="text-sm font-extrabold text-[#082022]">UNIDAD #${u.numero} • ${u.placa}</div>
+              <img src="${qrImg}" alt="QR Unidad ${u.numero}" class="w-32 h-32 my-2" />
+              <div class="text-[11px] font-extrabold text-emerald-700">Escanea para pedir tu Factura</div>
+              <div class="text-[9px] text-slate-400 break-all mt-1">${targetUrl}</div>
+            </div>
           </div>
         `;
       }).join("");
