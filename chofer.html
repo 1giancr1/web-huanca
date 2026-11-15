@@ -3,81 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App Conductor | Señor de Huanca Espinar S.A.C.</title>
+  <title>Portal del Conductor | Señor de Huanca Espinar S.A.C.</title>
   <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center py-4 px-3">
+<body class="bg-[#f4f7f7] text-[#082022] min-h-screen flex flex-col items-center py-4 px-3 selection:bg-[#082022] selection:text-white">
 
   <div class="w-full max-w-md space-y-4">
-    <!-- Barra superior -->
-    <div class="bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 flex items-center justify-between">
-      <div>
-        <h1 class="text-sm font-black text-white">Señor de Huanca Espinar</h1>
-        <p class="text-[11px] text-slate-400">Portal Oficial del Conductor</p>
+    <!-- Barra superior institucional -->
+    <div class="bg-[#082022] text-white border border-[#163a3d] rounded-2xl px-4 py-3 flex items-center justify-between shadow-md">
+      <div class="flex items-center gap-3">
+        <a href="./index.html" class="w-10 h-10 rounded-xl overflow-hidden bg-[#0c2b2e] border border-[#c5b496]/30 flex items-center justify-center shrink-0" title="Volver al inicio">
+          <img src="./logo.png" alt="Logo"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+               class="w-full h-full object-contain" />
+          <span style="display:none" class="text-[10px] font-extrabold text-[#c5b496]">SH</span>
+        </a>
+        <div>
+          <h1 class="text-sm font-extrabold text-white leading-tight">Señor de Huanca Espinar</h1>
+          <p class="text-[11px] text-[#c5b496]">Portal Oficial del Conductor</p>
+        </div>
       </div>
-      <div id="badgeConexion" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+      <div id="badgeConexion" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
         En Línea
       </div>
     </div>
 
     <!-- Pantalla de ingreso del conductor -->
-    <div id="loginBox" class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-xl">
-      <h2 class="text-base font-extrabold text-amber-400">Identificación de Unidad</h2>
-      <div>
-        <label class="block text-xs text-slate-300 mb-1 font-semibold">Selecciona tu Unidad (01 - 20)</label>
-        <select id="selectUnidad" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-sm text-white"></select>
+    <div id="loginBox" class="bg-white border border-slate-200/90 rounded-3xl p-6 space-y-4 shadow-lg shadow-slate-200/60">
+      <div class="space-y-1">
+        <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider text-[#082022] bg-[#082022]/8 px-2.5 py-0.5 rounded-full">
+          Inicio de Jornada
+        </span>
+        <h2 class="text-lg font-extrabold text-[#082022]">Identificación de Unidad</h2>
+        <p class="text-xs text-slate-500">Selecciona tu unidad e ingresa tu DNI para acceder a tu panel.</p>
       </div>
       <div>
-        <label class="block text-xs text-slate-300 mb-1 font-semibold">DNI del Conductor (Clave de acceso)</label>
-        <input id="inputDni" type="password" inputmode="numeric" maxlength="8" placeholder="Ingresa tu DNI de 8 dígitos" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-sm text-white" />
+        <label class="block text-xs text-slate-700 mb-1.5 font-bold">Selecciona tu Unidad (01 - 20)</label>
+        <select id="selectUnidad" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-[#082022] focus:border-[#082022] focus:outline-none"></select>
       </div>
-      <p id="loginError" class="hidden text-xs text-red-400 font-semibold"></p>
-      <button id="btnIngresar" type="button" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-2xl text-sm transition">
-        Ingresar a mi Turno
+      <div>
+        <label class="block text-xs text-slate-700 mb-1.5 font-bold">DNI del Conductor (Clave de acceso)</label>
+        <input id="inputDni" type="password" inputmode="numeric" maxlength="8" placeholder="Ingresa tu DNI de 8 dígitos" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
+      </div>
+      <p id="loginError" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2 font-semibold"></p>
+      <button id="btnIngresar" type="button" class="w-full bg-[#082022] hover:bg-[#0f3538] active:scale-[0.99] text-white font-extrabold py-3.5 rounded-2xl text-sm shadow-md transition">
+        Ingresar a mi Turno →
       </button>
     </div>
 
     <!-- Panel Principal del Conductor -->
     <div id="panelChofer" class="hidden space-y-4">
 
-      <!-- Cabecera compacta de Unidad Activa -->
-      <div class="bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 flex items-center justify-between gap-2">
-        <div>
-          <span id="lblUnidad" class="text-[11px] font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
-          <h2 id="lblChofer" class="text-base font-extrabold text-white leading-tight">Conductor</h2>
-          <p id="lblPlaca" class="text-[11px] text-slate-400">Placa • Vehículo</p>
+      <!-- Cabecera de Bienvenida Personalizada -->
+      <div class="bg-white border border-slate-200/90 rounded-3xl px-5 py-4 shadow-sm flex items-center justify-between gap-3">
+        <div class="space-y-0.5">
+          <div class="flex items-center gap-2">
+            <span id="lblUnidad" class="text-[10px] font-extrabold uppercase tracking-wider bg-[#082022] text-[#c5b496] px-2.5 py-0.5 rounded-full">
+              UNIDAD #01
+            </span>
+            <span id="lblPlaca" class="text-[11px] font-semibold text-slate-500">Placa • Vehículo</span>
+          </div>
+          <div class="pt-1">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 block">
+              BIENVENIDO:
+            </span>
+            <h2 id="lblChofer" class="text-lg font-extrabold text-[#082022] leading-tight">
+              Conductor
+            </h2>
+          </div>
         </div>
-        <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline shrink-0">Cambiar</button>
+        <button id="btnSalir" type="button" class="text-xs font-bold text-slate-500 hover:text-[#082022] bg-slate-100 hover:bg-slate-200/80 px-3 py-1.5 rounded-xl transition shrink-0">
+          Cambiar
+        </button>
       </div>
 
-      <!-- Botón Principal: Registrar Factura de Viaje (cuando el pasajero no escanea QR) -->
-      <button id="btnAbrirModalNuevaFactura" type="button" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.99] text-white rounded-2xl p-4 shadow-lg border border-emerald-400/30 flex items-center justify-between transition">
+      <!-- Botón Principal: Registrar Factura de Viaje -->
+      <button id="btnAbrirModalNuevaFactura" type="button" class="w-full bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white rounded-3xl p-4 shadow-lg shadow-[#082022]/15 border border-[#194448] flex items-center justify-between transition">
         <div class="text-left">
-          <div class="text-[10px] font-black uppercase tracking-wider text-emerald-100">¿Pasajero sin QR o apurado?</div>
-          <div class="text-base font-black text-white">+ Registrar Factura de Viaje</div>
-          <div class="text-[11px] text-emerald-50/90">Envía los datos directo a la Central S.A.C.</div>
+          <div class="text-[10px] font-extrabold uppercase tracking-wider text-[#c5b496]">¿Pasajero sin QR o apurado?</div>
+          <div class="text-base font-extrabold text-white mt-0.5">+ Registrar Factura de Viaje</div>
+          <div class="text-[11px] text-slate-300">Envía los datos directo a la Central S.A.C.</div>
         </div>
-        <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-xl font-black shrink-0">
+        <div class="w-11 h-11 rounded-2xl bg-white/10 border border-[#c5b496]/30 text-[#c5b496] flex items-center justify-center text-2xl font-extrabold shrink-0">
           +
         </div>
       </button>
 
       <!-- Alerta Cola Offline Global -->
-      <div id="colaOfflineBox" class="hidden bg-amber-950/90 border border-amber-500/60 rounded-2xl p-3 text-xs text-amber-200 flex items-center justify-between">
+      <div id="colaOfflineBox" class="hidden bg-amber-50 border border-amber-300 rounded-2xl p-3 text-xs text-amber-900 flex items-center justify-between shadow-sm">
         <span>Tienes <b id="countOffline">0</b> registro(s) guardados sin señal.</span>
-        <button id="btnSincronizarAhora" type="button" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">Sincronizar</button>
+        <button id="btnSincronizarAhora" type="button" class="bg-[#082022] text-white font-bold px-3 py-1.5 rounded-xl text-[11px]">Sincronizar</button>
       </div>
 
       <!-- NAVEGACIÓN POR PESTAÑAS DEL CONDUCTOR -->
-      <div class="grid grid-cols-2 gap-1.5 bg-slate-800 p-1.5 rounded-2xl border border-slate-700 shadow">
-        <button type="button" data-chofer-tab="tabTurno" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-black bg-amber-500 text-slate-950 transition">
+      <div class="grid grid-cols-2 gap-1.5 bg-white p-1.5 rounded-2xl border border-slate-200/90 shadow-sm">
+        <button type="button" data-chofer-tab="tabTurno" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-[#082022] text-white shadow-sm transition">
           1. Mi Turno y Deuda
         </button>
-        <button type="button" data-chofer-tab="tabSubirFactura" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700/70 transition flex items-center justify-center gap-1.5">
+        <button type="button" data-chofer-tab="tabSubirFactura" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5">
           <span>2. Subir Grifo/Taller</span>
-          <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-1.5 py-0.2 rounded-md">Foto</span>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-1.5 py-0.5 rounded-md">Foto</span>
         </button>
       </div>
 
@@ -87,43 +120,43 @@
       <div id="tabTurno" class="choferTabPanel space-y-4">
 
         <!-- 1. ESTADO DEL CONDUCTOR Y ESTADO DE SU DEUDA -->
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-5 space-y-4 shadow-sm">
           <!-- Estado Operativo Destacado -->
-          <div id="cardEstadoOperativo" class="rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between">
+          <div id="cardEstadoOperativo" class="rounded-2xl p-3.5 border bg-emerald-50/80 border-emerald-200 flex items-center justify-between">
             <div>
-              <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">Estado de tu Unidad</span>
-              <span id="lblEstado" class="text-base font-black text-emerald-400">ACTIVO • HABILITADO</span>
-              <p id="lblEstadoDesc" class="text-[11px] text-slate-300 mt-0.5">Puedes operar y generar facturas con normalidad.</p>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-slate-500 block">Estado de tu Unidad</span>
+              <span id="lblEstado" class="text-base font-extrabold text-[#082022]">ACTIVO • HABILITADO</span>
+              <p id="lblEstadoDesc" class="text-[11px] text-slate-600 mt-0.5">Puedes operar y generar facturas con normalidad.</p>
             </div>
-            <div id="iconoEstado" class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0">
+            <div id="iconoEstado" class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-lg font-extrabold shrink-0 shadow-sm">
               ✓
             </div>
           </div>
 
           <!-- Estado Detallado de Deuda -->
-          <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-3">
+          <div class="bg-[#f8fafa] border border-slate-200/90 rounded-2xl p-4 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Estado de tu Deuda (Retenciones)</span>
-              <span id="badgeNivelDeuda" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">AL DÍA</span>
+              <span class="text-xs font-extrabold uppercase tracking-wide text-[#082022]">Estado de tu Deuda (Retenciones)</span>
+              <span id="badgeNivelDeuda" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">AL DÍA</span>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <span class="text-[11px] text-slate-400 block">Saldo pendiente a pagar</span>
-                <span id="lblDeuda" class="text-2xl font-black text-white">S/ 0.00</span>
+                <span class="text-[11px] text-slate-500 block">Saldo pendiente a pagar</span>
+                <span id="lblDeuda" class="text-2xl font-extrabold text-[#082022]">S/ 0.00</span>
               </div>
               <div class="text-right">
-                <span class="text-[11px] text-slate-400 block">Margen antes de bloqueo</span>
-                <span id="lblMargen" class="text-lg font-extrabold text-emerald-400">S/ 100.00</span>
+                <span class="text-[11px] text-slate-500 block">Margen antes de bloqueo</span>
+                <span id="lblMargen" class="text-lg font-extrabold text-emerald-700">S/ 100.00</span>
               </div>
             </div>
 
             <!-- Barra visual hacia el tope de S/ 100 -->
             <div class="space-y-1">
-              <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-                <div id="barraDeuda" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+              <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div id="barraDeuda" class="h-full bg-emerald-600 transition-all duration-300" style="width: 0%"></div>
               </div>
-              <div class="flex justify-between text-[10px] text-slate-400">
+              <div class="flex justify-between text-[10px] font-semibold text-slate-500">
                 <span>S/ 0.00</span>
                 <span id="lblPorcentajeTope">0% del tope</span>
                 <span>Límite: S/ 100.00</span>
@@ -131,80 +164,80 @@
             </div>
 
             <!-- Desglose rápido de retenciones -->
-            <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-[11px]">
-              <div class="bg-slate-800/70 rounded-xl p-2">
-                <span class="text-slate-400 block text-[10px]">Retención por factura</span>
-                <span id="lblPctRetencion" class="font-bold text-amber-400">22% (cobro directo)</span>
+            <div class="pt-2 border-t border-slate-200 grid grid-cols-2 gap-2 text-[11px]">
+              <div class="bg-white border border-slate-200/80 rounded-xl p-2.5">
+                <span class="text-slate-500 block text-[10px]">Retención por factura</span>
+                <span id="lblPctRetencion" class="font-extrabold text-[#082022]">22% (cobro directo)</span>
               </div>
-              <div class="bg-slate-800/70 rounded-xl p-2">
-                <span class="text-slate-400 block text-[10px]">Facturado en tu unidad</span>
-                <span id="lblTotalFacturadoUnidad" class="font-bold text-white">S/ 0.00</span>
+              <div class="bg-white border border-slate-200/80 rounded-xl p-2.5">
+                <span class="text-slate-500 block text-[10px]">Facturado en tu unidad</span>
+                <span id="lblTotalFacturadoUnidad" class="font-extrabold text-[#082022]">S/ 0.00</span>
               </div>
             </div>
 
             <!-- Botón para ver datos de abono a la S.A.C. -->
-            <button id="btnToggleAbono" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-amber-300 transition">
+            <button id="btnToggleAbono" type="button" class="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-bold text-[#082022] transition shadow-xs">
               Ver cuentas para abonar mi deuda
             </button>
 
-            <div id="boxDatosAbono" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-3 text-[11px] space-y-2">
+            <div id="boxDatosAbono" class="hidden bg-white border border-[#082022]/20 rounded-xl p-3.5 text-[11px] space-y-2.5 shadow-xs">
               <div>
-                <span class="text-slate-400 block">Yape Corporativo S.A.C.:</span>
-                <span id="txtYapeEmpresa" class="font-extrabold text-white">Cargando...</span>
+                <span class="text-slate-500 block">Yape Corporativo S.A.C.:</span>
+                <span id="txtYapeEmpresa" class="font-extrabold text-[#082022]">Cargando...</span>
               </div>
               <div>
-                <span class="text-slate-400 block">Cuenta Bancaria S.A.C.:</span>
-                <span id="txtCuentaEmpresa" class="font-semibold text-slate-200">Cargando...</span>
+                <span class="text-slate-500 block">Cuenta Bancaria S.A.C.:</span>
+                <span id="txtCuentaEmpresa" class="font-semibold text-slate-700">Cargando...</span>
               </div>
-              <a id="btnEnviarVoucherWa" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
+              <a id="btnEnviarVoucherWa" href="#" target="_blank" class="block w-full text-center py-2.5 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white font-bold text-xs transition">
                 Enviar comprobante de abono por WhatsApp
               </a>
             </div>
           </div>
 
           <!-- Alerta de bloqueo si deuda > 100 -->
-          <div id="alertaBloqueo" class="hidden bg-red-950/90 border border-red-500 rounded-2xl p-3.5 text-xs text-red-200 space-y-1">
-            <div class="font-black text-red-400">UNIDAD BLOQUEADA POR SALDO PENDIENTE</div>
+          <div id="alertaBloqueo" class="hidden bg-rose-50 border border-rose-300 rounded-2xl p-3.5 text-xs text-rose-800 space-y-1">
+            <div class="font-extrabold text-rose-700">UNIDAD BLOQUEADA POR SALDO PENDIENTE</div>
             <p>Superaste el límite de S/ 100.00 en retenciones acumuladas. Regulariza tu abono por Yape o transferencia con Gerencia para volver a habilitar tu unidad.</p>
           </div>
         </div>
 
         <!-- 2. ESTADO DE SOLICITUDES DE FACTURAS GENERADAS EN ESTA UNIDAD -->
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-5 space-y-3 shadow-sm">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-sm font-extrabold text-white">Solicitudes de Facturas de mi Unidad</h3>
-              <p class="text-[11px] text-slate-400">Seguimiento en tiempo real de tus pasajeros</p>
+              <h3 class="text-sm font-extrabold text-[#082022]">Solicitudes de Facturas de mi Unidad</h3>
+              <p class="text-[11px] text-slate-500">Seguimiento en tiempo real de tus pasajeros</p>
             </div>
-            <span id="badgeTotalSol" class="text-xs font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full">0</span>
+            <span id="badgeTotalSol" class="text-xs font-extrabold bg-[#082022] text-[#c5b496] px-2.5 py-0.5 rounded-full">0</span>
           </div>
 
           <!-- Contadores de estado -->
           <div class="grid grid-cols-3 gap-2 text-center">
-            <div class="bg-slate-900 border border-slate-700 rounded-xl p-2">
-              <span class="text-[10px] text-slate-400 block">Total</span>
-              <span id="statSolTotal" class="text-sm font-black text-white">0</span>
+            <div class="bg-[#f8fafa] border border-slate-200 rounded-xl p-2">
+              <span class="text-[10px] text-slate-500 font-semibold block">Total</span>
+              <span id="statSolTotal" class="text-sm font-extrabold text-[#082022]">0</span>
             </div>
-            <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2">
-              <span class="text-[10px] text-amber-300 block">En Proceso</span>
-              <span id="statSolPendientes" class="text-sm font-black text-amber-400">0</span>
+            <div class="bg-amber-50/80 border border-amber-200 rounded-xl p-2">
+              <span class="text-[10px] text-amber-800 font-semibold block">En Proceso</span>
+              <span id="statSolPendientes" class="text-sm font-extrabold text-amber-700">0</span>
             </div>
-            <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
-              <span class="text-[10px] text-emerald-300 block">Emitidas</span>
-              <span id="statSolEmitidas" class="text-sm font-black text-emerald-400">0</span>
+            <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-2">
+              <span class="text-[10px] text-emerald-800 font-semibold block">Emitidas</span>
+              <span id="statSolEmitidas" class="text-sm font-extrabold text-emerald-700">0</span>
             </div>
           </div>
 
           <!-- Filtros rápidos -->
-          <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-[11px] font-bold">
-            <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white">Todas</button>
-            <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">En Proceso</button>
-            <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Emitidas</button>
+          <div class="grid grid-cols-3 gap-1.5 bg-[#f4f7f7] p-1 rounded-xl border border-slate-200 text-[11px] font-bold">
+            <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-[#082022] text-white">Todas</button>
+            <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-500 hover:text-[#082022]">En Proceso</button>
+            <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-500 hover:text-[#082022]">Emitidas</button>
           </div>
 
           <!-- Lista de solicitudes de la unidad -->
-          <div id="misViajesLista" class="space-y-2.5 text-xs text-slate-400 max-h-96 overflow-y-auto pr-0.5">
-            <p class="text-center py-3">Aún no hay solicitudes de factura registradas en esta unidad.</p>
+          <div id="misViajesLista" class="space-y-2.5 text-xs text-slate-500 max-h-96 overflow-y-auto pr-0.5">
+            <p class="text-center py-4">Aún no hay solicitudes de factura registradas en esta unidad.</p>
           </div>
         </div>
       </div>
@@ -213,23 +246,23 @@
       <!-- PESTAÑA 2: SUBIR FACTURA CON RUC Y FOTO DEL COMPROBANTE          -->
       <!-- ================================================================ -->
       <div id="tabSubirFactura" class="choferTabPanel hidden space-y-4">
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-5 space-y-4 shadow-sm">
           <div>
-            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400">Comprobantes con RUC S.A.C.</span>
-            <h3 class="text-base font-extrabold text-white mt-0.5">Subir Factura y Foto del Comprobante</h3>
-            <p class="text-[11px] text-slate-400 mt-0.5">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">Comprobantes con RUC S.A.C.</span>
+            <h3 class="text-base font-extrabold text-[#082022] mt-1.5">Subir Factura y Foto del Comprobante</h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">
               Ingresa el RUC del grifo, taller o establecimiento donde sacaste la factura y adjunta su foto clara.
             </p>
           </div>
 
           <!-- 1. Número de RUC con búsqueda automática SUNAT -->
           <div class="space-y-1.5">
-            <label class="block text-xs font-bold text-slate-200">
+            <label class="block text-xs font-bold text-slate-700">
               1. Número de RUC del Establecimiento (11 dígitos)
             </label>
             <div class="relative">
-              <input id="gastoRuc" type="text" maxlength="11" inputmode="numeric" placeholder="Ej. 20100047218" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-sm font-bold text-white pr-20 focus:border-emerald-400 focus:outline-none" />
-              <button id="btnBuscarRucGasto" type="button" class="absolute right-1.5 top-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition">
+              <input id="gastoRuc" type="text" maxlength="11" inputmode="numeric" placeholder="Ej. 20100047218" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-sm font-bold text-[#082022] pr-20 focus:border-[#082022] focus:outline-none" />
+              <button id="btnBuscarRucGasto" type="button" class="absolute right-1.5 top-1.5 bg-[#082022] hover:bg-[#0e3336] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition">
                 Buscar
               </button>
             </div>
@@ -238,18 +271,18 @@
 
           <!-- 2. Razón Social / Nombre del establecimiento -->
           <div class="space-y-1">
-            <label class="block text-xs font-bold text-slate-200">
+            <label class="block text-xs font-bold text-slate-700">
               2. Razón Social / Nombre del Grifo o Taller
             </label>
-            <input id="gastoProveedor" type="text" placeholder="Se llena solo con el RUC o escríbelo aquí" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-xs font-semibold text-white focus:border-emerald-400 focus:outline-none" />
+            <input id="gastoProveedor" type="text" placeholder="Se llena solo con el RUC o escríbelo aquí" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
           </div>
 
           <!-- 3. Concepto / Tipo de gasto -->
           <div class="space-y-1">
-            <label class="block text-xs font-bold text-slate-200">
+            <label class="block text-xs font-bold text-slate-700">
               3. Concepto de la Factura
             </label>
-            <select id="gastoTipo" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-xs text-white focus:border-emerald-400 focus:outline-none">
+            <select id="gastoTipo" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
               <option value="Combustible / Grifo">Combustible / Grifo</option>
               <option value="Lubricentro / Cambio de Aceite">Lubricentro / Cambio de Aceite</option>
               <option value="Repuestos / Taller Mecánico">Repuestos / Taller Mecánico</option>
@@ -261,73 +294,73 @@
           <!-- 4 y 5. Número de Factura y Monto Total -->
           <div class="grid grid-cols-2 gap-2.5">
             <div class="space-y-1">
-              <label class="block text-[11px] font-bold text-slate-200">4. N° de Factura</label>
-              <input id="gastoSerie" type="text" placeholder="Ej. F001-4521" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-semibold text-white uppercase focus:border-emerald-400 focus:outline-none" />
+              <label class="block text-[11px] font-bold text-slate-700">4. N° de Factura</label>
+              <input id="gastoSerie" type="text" placeholder="Ej. F001-4521" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-bold text-[#082022] uppercase focus:border-[#082022] focus:outline-none" />
             </div>
             <div class="space-y-1">
-              <label class="block text-[11px] font-bold text-slate-200">5. Monto Total (S/)</label>
-              <input id="gastoMonto" type="number" step="0.01" min="0.10" placeholder="0.00" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-black text-amber-400 focus:border-emerald-400 focus:outline-none" />
+              <label class="block text-[11px] font-bold text-slate-700">5. Monto Total (S/)</label>
+              <input id="gastoMonto" type="number" step="0.01" min="0.10" placeholder="0.00" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-extrabold text-[#082022] focus:border-[#082022] focus:outline-none" />
             </div>
           </div>
 
-          <div id="previewIgvBox" class="hidden bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 flex justify-between text-[11px]">
-            <span class="text-slate-400">IGV Crédito Fiscal (18%):</span>
-            <span id="lblIgvCalculado" class="font-bold text-emerald-400">S/ 0.00</span>
+          <div id="previewIgvBox" class="hidden bg-emerald-50/70 border border-emerald-200 rounded-xl px-3 py-2 flex justify-between text-[11px]">
+            <span class="text-slate-600 font-medium">IGV Crédito Fiscal (18%):</span>
+            <span id="lblIgvCalculado" class="font-extrabold text-emerald-800">S/ 0.00</span>
           </div>
 
           <!-- 6. AGREGAR FOTO DE LA FACTURA -->
           <div class="space-y-2">
-            <label class="block text-xs font-bold text-slate-200">
+            <label class="block text-xs font-bold text-slate-700">
               6. Foto de la Factura Física / Electrónica
             </label>
 
             <input id="inputFotoFactura" type="file" accept="image/*" class="hidden" />
 
             <!-- Botón / Zona de captura -->
-            <div id="dropzoneFoto" class="border-2 border-dashed border-slate-600 hover:border-emerald-400 bg-slate-900/80 rounded-2xl p-4 text-center space-y-2.5 transition">
-              <div class="w-11 h-11 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center mx-auto text-xl">
+            <div id="dropzoneFoto" class="border-2 border-dashed border-slate-300 hover:border-[#082022] bg-[#f8fafa] rounded-2xl p-4 text-center space-y-2.5 transition">
+              <div class="w-11 h-11 rounded-full bg-[#082022]/10 text-[#082022] flex items-center justify-center mx-auto text-xl">
                 📷
               </div>
               <div>
-                <p class="text-xs font-bold text-white">Toma una foto o súbela de tu galería</p>
-                <p class="text-[10px] text-slate-400 mt-0.5">Asegúrate de que se vea el RUC, serie y monto total</p>
+                <p class="text-xs font-extrabold text-[#082022]">Toma una foto o súbela de tu galería</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">Asegúrate de que se vea el RUC, serie y monto total</p>
               </div>
               <div class="grid grid-cols-2 gap-2 pt-1">
-                <button id="btnTomarCamara" type="button" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                <button id="btnTomarCamara" type="button" class="py-2.5 px-3 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white font-bold text-xs transition">
                   Abrir Cámara
                 </button>
-                <button id="btnElegirGaleria" type="button" class="py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs transition">
+                <button id="btnElegirGaleria" type="button" class="py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-[#082022] font-bold text-xs transition">
                   Galería / Archivo
                 </button>
               </div>
             </div>
 
             <!-- Vista previa de la foto seleccionada -->
-            <div id="previewFotoBox" class="hidden bg-slate-900 border border-emerald-500/50 rounded-2xl p-3 space-y-2.5">
+            <div id="previewFotoBox" class="hidden bg-[#f8fafa] border border-emerald-300 rounded-2xl p-3 space-y-2.5">
               <div class="flex items-center justify-between text-[11px]">
-                <span class="font-bold text-emerald-400">✓ Foto lista para enviar</span>
-                <button id="btnQuitarFoto" type="button" class="text-red-400 hover:text-red-300 font-bold underline">
+                <span class="font-extrabold text-emerald-700">✓ Foto lista para enviar</span>
+                <button id="btnQuitarFoto" type="button" class="text-rose-600 hover:text-rose-700 font-bold underline">
                   Cambiar / Quitar
                 </button>
               </div>
-              <img id="imgPreviewFactura" src="" alt="Vista previa de factura" class="w-full max-h-60 object-contain rounded-xl bg-black/50 border border-slate-700" />
+              <img id="imgPreviewFactura" src="" alt="Vista previa de factura" class="w-full max-h-60 object-contain rounded-xl bg-white border border-slate-200" />
             </div>
           </div>
 
-          <p id="gastoErrorMsg" class="hidden text-xs font-semibold text-red-400 bg-red-950/70 border border-red-500/40 rounded-xl px-3 py-2"></p>
+          <p id="gastoErrorMsg" class="hidden text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2"></p>
 
-          <button id="btnGuardarGasto" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black py-3.5 rounded-2xl text-sm shadow-lg transition">
+          <button id="btnGuardarGasto" type="button" class="w-full bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold py-3.5 rounded-2xl text-sm shadow-lg transition">
             Enviar Factura y Foto a Gerencia
           </button>
         </div>
 
         <!-- Historial de Facturas Subidas por este Conductor -->
-        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-5 space-y-3 shadow-sm">
           <div class="flex items-center justify-between">
-            <h4 class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Mis Facturas Subidas</h4>
-            <span id="badgeMisGastos" class="text-[11px] font-black bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full">0</span>
+            <h4 class="text-xs font-extrabold uppercase tracking-wide text-[#082022]">Mis Facturas Subidas</h4>
+            <span id="badgeMisGastos" class="text-[11px] font-extrabold bg-[#082022]/10 text-[#082022] px-2.5 py-0.5 rounded-full">0</span>
           </div>
-          <div id="listaMisGastos" class="space-y-2.5 text-xs text-slate-400">
+          <div id="listaMisGastos" class="space-y-2.5 text-xs text-slate-500">
             <p class="text-center py-2">Aún no has subido fotos de facturas en esta unidad.</p>
           </div>
         </div>
@@ -339,42 +372,42 @@
   <!-- ====================================================================== -->
   <!-- PESTAÑA EMERGENTE: DETALLE DE MODALIDAD DE PAGO (QR YAPE / EFECTIVO)   -->
   <!-- ====================================================================== -->
-  <div id="modalDetalleModalidadPago" class="hidden fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[60] flex items-center justify-center p-4">
-    <div class="bg-slate-800 border border-slate-600 w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-fadeIn">
+  <div id="modalDetalleModalidadPago" class="hidden fixed inset-0 bg-[#082022]/75 backdrop-blur-sm z-[60] flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-fadeIn">
       <!-- Cabecera -->
-      <div id="headerDetalleModalidad" class="bg-purple-900/90 px-5 py-3.5 flex items-center justify-between border-b border-purple-500/30">
+      <div id="headerDetalleModalidad" class="bg-[#082022] px-5 py-3.5 flex items-center justify-between border-b border-[#194347]">
         <div>
-          <span id="tagDetalleModalidad" class="text-[10px] font-black uppercase tracking-wider text-purple-200">MODALIDAD DE PAGO</span>
-          <h4 id="tituloDetalleModalidad" class="text-sm font-black text-white">Cuenta Conductor</h4>
+          <span id="tagDetalleModalidad" class="text-[10px] font-extrabold uppercase tracking-wider text-[#c5b496]">MODALIDAD DE PAGO</span>
+          <h4 id="tituloDetalleModalidad" class="text-sm font-extrabold text-white">Cuenta Conductor</h4>
         </div>
-        <button id="btnCerrarDetalleModalidad" type="button" class="text-purple-200 hover:text-white text-base font-black px-2 py-0.5 rounded-lg">✕</button>
+        <button id="btnCerrarDetalleModalidad" type="button" class="text-slate-300 hover:text-white text-base font-extrabold px-2 py-0.5 rounded-lg">✕</button>
       </div>
 
       <!-- Vista 1: Cuenta Conductor (QR Yape Conductor + Botón Efectivo + Botón Aceptar) -->
       <div id="vistaPagoConductor" class="p-5 space-y-4 text-center">
-        <div class="bg-white rounded-2xl p-4 shadow-inner mx-auto max-w-[250px] space-y-2 border-4 border-purple-600">
+        <div class="bg-[#f8fafa] rounded-2xl p-4 shadow-inner mx-auto max-w-[250px] space-y-2 border-2 border-purple-600">
           <div class="flex items-center justify-center gap-1.5">
-            <span class="px-2.5 py-0.5 rounded-full bg-purple-700 text-white text-[11px] font-black tracking-wide">YAPE CONDUCTOR</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-purple-700 text-white text-[11px] font-extrabold tracking-wide">YAPE CONDUCTOR</span>
           </div>
-          <div class="w-44 h-44 mx-auto bg-slate-100 rounded-xl flex items-center justify-center overflow-hidden border border-slate-200">
+          <div class="w-44 h-44 mx-auto bg-white rounded-xl flex items-center justify-center overflow-hidden border border-slate-200">
             <img id="imgQrConductor" src="" alt="QR Yape del Conductor" class="w-full h-full object-contain" />
           </div>
           <div class="pt-0.5">
-            <div id="lblQrChoferNombre" class="text-xs font-black text-slate-900 leading-tight">Conductor</div>
+            <div id="lblQrChoferNombre" class="text-xs font-extrabold text-slate-900 leading-tight">Conductor</div>
             <div id="lblQrChoferNumero" class="text-sm font-extrabold text-purple-700 tracking-wide">984 000 000</div>
           </div>
         </div>
 
-        <p class="text-[11px] text-slate-300">
+        <p class="text-[11px] text-slate-600">
           Muestra este QR al pasajero para cobrar con <b>Yape</b> o selecciona <b>Efectivo</b> si te pagó en mano.
         </p>
 
         <div class="space-y-2 pt-1">
-          <button id="btnPopupEfectivo" type="button" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-slate-950 font-black text-xs shadow transition flex items-center justify-center gap-2">
+          <button id="btnPopupEfectivo" type="button" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-slate-950 font-extrabold text-xs shadow-sm transition flex items-center justify-center gap-2">
             <span>💵</span>
             <span>Efectivo</span>
           </button>
-          <button id="btnPopupAceptarConductor" type="button" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-xs shadow-lg transition">
+          <button id="btnPopupAceptarConductor" type="button" class="w-full py-3 rounded-xl bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold text-xs shadow-md transition">
             ✓ Yape Conductor (Aceptar)
           </button>
         </div>
@@ -382,33 +415,33 @@
 
       <!-- Vista 2: Cuenta S.A.C. (QR Yape Empresa + Número de Cuenta Empresa + Botón Aceptar) -->
       <div id="vistaPagoSac" class="hidden p-5 space-y-4 text-center">
-        <div class="bg-white rounded-2xl p-4 shadow-inner mx-auto max-w-[250px] space-y-2 border-4 border-purple-700">
+        <div class="bg-[#f8fafa] rounded-2xl p-4 shadow-inner mx-auto max-w-[250px] space-y-2 border-2 border-purple-700">
           <div class="flex items-center justify-center gap-1.5">
-            <span class="px-2.5 py-0.5 rounded-full bg-purple-700 text-white text-[11px] font-black tracking-wide">YAPE EMPRESA S.A.C.</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-purple-700 text-white text-[11px] font-extrabold tracking-wide">YAPE EMPRESA S.A.C.</span>
           </div>
-          <div class="w-44 h-44 mx-auto bg-slate-100 rounded-xl flex items-center justify-center overflow-hidden border border-slate-200">
+          <div class="w-44 h-44 mx-auto bg-white rounded-xl flex items-center justify-center overflow-hidden border border-slate-200">
             <img id="imgQrEmpresa" src="" alt="QR Yape Empresa S.A.C." class="w-full h-full object-contain" />
           </div>
           <div class="pt-0.5">
-            <div class="text-[11px] font-black text-slate-900 leading-tight">Señor de Huanca Espinar S.A.C.</div>
+            <div class="text-[11px] font-extrabold text-slate-900 leading-tight">Señor de Huanca Espinar S.A.C.</div>
             <div id="lblQrEmpresaYape" class="text-xs font-extrabold text-purple-700">984 000 999</div>
           </div>
         </div>
 
         <!-- Número de cuenta de la empresa -->
-        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl p-3 text-left space-y-1">
+        <div class="bg-[#f4f7f7] border border-[#082022]/20 rounded-2xl p-3 text-left space-y-1">
           <div class="flex items-center justify-between">
-            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400">Número de Cuenta Empresa</span>
-            <button id="btnCopiarCuentaSac" type="button" class="text-[10px] font-bold bg-slate-800 hover:bg-slate-700 text-emerald-300 px-2 py-0.5 rounded border border-slate-600">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#082022]">Número de Cuenta Empresa</span>
+            <button id="btnCopiarCuentaSac" type="button" class="text-[10px] font-bold bg-white hover:bg-slate-100 text-[#082022] px-2.5 py-0.5 rounded-lg border border-slate-300">
               Copiar
             </button>
           </div>
-          <div id="lblCuentaBancariaSacPopup" class="text-xs font-bold text-white break-words">
+          <div id="lblCuentaBancariaSacPopup" class="text-xs font-bold text-slate-800 break-words">
             Cargando cuenta...
           </div>
         </div>
 
-        <button id="btnPopupAceptarSac" type="button" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-xs shadow-lg transition">
+        <button id="btnPopupAceptarSac" type="button" class="w-full py-3 rounded-xl bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold text-xs shadow-md transition">
           ✓ Confirmar Cuenta S.A.C.
         </button>
       </div>
@@ -418,22 +451,22 @@
   <!-- ====================================================================== -->
   <!-- MODAL: REGISTRAR FACTURA DE VIAJE POR EL CONDUCTOR (MODALIDAD A)       -->
   <!-- ====================================================================== -->
-  <div id="modalNuevaFacturaViaje" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3 overflow-y-auto">
-    <div class="bg-slate-800 border border-slate-700 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden my-auto">
-      <div class="bg-slate-950 px-5 py-4 flex items-center justify-between border-b border-slate-800">
+  <div id="modalNuevaFacturaViaje" class="hidden fixed inset-0 bg-[#082022]/75 backdrop-blur-sm z-50 flex items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-white border border-slate-200 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden my-auto">
+      <div class="bg-[#082022] px-5 py-4 flex items-center justify-between">
         <div>
-          <span id="modalFacUnidadTag" class="text-[10px] font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
-          <h3 class="text-base font-black text-white">Registrar Factura de Viaje</h3>
-          <p class="text-[11px] text-slate-400">La Central S.A.C. enviará la constancia y el PDF al cliente</p>
+          <span id="modalFacUnidadTag" class="text-[10px] font-extrabold uppercase tracking-wider text-[#c5b496]">UNIDAD #01</span>
+          <h3 class="text-base font-extrabold text-white">Registrar Factura de Viaje</h3>
+          <p class="text-[11px] text-slate-300">La Central S.A.C. enviará la constancia y el PDF al cliente</p>
         </div>
-        <button id="btnCerrarModalNuevaFactura" type="button" class="text-slate-400 hover:text-white text-lg font-black px-2">✕</button>
+        <button id="btnCerrarModalNuevaFactura" type="button" class="text-slate-300 hover:text-white text-lg font-extrabold px-2">✕</button>
       </div>
 
       <!-- Formulario de captura rápida -->
       <div id="formNuevaFacturaBody" class="p-5 space-y-3.5 max-h-[80vh] overflow-y-auto">
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">1. Empresa o Mina a Facturar</label>
-          <select id="choferEmpresaSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-semibold text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">1. Empresa o Mina a Facturar</label>
+          <select id="choferEmpresaSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="20114915026|COMPAÑIA MINERA ANTAPACCAY S.A.">Compañía Minera Antapaccay S.A. (20114915026)</option>
             <option value="20538428524|MINERA LAS BAMBAS S.A.">Minera Las Bambas S.A. (20538428524)</option>
             <option value="20511165181|HUDBAY PERU S.A.C.">Hudbay Perú S.A.C. (20511165181)</option>
@@ -444,31 +477,31 @@
             <option value="OTRO">Otro (Escribir RUC 11 dígitos)</option>
           </select>
 
-          <div id="choferOtroEmpresaBox" class="hidden mt-2 space-y-2 p-3 bg-slate-900 rounded-xl border border-slate-700">
+          <div id="choferOtroEmpresaBox" class="hidden mt-2 space-y-2 p-3 bg-[#f4f7f7] rounded-xl border border-slate-200">
             <div class="relative">
-              <input id="choferCustomRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos" class="w-full rounded-lg bg-slate-800 border border-slate-600 px-3 py-2 text-xs font-bold text-white pr-16" />
-              <button id="btnChoferBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded">
+              <input id="choferCustomRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos" class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs font-bold text-[#082022] pr-16" />
+              <button id="btnChoferBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-[#082022] text-white text-[10px] font-bold px-2.5 py-1 rounded">
                 Buscar
               </button>
             </div>
             <p id="choferRucMsg" class="hidden text-[11px] font-semibold"></p>
-            <input id="choferCustomRazon" type="text" placeholder="Razón Social (se llena sola con el RUC)" class="w-full rounded-lg bg-slate-800 border border-slate-600 px-3 py-2 text-xs text-white" />
+            <input id="choferCustomRazon" type="text" placeholder="Razón Social (se llena sola con el RUC)" class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs font-semibold text-[#082022]" />
           </div>
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">2. WhatsApp o Correo del Pasajero</label>
-          <input id="choferContactoInput" type="text" placeholder="Ej. 984123456 o correo@empresa.com" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">2. WhatsApp o Correo del Pasajero</label>
+          <input id="choferContactoInput" type="text" placeholder="Ej. 984123456 o correo@empresa.com" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">3. Monto (S/)</label>
-            <input id="choferMontoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-sm font-black text-amber-400" />
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">3. Monto (S/)</label>
+            <input id="choferMontoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-sm font-extrabold text-[#082022] focus:border-[#082022] focus:outline-none" />
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">4. Ruta</label>
-            <select id="choferRutaSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-2.5 py-2.5 text-xs text-white">
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">4. Ruta</label>
+            <select id="choferRutaSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-2.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
               <option value="Espinar - Garita Mina Antapaccay">Espinar ↔ Garita Antapaccay</option>
               <option value="Espinar - Campamento Tintaya / Coroccohuayco">Espinar ↔ Tintaya</option>
               <option value="Espinar - Aeropuerto Cusco">Espinar ↔ Cusco</option>
@@ -479,11 +512,11 @@
           </div>
         </div>
 
-        <input id="choferCustomRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-xs text-white" />
+        <input id="choferCustomRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022]" />
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">5. Concepto</label>
-          <select id="choferConceptoSelect" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-xs text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">5. Concepto</label>
+          <select id="choferConceptoSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="Servicio de transporte privado ejecutivo">Transporte privado ejecutivo</option>
             <option value="Movilidad corporativa y tiempo de espera">Movilidad corporativa y espera</option>
             <option value="Traslado de personal técnico a operación">Traslado de personal técnico</option>
@@ -493,50 +526,50 @@
 
         <div id="bloqueModalidadPago" class="rounded-2xl p-2 -mx-2 transition">
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-[11px] font-bold uppercase text-slate-300">6. Modalidad de pago <span class="text-rose-400">*</span></label>
-            <span class="text-[10px] font-bold text-amber-400">Obligatorio elegir</span>
+            <label class="block text-[11px] font-bold uppercase text-slate-600">6. Modalidad de pago <span class="text-rose-600">*</span></label>
+            <span class="text-[10px] font-bold text-[#082022]">Obligatorio elegir</span>
           </div>
           <div class="grid grid-cols-2 gap-2">
-            <button id="btnModCuentaConductor" type="button" class="p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-amber-400/70 hover:bg-amber-500/10 active:scale-[0.99]">
-              <div class="text-xs font-extrabold text-white">Cuenta Conductor</div>
-              <div class="text-[10px] text-amber-300/90 mt-0.5">QR Yape / Efectivo</div>
+            <button id="btnModCuentaConductor" type="button" class="p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-amber-500 hover:bg-amber-50/50 active:scale-[0.99]">
+              <div class="text-xs font-extrabold text-[#082022]">Cuenta Conductor</div>
+              <div class="text-[10px] text-amber-700 font-semibold mt-0.5">QR Yape / Efectivo</div>
             </button>
-            <button id="btnModCuentaSac" type="button" class="p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-emerald-400/70 hover:bg-emerald-500/10 active:scale-[0.99]">
-              <div class="text-xs font-extrabold text-white">Cuenta S.A.C.</div>
-              <div class="text-[10px] text-slate-400 mt-0.5">QR Yape / Cuenta Empresa</div>
+            <button id="btnModCuentaSac" type="button" class="p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-[#082022] hover:bg-emerald-50/50 active:scale-[0.99]">
+              <div class="text-xs font-extrabold text-[#082022]">Cuenta S.A.C.</div>
+              <div class="text-[10px] text-emerald-700 font-semibold mt-0.5">QR Yape / Cuenta Empresa</div>
             </button>
           </div>
-          <div id="badgeModalidadConfirmada" class="mt-2 px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-center justify-between text-[11px]">
-            <span id="lblEstadoModalidad" class="text-slate-400">Estado:</span>
-            <span id="txtModalidadConfirmada" class="font-bold text-amber-400">⚠️ Falta elegir modalidad de pago</span>
+          <div id="badgeModalidadConfirmada" class="mt-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-between text-[11px]">
+            <span id="lblEstadoModalidad" class="text-slate-600 font-medium">Estado:</span>
+            <span id="txtModalidadConfirmada" class="font-bold text-amber-800">⚠️ Falta elegir modalidad de pago</span>
           </div>
         </div>
 
-        <p id="choferFacturaError" class="hidden text-xs font-semibold text-red-400 bg-red-950/70 border border-red-500/40 rounded-xl px-3 py-2"></p>
+        <p id="choferFacturaError" class="hidden text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2"></p>
 
         <div class="flex gap-2 pt-1">
-          <button id="btnCancelarNuevaFactura" type="button" class="w-1/3 py-3 rounded-xl border border-slate-600 text-xs font-bold text-slate-300">
+          <button id="btnCancelarNuevaFactura" type="button" class="w-1/3 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-600">
             Cancelar
           </button>
-          <button id="btnEnviarFacturaChofer" type="button" class="w-2/3 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-lg">
+          <button id="btnEnviarFacturaChofer" type="button" class="w-2/3 py-3 rounded-xl bg-[#082022] hover:bg-[#0e3336] text-white text-xs font-extrabold shadow-md">
             Enviar a Central S.A.C.
           </button>
         </div>
       </div>
 
-      <!-- Confirmación limpia (sin WhatsApp del conductor: la empresa envía la constancia) -->
+      <!-- Confirmación limpia -->
       <div id="exitoNuevaFacturaBody" class="hidden p-6 text-center space-y-4">
-        <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-2xl font-black">
+        <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-2xl font-extrabold">
           ✓
         </div>
         <div class="space-y-1">
-          <h4 class="text-base font-black text-white">Datos enviados a la Central S.A.C.</h4>
-          <p class="text-xs text-slate-300">
+          <h4 class="text-base font-extrabold text-[#082022]">Datos enviados a la Central S.A.C.</h4>
+          <p class="text-xs text-slate-600">
             La Central de <b>Señor de Huanca Espinar S.A.C.</b> enviará la constancia de recepción y la factura PDF directamente al WhatsApp/correo del cliente.
           </p>
         </div>
-        <div id="resumenChoferFactura" class="bg-slate-900 border border-slate-700 rounded-2xl p-3 text-left text-xs text-slate-300 space-y-1"></div>
-        <button id="btnListoNuevaFactura" type="button" class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs">
+        <div id="resumenChoferFactura" class="bg-[#f8fafa] border border-slate-200 rounded-2xl p-3 text-left text-xs text-slate-700 space-y-1"></div>
+        <button id="btnListoNuevaFactura" type="button" class="w-full py-3 rounded-2xl bg-[#082022] hover:bg-[#0e3336] text-white font-extrabold text-xs">
           Listo, volver a mi turno
         </button>
       </div>
@@ -576,9 +609,9 @@
     document.querySelectorAll(".choferTabBtn").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".choferTabBtn").forEach(b => {
-          b.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700/70 transition flex items-center justify-center gap-1.5";
+          b.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition flex items-center justify-center gap-1.5";
         });
-        btn.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-black bg-amber-500 text-slate-950 transition flex items-center justify-center gap-1.5";
+        btn.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold bg-[#082022] text-white shadow-sm transition flex items-center justify-center gap-1.5";
         document.querySelectorAll(".choferTabPanel").forEach(p => p.classList.add("hidden"));
         document.getElementById(btn.dataset.choferTab).classList.remove("hidden");
       });
@@ -588,12 +621,12 @@
       const online = navigator.onLine;
       const badge = document.getElementById("badgeConexion");
       if (online) {
-        badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+        badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30";
         badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> En Línea`;
         sincronizarColaOffline();
       } else {
-        badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
-        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span> Sin Señal (Modo Offline)`;
+        badge.className = "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-200 border border-amber-400/40";
+        badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span> Sin Señal (Offline)`;
       }
     }
     window.addEventListener("online", actualizarEstadoRed);
@@ -612,9 +645,9 @@
       btn.addEventListener("click", () => {
         filtroActual = btn.dataset.filtro;
         document.querySelectorAll(".filtroSolBtn").forEach(b => {
-          b.className = "filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white";
+          b.className = "filtroSolBtn py-1.5 rounded-lg text-slate-500 hover:text-[#082022]";
         });
-        btn.className = "filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white";
+        btn.className = "filtroSolBtn py-1.5 rounded-lg bg-[#082022] text-white";
         renderMisViajes();
       });
     });
@@ -631,9 +664,8 @@
     const choferRutaSelect = document.getElementById("choferRutaSelect");
     const choferCustomRuta = document.getElementById("choferCustomRuta");
 
-    // Estado de Modalidad de Pago y pestaña emergente (inicia vacío: obligatorio elegir)
-    let metodoPagoSeleccionado = null; // null | "conductor" | "empresa"
-    let subModalidadSeleccionada = null; // null | "yape_conductor" | "efectivo" | "cuenta_sac"
+    let metodoPagoSeleccionado = null;
+    let subModalidadSeleccionada = null;
 
     const modalDetallePago = document.getElementById("modalDetalleModalidadPago");
     const vistaPagoConductor = document.getElementById("vistaPagoConductor");
@@ -675,7 +707,7 @@
     function limpiarAvisoModalidadPago() {
       const bloqueMod = document.getElementById("bloqueModalidadPago");
       if (bloqueMod) {
-        bloqueMod.classList.remove("ring-2", "ring-red-500", "bg-red-950/20");
+        bloqueMod.classList.remove("ring-2", "ring-rose-500", "bg-rose-50/70");
       }
       const errEl = document.getElementById("choferFacturaError");
       if (errEl && errEl.textContent.includes("modalidad de pago")) {
@@ -689,38 +721,38 @@
       const badgeEl = document.getElementById("badgeModalidadConfirmada");
 
       if (!metodoPagoSeleccionado || !subModalidadSeleccionada) {
-        btnModCuentaConductor.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-amber-400/70 hover:bg-amber-500/10 active:scale-[0.99]";
-        btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-emerald-400/70 hover:bg-emerald-500/10 active:scale-[0.99]";
+        btnModCuentaConductor.className = "p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-amber-500 hover:bg-amber-50/50 active:scale-[0.99]";
+        btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-[#082022] hover:bg-emerald-50/50 active:scale-[0.99]";
         if (badgeEl) {
-          badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-center justify-between text-[11px]";
+          badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 flex items-center justify-between text-[11px]";
         }
         if (lblEstado) lblEstado.textContent = "Estado:";
         txtEl.textContent = "⚠️ Falta elegir modalidad de pago";
-        txtEl.className = "font-bold text-amber-400";
+        txtEl.className = "font-bold text-amber-800";
         return;
       }
 
       limpiarAvisoModalidadPago();
       if (badgeEl) {
-        badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700 flex items-center justify-between text-[11px]";
+        badgeEl.className = "mt-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center justify-between text-[11px]";
       }
       if (lblEstado) lblEstado.textContent = "Seleccionado:";
 
       if (metodoPagoSeleccionado === "conductor") {
-        btnModCuentaConductor.className = "p-2.5 rounded-xl border-2 border-amber-400 bg-amber-500/15 text-center transition hover:bg-amber-500/20 active:scale-[0.99]";
-        btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-emerald-400/70 hover:bg-emerald-500/10 active:scale-[0.99]";
+        btnModCuentaConductor.className = "p-2.5 rounded-xl border-2 border-amber-500 bg-amber-50 text-center transition active:scale-[0.99]";
+        btnModCuentaSac.className = "p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-[#082022] active:scale-[0.99]";
         if (subModalidadSeleccionada === "efectivo") {
           txtEl.textContent = "✓ Cuenta Conductor (Efectivo)";
-          txtEl.className = "font-bold text-amber-300";
+          txtEl.className = "font-extrabold text-amber-800";
         } else {
           txtEl.textContent = "✓ Cuenta Conductor (Yape QR)";
-          txtEl.className = "font-bold text-purple-300";
+          txtEl.className = "font-extrabold text-purple-800";
         }
       } else {
-        btnModCuentaConductor.className = "p-2.5 rounded-xl border border-slate-600 bg-slate-900 text-center transition hover:border-amber-400/70 hover:bg-amber-500/10 active:scale-[0.99]";
-        btnModCuentaSac.className = "p-2.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/15 text-center transition hover:bg-emerald-500/20 active:scale-[0.99]";
+        btnModCuentaConductor.className = "p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-center transition hover:border-amber-500 active:scale-[0.99]";
+        btnModCuentaSac.className = "p-2.5 rounded-xl border-2 border-[#082022] bg-emerald-50 text-center transition active:scale-[0.99]";
         txtEl.textContent = "✓ Cuenta S.A.C. (Yape / Cuenta Empresa)";
-        txtEl.className = "font-bold text-emerald-300";
+        txtEl.className = "font-extrabold text-[#082022]";
       }
     }
 
@@ -770,7 +802,6 @@
     btnModCuentaSac.addEventListener("click", () => abrirPopupModalidadPago("empresa"));
     document.getElementById("btnCerrarDetalleModalidad").addEventListener("click", cerrarPopupModalidadPago);
 
-    // Botón Efectivo dentro de Cuenta Conductor
     document.getElementById("btnPopupEfectivo").addEventListener("click", () => {
       metodoPagoSeleccionado = "conductor";
       subModalidadSeleccionada = "efectivo";
@@ -778,7 +809,6 @@
       cerrarPopupModalidadPago();
     });
 
-    // Botón Aceptar dentro de Cuenta Conductor (confirma Yape del conductor)
     document.getElementById("btnPopupAceptarConductor").addEventListener("click", () => {
       metodoPagoSeleccionado = "conductor";
       subModalidadSeleccionada = "yape_conductor";
@@ -786,7 +816,6 @@
       cerrarPopupModalidadPago();
     });
 
-    // Botón Aceptar dentro de Cuenta S.A.C.
     document.getElementById("btnPopupAceptarSac").addEventListener("click", () => {
       metodoPagoSeleccionado = "empresa";
       subModalidadSeleccionada = "cuenta_sac";
@@ -794,35 +823,31 @@
       cerrarPopupModalidadPago();
     });
 
-    // Copiar número de cuenta S.A.C.
-    document.getElementById("btnCopiarCuentaSac").addEventListener("click", async () => {
-      const texto = EMPRESA_CONFIG.cuentaBCP || "";
-      try {
-        await navigator.clipboard.writeText(texto);
-        const btn = document.getElementById("btnCopiarCuentaSac");
-        btn.textContent = "¡Copiado!";
-        setTimeout(() => { btn.textContent = "Copiar"; }, 1800);
-      } catch (e) {}
+    document.getElementById("btnCopiarCuentaSac").addEventListener("click", () => {
+      const txt = document.getElementById("lblCuentaBancariaSacPopup").textContent.trim();
+      navigator.clipboard?.writeText(txt);
+      const btn = document.getElementById("btnCopiarCuentaSac");
+      btn.textContent = "¡Copiado!";
+      setTimeout(() => { btn.textContent = "Copiar"; }, 1500);
     });
 
-    function abrirModalNuevaFactura() {
+    document.getElementById("btnAbrirModalNuevaFactura").addEventListener("click", () => {
       if (!unidadActiva) return;
-      metodoPagoSeleccionado = null;
-      subModalidadSeleccionada = null;
-      limpiarAvisoModalidadPago();
-      actualizarUiModalidadPago();
       document.getElementById("modalFacUnidadTag").textContent = `UNIDAD #${unidadActiva.numero} • ${unidadActiva.placa}`;
       document.getElementById("formNuevaFacturaBody").classList.remove("hidden");
       document.getElementById("exitoNuevaFacturaBody").classList.add("hidden");
       document.getElementById("choferFacturaError").classList.add("hidden");
+      metodoPagoSeleccionado = null;
+      subModalidadSeleccionada = null;
+      actualizarUiModalidadPago();
       modalNuevaFactura.classList.remove("hidden");
-    }
+    });
 
     function cerrarModalNuevaFactura() {
+      cerrarPopupModalidadPago();
       modalNuevaFactura.classList.add("hidden");
     }
 
-    document.getElementById("btnAbrirModalNuevaFactura").addEventListener("click", abrirModalNuevaFactura);
     document.getElementById("btnCerrarModalNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
     document.getElementById("btnCancelarNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
     document.getElementById("btnListoNuevaFactura").addEventListener("click", cerrarModalNuevaFactura);
@@ -848,26 +873,23 @@
       ultimoRucChoferConsultado = ruc;
 
       choferRucMsg.textContent = "Consultando RUC en SUNAT...";
-      choferRucMsg.className = "text-[11px] font-semibold text-amber-400";
+      choferRucMsg.className = "text-[11px] font-semibold text-amber-700";
       choferRucMsg.classList.remove("hidden");
 
       try {
         const resp = await fetch(`/api/ruc?numero=${ruc}`);
-        if (!resp.ok) throw new Error("Sin respuesta");
         const data = await resp.json();
-        if (data && data.ok && data.razonSocial) {
+        if (resp.ok && data.razonSocial) {
           choferCustomRazon.value = data.razonSocial;
           choferRucMsg.textContent = "✓ Entidad encontrada en SUNAT";
-          choferRucMsg.className = "text-[11px] font-bold text-emerald-400";
+          choferRucMsg.className = "text-[11px] font-bold text-emerald-700";
         } else {
           choferRucMsg.textContent = "No se obtuvo automático. Escribe la Razón Social abajo:";
-          choferRucMsg.className = "text-[11px] font-semibold text-slate-400";
-          choferCustomRazon.focus();
+          choferRucMsg.className = "text-[11px] font-semibold text-slate-500";
         }
-      } catch (e) {
+      } catch {
         choferRucMsg.textContent = "Sin conexión SUNAT. Escribe la Razón Social abajo:";
-        choferRucMsg.className = "text-[11px] font-semibold text-slate-400";
-        choferCustomRazon.focus();
+        choferRucMsg.className = "text-[11px] font-semibold text-slate-500";
       }
     }
 
@@ -923,7 +945,7 @@
         errEl.classList.remove("hidden");
         const bloqueMod = document.getElementById("bloqueModalidadPago");
         if (bloqueMod) {
-          bloqueMod.classList.add("ring-2", "ring-red-500", "bg-red-950/20");
+          bloqueMod.classList.add("ring-2", "ring-rose-500", "bg-rose-50/70");
           bloqueMod.scrollIntoView({ behavior: "smooth", block: "center" });
         }
         return;
@@ -978,7 +1000,6 @@
           <div><b>Destino Constancia/PDF:</b> ${contacto}</div>
         `;
 
-        // Limpiar campos
         choferCustomRuc.value = "";
         choferCustomRazon.value = "";
         choferRucMsg.classList.add("hidden");
@@ -1019,33 +1040,29 @@
       ultimoRucGastoConsultado = ruc;
 
       gastoRucStatus.textContent = "Consultando RUC en SUNAT...";
-      gastoRucStatus.className = "text-[11px] font-semibold text-amber-400";
+      gastoRucStatus.className = "text-[11px] font-semibold text-amber-700";
       gastoRucStatus.classList.remove("hidden");
 
       try {
         const resp = await fetch(`/api/ruc?numero=${ruc}`);
-        if (!resp.ok) throw new Error("Sin respuesta");
         const data = await resp.json();
-        if (data && data.ok && data.razonSocial) {
+        if (resp.ok && data.razonSocial) {
           gastoProveedorInput.value = data.razonSocial;
           gastoRucStatus.textContent = "✓ Entidad encontrada en SUNAT";
-          gastoRucStatus.className = "text-[11px] font-bold text-emerald-400";
+          gastoRucStatus.className = "text-[11px] font-bold text-emerald-700";
         } else {
           gastoRucStatus.textContent = "No se obtuvo automático. Escribe el nombre abajo:";
-          gastoRucStatus.className = "text-[11px] font-semibold text-slate-400";
-          gastoProveedorInput.focus();
+          gastoRucStatus.className = "text-[11px] font-semibold text-slate-500";
         }
-      } catch (e) {
+      } catch {
         gastoRucStatus.textContent = "Sin conexión SUNAT. Escribe el nombre manualmente:";
-        gastoRucStatus.className = "text-[11px] font-semibold text-slate-400";
-        gastoProveedorInput.focus();
+        gastoRucStatus.className = "text-[11px] font-semibold text-slate-500";
       }
     }
 
     gastoRucInput.addEventListener("input", () => buscarRucEstablecimiento(false));
     document.getElementById("btnBuscarRucGasto").addEventListener("click", () => buscarRucEstablecimiento(true));
 
-    // Cálculo visual de IGV al escribir el monto
     document.getElementById("gastoMonto").addEventListener("input", (e) => {
       const val = parseFloat(e.target.value) || 0;
       const box = document.getElementById("previewIgvBox");
@@ -1058,7 +1075,6 @@
       }
     });
 
-    // Manejo de Cámara / Galería y Compresión de Foto
     const inputFotoFactura = document.getElementById("inputFotoFactura");
     const dropzoneFoto = document.getElementById("dropzoneFoto");
     const previewFotoBox = document.getElementById("previewFotoBox");
@@ -1148,19 +1164,19 @@
       const alertaBloqueo = document.getElementById("alertaBloqueo");
 
       if (bloqueado) {
-        cardEstado.className = "rounded-2xl p-3.5 border bg-red-950/60 border-red-500/60 flex items-center justify-between";
+        cardEstado.className = "rounded-2xl p-3.5 border bg-rose-50 border-rose-200 flex items-center justify-between";
         lblEstado.textContent = "BLOQUEADO • SUSPENDIDO";
-        lblEstado.className = "text-base font-black text-red-400";
+        lblEstado.className = "text-base font-extrabold text-rose-700";
         lblEstadoDesc.textContent = "Deuda mayor a S/ 100.00. Abona a la S.A.C. para reactivar.";
-        iconoEstado.className = "w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-lg font-black shrink-0";
+        iconoEstado.className = "w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center text-lg font-extrabold shrink-0 shadow-sm";
         iconoEstado.textContent = "✕";
         alertaBloqueo.classList.remove("hidden");
       } else {
-        cardEstado.className = "rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between";
+        cardEstado.className = "rounded-2xl p-3.5 border bg-emerald-50/80 border-emerald-200 flex items-center justify-between";
         lblEstado.textContent = "ACTIVO • HABILITADO";
-        lblEstado.className = "text-base font-black text-emerald-400";
+        lblEstado.className = "text-base font-extrabold text-[#082022]";
         lblEstadoDesc.textContent = "Puedes operar y generar facturas con normalidad.";
-        iconoEstado.className = "w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0";
+        iconoEstado.className = "w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center text-lg font-extrabold shrink-0 shadow-sm";
         iconoEstado.textContent = "✓";
         alertaBloqueo.classList.add("hidden");
       }
@@ -1174,21 +1190,21 @@
       barra.style.width = `${pct}%`;
 
       if (bloqueado) {
-        barra.className = "h-full bg-red-500 transition-all duration-300";
+        barra.className = "h-full bg-rose-600 transition-all duration-300";
         badgeNivel.textContent = "TOPE SUPERADO";
-        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-red-500/20 text-red-300";
+        badgeNivel.className = "text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800";
       } else if (deuda >= limite * 0.7) {
         barra.className = "h-full bg-amber-500 transition-all duration-300";
         badgeNivel.textContent = "CERCA AL LÍMITE";
-        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300";
+        badgeNivel.className = "text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800";
       } else if (deuda > 0) {
-        barra.className = "h-full bg-sky-400 transition-all duration-300";
+        barra.className = "h-full bg-sky-600 transition-all duration-300";
         badgeNivel.textContent = "SALDO PENDIENTE";
-        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300";
+        badgeNivel.className = "text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800";
       } else {
-        barra.className = "h-full bg-emerald-500 transition-all duration-300";
+        barra.className = "h-full bg-emerald-600 transition-all duration-300";
         badgeNivel.textContent = "SIN DEUDA (S/ 0)";
-        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300";
+        badgeNivel.className = "text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800";
       }
 
       const waMsg = encodeURIComponent(`Hola Gerencia Señor de Huanca Espinar, soy ${u.chofer} de la Unidad #${u.numero} (${u.placa}). Adjunto comprobante de abono de mi deuda actual (S/ ${deuda.toFixed(2)}).`);
@@ -1226,7 +1242,7 @@
       });
 
       if (!filtrados.length) {
-        cont.innerHTML = `<p class="text-center py-4 text-slate-400">No hay solicitudes de factura en esta vista.</p>`;
+        cont.innerHTML = `<p class="text-center py-4 text-slate-500">No hay solicitudes de factura en esta vista.</p>`;
         return;
       }
 
@@ -1239,37 +1255,37 @@
         const pagoChofer = v.metodoPago === "conductor";
         const retencion = +(monto * (pctRet / 100)).toFixed(2);
 
-        let badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300">⏳ EN CENTRAL (PENDIENTE)</span>`;
-        let borderClass = "border-amber-500/30";
+        let badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800">⏳ EN CENTRAL (PENDIENTE)</span>`;
+        let borderClass = "border-amber-200";
         if (esEmitida) {
-          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300">✓ FACTURA EMITIDA SUNAT</span>`;
-          borderClass = "border-emerald-500/30";
+          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">✓ FACTURA EMITIDA SUNAT</span>`;
+          borderClass = "border-emerald-200";
         } else if (esConstancia) {
-          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black bg-sky-500/20 text-sky-300">📩 CONSTANCIA ENVIADA POR SAC</span>`;
-          borderClass = "border-sky-500/40";
+          badgeHtml = `<span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-100 text-sky-800">📩 CONSTANCIA ENVIADA POR SAC</span>`;
+          borderClass = "border-sky-200";
         }
 
         return `
-          <div class="bg-slate-900 border ${borderClass} rounded-2xl p-3 space-y-2">
+          <div class="bg-[#f8fafa] border ${borderClass} rounded-2xl p-3 space-y-2">
             <div class="flex items-start justify-between gap-2">
               <div>
                 <div class="flex flex-wrap items-center gap-1">
                   ${badgeHtml}
-                  ${v.registradoPor === 'conductor' ? `<span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Vía Chofer</span>` : ''}
+                  ${v.registradoPor === 'conductor' ? `<span class="inline-block px-1.5 py-0.5 rounded text-[9px] font-bold bg-white text-slate-600 border border-slate-200">Vía Chofer</span>` : ''}
                 </div>
-                <div class="font-bold text-white text-xs mt-1">${v.razonSocial}</div>
-                <div class="text-[10px] text-slate-400">RUC: ${v.ruc}</div>
+                <div class="font-extrabold text-[#082022] text-xs mt-1">${v.razonSocial}</div>
+                <div class="text-[10px] text-slate-500 font-medium">RUC: ${v.ruc}</div>
               </div>
               <div class="text-right shrink-0">
-                <span class="text-[10px] text-slate-400 block">Monto</span>
-                <span class="text-sm font-black text-amber-400">S/ ${monto.toFixed(2)}</span>
+                <span class="text-[10px] text-slate-500 block">Monto</span>
+                <span class="text-sm font-extrabold text-[#082022]">S/ ${monto.toFixed(2)}</span>
               </div>
             </div>
 
-            <div class="text-[11px] text-slate-300 bg-slate-800/70 rounded-xl p-2 space-y-0.5">
+            <div class="text-[11px] text-slate-700 bg-white border border-slate-200/80 rounded-xl p-2 space-y-0.5">
               <div><b>Ruta:</b> ${v.ruta}</div>
               <div><b>Fecha:</b> ${v.fechaTexto || 'Reciente'}</div>
-              <div class="pt-0.5 ${pagoChofer ? 'text-amber-300' : 'text-emerald-300'} font-semibold">
+              <div class="pt-0.5 ${pagoChofer ? 'text-amber-800' : 'text-emerald-800'} font-semibold">
                 ${pagoChofer
                   ? `Cobrado por ti • Retención SAC (${pctRet}%): S/ ${retencion.toFixed(2)} ${esEmitida ? '(Sumado a deuda)' : '(Se suma al emitir)'}`
                   : 'Pagado directo a Cuenta S.A.C. • Sin retención a tu deuda'}
@@ -1287,25 +1303,25 @@
       document.getElementById("badgeMisGastos").textContent = propios.length;
 
       if (!propios.length) {
-        cont.innerHTML = `<p class="text-center py-2 text-slate-400">Aún no has subido fotos de facturas en esta unidad.</p>`;
+        cont.innerHTML = `<p class="text-center py-2 text-slate-500">Aún no has subido fotos de facturas en esta unidad.</p>`;
         return;
       }
 
       cont.innerHTML = propios.slice(0, 10).map(g => `
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+        <div class="bg-[#f8fafa] border border-slate-200 rounded-2xl p-3 flex items-center justify-between gap-2.5">
           <div class="space-y-0.5">
             <div class="flex items-center gap-1.5">
-              <span class="font-bold text-white text-xs">${g.proveedor}</span>
-              ${g.fotoBase64 ? `<span class="text-[9px] font-black bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">Con Foto ✓</span>` : ''}
+              <span class="font-extrabold text-[#082022] text-xs">${g.proveedor}</span>
+              ${g.fotoBase64 ? `<span class="text-[9px] font-extrabold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Con Foto ✓</span>` : ''}
             </div>
-            <div class="text-[10px] text-slate-400">
+            <div class="text-[10px] text-slate-600 font-medium">
               ${g.ruc ? `RUC: ${g.ruc} • ` : ''}Factura: ${g.serie}
             </div>
             <div class="text-[10px] text-slate-500">${g.tipo} • ${g.fechaTexto || ''}</div>
           </div>
           <div class="text-right shrink-0">
-            <div class="text-sm font-black text-emerald-400">S/ ${Number(g.monto || 0).toFixed(2)}</div>
-            <div class="text-[10px] text-slate-400">IGV: S/ ${Number(g.igv || 0).toFixed(2)}</div>
+            <div class="text-sm font-extrabold text-[#082022]">S/ ${Number(g.monto || 0).toFixed(2)}</div>
+            <div class="text-[10px] text-emerald-700 font-semibold">IGV: S/ ${Number(g.igv || 0).toFixed(2)}</div>
           </div>
         </div>
       `).join("");

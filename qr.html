@@ -5,61 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portal del Pasajero | Señor de Huanca Espinar S.A.C.</title>
   <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center py-4 px-3 selection:bg-emerald-500 selection:text-white">
+<body class="bg-[#f4f7f7] text-[#082022] min-h-screen flex flex-col items-center py-4 px-3 selection:bg-[#082022] selection:text-white">
 
-  <div class="w-full max-w-md bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 overflow-hidden">
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-slate-200/70 border border-slate-200/90 overflow-hidden">
 
-    <!-- Encabezado -->
-    <header class="bg-slate-950/90 border-b border-slate-800 px-5 py-4">
+    <!-- Encabezado Institucional -->
+    <header class="bg-[#082022] text-white px-5 py-4">
       <div class="flex items-center justify-between gap-2">
-        <a href="./index.html" class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-white transition">
+        <a href="./index.html" class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-300 hover:text-white transition">
           ← Inicio
         </a>
-        <span id="badgeOrigenPortal" class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+        <span id="badgeOrigenPortal" class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#c5b496] bg-white/10 border border-[#c5b496]/30 px-2.5 py-0.5 rounded-full">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           Portal del Pasajero
         </span>
       </div>
 
-      <div class="mt-2.5 flex items-center justify-between gap-3">
-        <div>
-          <h1 class="text-lg font-black tracking-tight text-white">Señor de Huanca Espinar</h1>
-          <p class="text-[11px] text-slate-400">Facturación Electrónica SUNAT • Movilidad Corporativa</p>
+      <div class="mt-3 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl overflow-hidden bg-[#0c2b2e] border border-[#c5b496]/30 flex items-center justify-center shrink-0">
+            <img src="./logo.png" alt="Logo"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                 class="w-full h-full object-contain" />
+            <span style="display:none" class="text-xs font-extrabold text-[#c5b496]">SH</span>
+          </div>
+          <div>
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">Señor de Huanca Espinar</h1>
+            <p class="text-[11px] text-[#c5b496]">Facturación Electrónica SUNAT • Movilidad</p>
+          </div>
         </div>
         <!-- Badge de Unidad (solo visible cuando entra desde QR de un vehículo) -->
-        <div id="boxUnidadQr" class="hidden text-right bg-slate-900 border border-amber-500/40 px-3 py-1.5 rounded-2xl shrink-0">
-          <div class="text-[9px] text-amber-400 uppercase font-bold">Unidad QR</div>
-          <div id="badgeUnidadQr" class="text-lg font-black text-white leading-tight">#01</div>
+        <div id="boxUnidadQr" class="hidden text-right bg-[#0e3235] border border-[#c5b496]/40 px-3 py-1.5 rounded-2xl shrink-0">
+          <div class="text-[9px] text-[#c5b496] uppercase font-bold">Unidad QR</div>
+          <div id="badgeUnidadQr" class="text-lg font-extrabold text-white leading-tight">#01</div>
         </div>
       </div>
 
       <!-- Info de unidad verificada (solo modo QR vehículo) -->
-      <div id="infoUnidadQrBar" class="hidden mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+      <div id="infoUnidadQrBar" class="hidden mt-3 pt-2.5 border-t border-white/15 flex items-center justify-between text-[11px]">
         <div>
-          <span class="text-slate-400">Conductor:</span>
+          <span class="text-slate-300">Conductor:</span>
           <span id="txtChoferQr" class="font-bold text-white ml-1">—</span>
         </div>
         <div>
-          <span class="text-slate-400">Placa:</span>
-          <span id="txtPlacaQr" class="font-bold text-amber-300 ml-1">—</span>
+          <span class="text-slate-300">Placa:</span>
+          <span id="txtPlacaQr" class="font-bold text-[#c5b496] ml-1">—</span>
         </div>
       </div>
     </header>
 
     <!-- Navegación de 3 Pestañas -->
-    <nav class="grid grid-cols-3 gap-1.5 bg-slate-950/60 p-2 border-b border-slate-800">
+    <nav class="grid grid-cols-3 gap-1.5 bg-[#f4f7f7] p-2 border-b border-slate-200">
       <button type="button" data-tab="tabRetorno"
-        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-black bg-emerald-600 text-white transition text-center">
+        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-extrabold bg-[#082022] text-white shadow-xs transition text-center">
         1. Pedir Retorno
       </button>
       <button type="button" data-tab="tabFactura"
-        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-extrabold text-slate-300 hover:bg-slate-800 transition text-center">
+        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-bold text-slate-600 hover:bg-white transition text-center">
         2. Pedir Factura
       </button>
       <button type="button" data-tab="tabConsultar"
-        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-extrabold text-slate-300 hover:bg-slate-800 transition text-center">
+        class="pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-bold text-slate-600 hover:bg-white transition text-center">
         3. Mis Facturas
       </button>
     </nav>
@@ -69,14 +83,14 @@
     <!-- =================================================================== -->
     <section id="tabRetorno" class="pasajeroTabPanel p-5 space-y-4">
       <div id="formRetornoBody" class="space-y-3.5">
-        <div class="bg-emerald-950/30 border border-emerald-500/25 rounded-2xl p-3">
-          <p class="text-xs font-bold text-emerald-300">Despacho Directo a Central S.A.C.</p>
-          <p class="text-[11px] text-slate-300 mt-0.5">Indica dónde te encuentras y asignaremos la unidad más cercana.</p>
+        <div class="bg-[#082022]/5 border border-[#082022]/15 rounded-2xl p-3.5">
+          <p class="text-xs font-extrabold text-[#082022]">Despacho Directo a Central S.A.C.</p>
+          <p class="text-[11px] text-slate-600 mt-0.5">Indica dónde te encuentras y asignaremos la unidad más cercana para tu traslado.</p>
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">1. Punto de Recojo (Origen)</label>
-          <select id="retOrigenSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-semibold text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">1. Punto de Recojo (Origen)</label>
+          <select id="retOrigenSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="Garita Mina Antapaccay">Garita Mina Antapaccay</option>
             <option value="Campamento Tintaya / Coroccohuayco">Campamento Tintaya / Coroccohuayco</option>
             <option value="Plaza de Armas Espinar">Plaza de Armas Espinar</option>
@@ -84,12 +98,12 @@
             <option value="Aeropuerto Velasco Astete (Cusco)">Aeropuerto Velasco Astete (Cusco)</option>
             <option value="OTRO">Otro punto de recojo...</option>
           </select>
-          <input id="retOrigenCustom" type="text" placeholder="Escribe la dirección o punto exacto" class="hidden mt-2 w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+          <input id="retOrigenCustom" type="text" placeholder="Escribe la dirección o punto exacto" class="hidden mt-2 w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022]" />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">2. Destino</label>
-          <select id="retDestinoSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-semibold text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">2. Destino</label>
+          <select id="retDestinoSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="Plaza de Armas Espinar">Plaza de Armas Espinar</option>
             <option value="Garita Mina Antapaccay">Garita Mina Antapaccay</option>
             <option value="Campamento Tintaya / Coroccohuayco">Campamento Tintaya / Coroccohuayco</option>
@@ -97,20 +111,20 @@
             <option value="Arequipa Ciudad">Arequipa Ciudad</option>
             <option value="OTRO">Otro destino...</option>
           </select>
-          <input id="retDestinoCustom" type="text" placeholder="Escribe tu destino" class="hidden mt-2 w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+          <input id="retDestinoCustom" type="text" placeholder="Escribe tu destino" class="hidden mt-2 w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022]" />
         </div>
 
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">3. Horario</label>
-            <select id="retHorarioTipo" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-2.5 py-2.5 text-xs font-semibold text-white">
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">3. Horario</label>
+            <select id="retHorarioTipo" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-2.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
               <option value="INMEDIATO">Lo antes posible</option>
               <option value="PROGRAMADO">Programar hora</option>
             </select>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">Pasajeros</label>
-            <select id="retPasajeros" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-2.5 py-2.5 text-xs font-semibold text-white">
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Pasajeros</label>
+            <select id="retPasajeros" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-2.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
               <option value="1 pasajero">1 pasajero</option>
               <option value="2 pasajeros">2 pasajeros</option>
               <option value="3 pasajeros">3 pasajeros</option>
@@ -120,55 +134,55 @@
         </div>
 
         <div id="boxHoraProgramada" class="hidden">
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">Hora de recojo deseada</label>
-          <input id="retHoraExacta" type="time" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs font-bold text-amber-400" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Hora de recojo deseada</label>
+          <input id="retHoraExacta" type="time" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs font-extrabold text-[#082022]" />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">4. Tu WhatsApp (9 dígitos) <span class="text-rose-400">*</span></label>
-          <input id="retWhatsapp" type="tel" maxlength="12" inputmode="numeric" placeholder="Ej. 984123456" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-bold text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">4. Tu WhatsApp (9 dígitos) <span class="text-rose-600">*</span></label>
+          <input id="retWhatsapp" type="tel" maxlength="12" inputmode="numeric" placeholder="Ej. 984123456" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-bold text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">5. Nombre y Empresa / Contrata</label>
-          <input id="retEmpresa" type="text" placeholder="Ej. Ing. Juan Pérez — Antapaccay" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">5. Nombre y Empresa / Contrata</label>
+          <input id="retEmpresa" type="text" placeholder="Ej. Ing. Juan Pérez — Antapaccay" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-medium text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">Referencia adicional (Opcional)</label>
-          <input id="retNotas" type="text" placeholder="Ej. Puerta 2, llevo equipaje, necesito factura" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Referencia adicional (Opcional)</label>
+          <input id="retNotas" type="text" placeholder="Ej. Puerta 2, llevo equipaje, necesito factura" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
-        <p id="retError" class="hidden text-xs font-bold text-rose-400 bg-rose-950/40 border border-rose-500/30 rounded-xl px-3 py-2"></p>
+        <p id="retError" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2"></p>
 
         <button id="btnEnviarRetorno" type="button"
-          class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-sm shadow-lg transition">
+          class="w-full py-3.5 rounded-2xl bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold text-sm shadow-lg transition">
           Solicitar Unidad Ahora
         </button>
       </div>
 
       <!-- Éxito Retorno -->
       <div id="exitoRetornoBody" class="hidden space-y-4 text-center py-2">
-        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto text-xl font-black">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center mx-auto text-xl font-extrabold">
           ✓
         </div>
         <div>
-          <span id="badgeTicketRetorno" class="inline-block text-xs font-black px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+          <span id="badgeTicketRetorno" class="inline-block text-xs font-extrabold px-3 py-1 rounded-full bg-[#082022] text-[#c5b496]">
             #RET-0000
           </span>
-          <h2 class="text-base font-black text-white mt-2">¡Solicitud de Movilidad Enviada!</h2>
-          <p class="text-xs text-slate-400 mt-1">La Central S.A.C. ya recibió tu pedido y te confirmará la unidad por WhatsApp.</p>
+          <h2 class="text-base font-extrabold text-[#082022] mt-2">¡Solicitud de Movilidad Enviada!</h2>
+          <p class="text-xs text-slate-600 mt-1">La Central S.A.C. ya recibió tu pedido y te confirmará la unidad por WhatsApp.</p>
         </div>
 
-        <div id="resumenRetornoBox" class="text-left bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs space-y-1 text-slate-300"></div>
+        <div id="resumenRetornoBox" class="text-left bg-[#f8fafa] border border-slate-200 rounded-2xl p-3.5 text-xs space-y-1 text-slate-700"></div>
 
         <a id="btnWhatsappRetorno" href="#" target="_blank"
-          class="block w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center transition">
+          class="block w-full py-3 rounded-2xl bg-[#082022] hover:bg-[#0e3336] text-white font-extrabold text-xs text-center transition">
           Confirmar también por WhatsApp a Central
         </a>
 
         <button id="btnNuevoRetorno" type="button"
-          class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition">
+          class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#082022] font-bold text-xs transition">
           Hacer otra solicitud de movilidad
         </button>
       </div>
@@ -180,32 +194,32 @@
     <section id="tabFactura" class="pasajeroTabPanel hidden p-5 space-y-3.5">
       <div id="formFacturaBody" class="space-y-3.5">
 
-        <!-- Selector de Unidad (Visible si entró desde index.html sin QR de taxi) -->
+        <!-- Selector de Unidad -->
         <div id="bloqueSelectUnidadPasajero">
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-[11px] font-bold uppercase text-slate-300">¿En qué unidad o placa viajaste?</label>
+            <label class="block text-[11px] font-bold uppercase text-slate-600">¿En qué unidad o placa viajaste?</label>
           </div>
-          <select id="pasajeroUnidadSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-semibold text-white">
+          <select id="pasajeroUnidadSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="">-- Selecciona la unidad o placa --</option>
             <option value="POR_DEFINIR">No recuerdo la placa (Verificar en Central)</option>
           </select>
         </div>
 
-        <!-- Aviso de unidad bloqueada por QR (Visible solo si entró con ?unidad=XX) -->
-        <div id="bloqueUnidadFijaQr" class="hidden bg-amber-950/30 border border-amber-500/30 rounded-2xl px-3.5 py-2.5 flex items-center justify-between">
+        <!-- Aviso de unidad bloqueada por QR -->
+        <div id="bloqueUnidadFijaQr" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl px-3.5 py-2.5 flex items-center justify-between">
           <div class="text-xs">
-            <span class="text-slate-400">Viaje registrado en:</span>
-            <strong id="lblUnidadFijaTexto" class="text-amber-300 block">Unidad #01</strong>
+            <span class="text-slate-600">Viaje registrado en:</span>
+            <strong id="lblUnidadFijaTexto" class="text-[#082022] block">Unidad #01</strong>
           </div>
-          <button id="btnCambiarUnidadQr" type="button" class="text-[11px] font-bold text-slate-300 underline hover:text-white">
+          <button id="btnCambiarUnidadQr" type="button" class="text-[11px] font-bold text-[#082022] underline hover:opacity-80">
             Cambiar
           </button>
         </div>
 
         <!-- 1. Empresa / RUC -->
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">1. Empresa o Mina a Facturar</label>
-          <select id="pasEmpresaSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-semibold text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">1. Empresa o Mina a Facturar</label>
+          <select id="pasEmpresaSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="20114915026|COMPAÑIA MINERA ANTAPACCAY S.A.">Compañía Minera Antapaccay S.A. (20114915026)</option>
             <option value="20538428524|MINERA LAS BAMBAS S.A.">Minera Las Bambas S.A. (20538428524)</option>
             <option value="20511165181|HUDBAY PERU S.A.C.">Hudbay Perú S.A.C. (20511165181)</option>
@@ -216,36 +230,36 @@
             <option value="OTRO">Otro (Escribir RUC de 11 dígitos)</option>
           </select>
 
-          <div id="pasOtroEmpresaBox" class="hidden mt-2 space-y-2 p-3 bg-slate-950 rounded-xl border border-slate-800">
+          <div id="pasOtroEmpresaBox" class="hidden mt-2 space-y-2 p-3 bg-[#f4f7f7] rounded-xl border border-slate-200">
             <div class="relative">
-              <input id="pasCustomRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos" class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs font-bold text-white pr-16" />
-              <button id="btnPasBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-1 rounded">
+              <input id="pasCustomRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos" class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs font-bold text-[#082022] pr-16" />
+              <button id="btnPasBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-[#082022] hover:bg-[#0e3336] text-white text-[10px] font-bold px-2.5 py-1 rounded">
                 Buscar
               </button>
             </div>
             <p id="pasRucMsg" class="hidden text-[11px] font-semibold"></p>
-            <input id="pasCustomRazon" type="text" placeholder="Razón Social (se llena automática con RUC)" class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-white" />
+            <input id="pasCustomRazon" type="text" placeholder="Razón Social (se llena automática con RUC)" class="w-full rounded-lg bg-white border border-slate-300 px-3 py-2 text-xs font-semibold text-[#082022]" />
           </div>
         </div>
 
-        <!-- 2. WhatsApp o Correo (Llave privada de consulta) -->
+        <!-- 2. WhatsApp o Correo -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-[11px] font-bold uppercase text-slate-300">2. Tu WhatsApp o Correo <span class="text-rose-400">*</span></label>
-            <span class="text-[10px] text-emerald-400 font-semibold">Llave para consultar tu PDF</span>
+            <label class="block text-[11px] font-bold uppercase text-slate-600">2. Tu WhatsApp o Correo <span class="text-rose-600">*</span></label>
+            <span class="text-[10px] text-emerald-700 font-bold">Llave para consultar tu PDF</span>
           </div>
-          <input id="pasContactoInput" type="text" placeholder="Ej. 984123456 o nombre@empresa.com" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs text-white" />
+          <input id="pasContactoInput" type="text" placeholder="Ej. 984123456 o nombre@empresa.com" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <!-- 3. Monto y Ruta -->
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">3. Monto (S/) <span class="text-rose-400">*</span></label>
-            <input id="pasMontoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-sm font-black text-amber-400" />
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">3. Monto (S/) <span class="text-rose-600">*</span></label>
+            <input id="pasMontoInput" type="number" step="0.01" min="1" placeholder="0.00" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-sm font-extrabold text-[#082022] focus:border-[#082022] focus:outline-none" />
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">4. Ruta</label>
-            <select id="pasRutaSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-2.5 py-2.5 text-xs text-white">
+            <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">4. Ruta</label>
+            <select id="pasRutaSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-2.5 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
               <option value="Espinar - Garita Mina Antapaccay">Espinar ↔ Garita Antapaccay</option>
               <option value="Espinar - Campamento Tintaya / Coroccohuayco">Espinar ↔ Tintaya</option>
               <option value="Espinar - Aeropuerto Cusco">Espinar ↔ Cusco</option>
@@ -256,12 +270,12 @@
           </div>
         </div>
 
-        <input id="pasCustomRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+        <input id="pasCustomRuta" type="text" placeholder="Escribe origen y destino exacto" class="hidden w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022]" />
 
         <!-- 5. Concepto -->
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">5. Concepto del Comprobante</label>
-          <select id="pasConceptoSelect" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white">
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">5. Concepto del Comprobante</label>
+          <select id="pasConceptoSelect" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none">
             <option value="Servicio de transporte privado ejecutivo">Transporte privado ejecutivo</option>
             <option value="Movilidad corporativa y tiempo de espera">Movilidad corporativa y espera</option>
             <option value="Traslado de personal técnico a operación">Traslado de personal técnico</option>
@@ -271,60 +285,60 @@
 
         <!-- 6. Modalidad de Pago -->
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1.5">6. ¿Cómo realizaste o harás el pago? <span class="text-rose-400">*</span></label>
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1.5">6. ¿Cómo realizaste o harás el pago? <span class="text-rose-600">*</span></label>
           <div class="grid grid-cols-2 gap-2">
-            <button type="button" data-pago="conductor|yape" class="pasPagoBtn p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-left hover:border-amber-400/70 transition">
-              <div class="text-xs font-extrabold text-white">Yape Conductor</div>
-              <div class="text-[10px] text-amber-300">Directo al taxista</div>
+            <button type="button" data-pago="conductor|yape" class="pasPagoBtn p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-left hover:border-[#082022] transition">
+              <div class="text-xs font-extrabold text-[#082022]">Yape Conductor</div>
+              <div class="text-[10px] text-slate-500 font-medium">Directo al taxista</div>
             </button>
-            <button type="button" data-pago="conductor|efectivo" class="pasPagoBtn p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-left hover:border-amber-400/70 transition">
-              <div class="text-xs font-extrabold text-white">Efectivo</div>
-              <div class="text-[10px] text-amber-300">Pagado en unidad</div>
+            <button type="button" data-pago="conductor|efectivo" class="pasPagoBtn p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-left hover:border-[#082022] transition">
+              <div class="text-xs font-extrabold text-[#082022]">Efectivo</div>
+              <div class="text-[10px] text-slate-500 font-medium">Pagado en unidad</div>
             </button>
-            <button type="button" data-pago="empresa|yape_sac" class="pasPagoBtn col-span-2 p-2.5 rounded-xl border border-slate-700 bg-slate-950 text-left hover:border-emerald-400/70 transition flex items-center justify-between">
+            <button type="button" data-pago="empresa|yape_sac" class="pasPagoBtn col-span-2 p-2.5 rounded-xl border border-slate-300 bg-[#f8fafa] text-left hover:border-[#082022] transition flex items-center justify-between">
               <div>
-                <div class="text-xs font-extrabold text-white">Cuenta S.A.C. (Yape / Transferencia Empresa)</div>
-                <div id="lblCuentaSacInfo" class="text-[10px] text-emerald-300">Yape Empresa Oficial</div>
+                <div class="text-xs font-extrabold text-[#082022]">Cuenta S.A.C. (Yape / Transferencia Empresa)</div>
+                <div id="lblCuentaSacInfo" class="text-[10px] text-emerald-700 font-semibold">Yape Empresa Oficial</div>
               </div>
-              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300">S.A.C.</span>
+              <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-[#082022] text-[#c5b496]">S.A.C.</span>
             </button>
           </div>
         </div>
 
-        <p id="pasFacturaError" class="hidden text-xs font-bold text-rose-400 bg-rose-950/40 border border-rose-500/30 rounded-xl px-3 py-2"></p>
+        <p id="pasFacturaError" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2"></p>
 
         <button id="btnEnviarSolicitudFactura" type="button"
-          class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-sm shadow-lg transition">
+          class="w-full py-3.5 rounded-2xl bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold text-sm shadow-lg transition">
           Solicitar Factura Electrónica
         </button>
       </div>
 
       <!-- Éxito Solicitud de Factura -->
       <div id="exitoFacturaBody" class="hidden space-y-4 text-center py-2">
-        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto text-xl font-black">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center mx-auto text-xl font-extrabold">
           ✓
         </div>
         <div>
-          <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400">Código de Seguimiento</p>
-          <div class="mt-1 inline-flex items-center gap-2 bg-slate-950 border border-amber-500/40 px-4 py-1.5 rounded-full">
-            <span id="txtTicketFacturaGenerado" class="text-base font-black text-amber-400">#SH-0000</span>
-            <button id="btnCopiarTicket" type="button" class="text-[10px] font-bold text-slate-300 hover:text-white underline">
+          <p class="text-[11px] uppercase tracking-wider font-bold text-slate-500">Código de Seguimiento</p>
+          <div class="mt-1 inline-flex items-center gap-2 bg-[#082022] px-4 py-1.5 rounded-full">
+            <span id="txtTicketFacturaGenerado" class="text-base font-extrabold text-[#c5b496]">#SH-0000</span>
+            <button id="btnCopiarTicket" type="button" class="text-[10px] font-bold text-white/80 hover:text-white underline">
               Copiar
             </button>
           </div>
-          <h2 class="text-base font-black text-white mt-2">Solicitud Registrada en SUNAT Central</h2>
-          <p class="text-xs text-slate-400 mt-1">Guarda tu código o usa tu WhatsApp/correo para revisar cuando tu PDF esté emitido.</p>
+          <h2 class="text-base font-extrabold text-[#082022] mt-2">Solicitud Registrada en SUNAT Central</h2>
+          <p class="text-xs text-slate-600 mt-1">Guarda tu código o usa tu WhatsApp/correo para revisar cuando tu PDF esté emitido.</p>
         </div>
 
-        <div id="resumenFacturaBox" class="text-left bg-slate-950 border border-slate-800 rounded-2xl p-3.5 text-xs space-y-1 text-slate-300"></div>
+        <div id="resumenFacturaBox" class="text-left bg-[#f8fafa] border border-slate-200 rounded-2xl p-3.5 text-xs space-y-1 text-slate-700"></div>
 
         <button id="btnIrAConsultarMiFactura" type="button"
-          class="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition">
+          class="w-full py-3 rounded-2xl bg-[#082022] hover:bg-[#0e3336] text-white font-extrabold text-xs transition">
           Ver estado de mi factura ahora →
         </button>
 
         <button id="btnNuevaFacturaPasajero" type="button"
-          class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition">
+          class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#082022] font-bold text-xs transition">
           Registrar otra factura
         </button>
       </div>
@@ -334,26 +348,26 @@
     <!-- PESTAÑA 3: CONSULTAR ESTADO DE MI FACTURA (FILTRO PRIVADO)          -->
     <!-- =================================================================== -->
     <section id="tabConsultar" class="pasajeroTabPanel hidden p-5 space-y-4">
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3.5 space-y-1">
-        <p class="text-xs font-bold text-white">Consulta Privada de Comprobantes</p>
-        <p class="text-[11px] text-slate-400">
-          Por privacidad entre trabajadores de una misma empresa, ingresa <b>tu WhatsApp/correo</b> o tu <b>código de ticket</b> (<span class="text-amber-300">#SH-XXXX</span>).
+      <div class="bg-[#082022]/5 border border-[#082022]/15 rounded-2xl p-3.5 space-y-1">
+        <p class="text-xs font-extrabold text-[#082022]">Consulta Privada de Comprobantes</p>
+        <p class="text-[11px] text-slate-600">
+          Por privacidad entre trabajadores de una misma empresa, ingresa <b>tu WhatsApp/correo</b> o tu <b>código de ticket</b> (<span class="font-bold text-[#082022]">#SH-XXXX</span>).
         </p>
       </div>
 
       <div class="space-y-3">
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">Tu WhatsApp, Correo o Código de Ticket <span class="text-rose-400">*</span></label>
-          <input id="consultaLlaveInput" type="text" placeholder="Ej. 984123456, correo@empresa.com o SH-4821" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2.5 text-xs font-semibold text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Tu WhatsApp, Correo o Código de Ticket <span class="text-rose-600">*</span></label>
+          <input id="consultaLlaveInput" type="text" placeholder="Ej. 984123456, correo@empresa.com o SH-4821" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2.5 text-xs font-semibold text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase text-slate-300 mb-1">Filtrar por RUC de Empresa (Opcional)</label>
-          <input id="consultaRucInput" type="text" maxlength="11" inputmode="numeric" placeholder="Opcional: 11 dígitos del RUC" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white" />
+          <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Filtrar por RUC de Empresa (Opcional)</label>
+          <input id="consultaRucInput" type="text" maxlength="11" inputmode="numeric" placeholder="Opcional: 11 dígitos del RUC" class="w-full rounded-xl bg-[#f8fafa] border border-slate-300 px-3 py-2 text-xs text-[#082022] focus:border-[#082022] focus:outline-none" />
         </div>
 
         <button id="btnBuscarMisFacturas" type="button"
-          class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black text-xs shadow-lg transition">
+          class="w-full py-3 rounded-2xl bg-[#082022] hover:bg-[#0e3336] active:scale-[0.99] text-white font-extrabold text-xs shadow-md transition">
           Buscar mis comprobantes
         </button>
       </div>
@@ -373,9 +387,6 @@
       isFirebaseConfigured, EMPRESA_CONFIG, FLOTA_INICIAL
     } from "./firebase-config.js";
 
-    // -----------------------------------------------------------------------
-    // 1. DETECCIÓN DE MODO DE ENTRADA (?unidad=XX vs Portal Web General)
-    // -----------------------------------------------------------------------
     const params = new URLSearchParams(window.location.search);
     const unidadParam = (params.get("unidad") || params.get("u") || "").trim();
 
@@ -384,7 +395,6 @@
     let solicitudesCache = [];
     let ultimoRucConsultado = "";
 
-    // Poblar selector de unidades en Pestaña 2
     const pasajeroUnidadSelect = document.getElementById("pasajeroUnidadSelect");
     FLOTA_INICIAL.forEach(u => {
       const opt = document.createElement("option");
@@ -400,8 +410,8 @@
       document.querySelectorAll(".pasajeroTabBtn").forEach(b => {
         const activo = b.dataset.tab === tabId;
         b.className = activo
-          ? "pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-black bg-emerald-600 text-white transition text-center"
-          : "pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-extrabold text-slate-300 hover:bg-slate-800 transition text-center";
+          ? "pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-extrabold bg-[#082022] text-white shadow-xs transition text-center"
+          : "pasajeroTabBtn py-2 px-2 rounded-xl text-[11px] font-bold text-slate-600 hover:bg-white transition text-center";
       });
       document.querySelectorAll(".pasajeroTabPanel").forEach(p => p.classList.add("hidden"));
       document.getElementById(tabId).classList.remove("hidden");
@@ -419,9 +429,8 @@
     }
 
     if (unidadQrDetectada) {
-      // Modo QR pegado dentro del taxi
       document.getElementById("badgeOrigenPortal").innerHTML =
-        `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Unidad Verificada`;
+        `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Unidad Verificada`;
       document.getElementById("boxUnidadQr").classList.remove("hidden");
       document.getElementById("badgeUnidadQr").textContent = `#${unidadQrDetectada.numero}`;
       document.getElementById("infoUnidadQrBar").classList.remove("hidden");
@@ -434,10 +443,8 @@
       document.getElementById("lblUnidadFijaTexto").textContent =
         `Unidad #${unidadQrDetectada.numero} • ${unidadQrDetectada.placa} (${unidadQrDetectada.chofer})`;
 
-      // Abrir directo en Pedir Factura
       activarTab("tabFactura");
     } else {
-      // Modo entrada general desde index.html -> inicia en Pedir Retorno (sin asignar conductor a la fuerza)
       activarTab("tabRetorno");
     }
 
@@ -446,7 +453,6 @@
       document.getElementById("bloqueSelectUnidadPasajero").classList.remove("hidden");
     });
 
-    // Sincronización en tiempo real de solicitudes para consulta privada
     if (isFirebaseConfigured && db) {
       onSnapshot(query(collection(db, "solicitudes"), orderBy("createdAt", "desc")), (snap) => {
         solicitudesCache = [];
@@ -457,7 +463,7 @@
     }
 
     // -----------------------------------------------------------------------
-    // 2. PESTAÑA 1: SOLICITAR RETORNO / MOVILIDAD
+    // PESTAÑA 1: SOLICITAR RETORNO / MOVILIDAD
     // -----------------------------------------------------------------------
     const retOrigenSelect = document.getElementById("retOrigenSelect");
     const retOrigenCustom = document.getElementById("retOrigenCustom");
@@ -576,7 +582,7 @@
     });
 
     // -----------------------------------------------------------------------
-    // 3. PESTAÑA 2: SOLICITAR FACTURA ELECTRÓNICA
+    // PESTAÑA 2: SOLICITAR FACTURA ELECTRÓNICA
     // -----------------------------------------------------------------------
     const pasEmpresaSelect = document.getElementById("pasEmpresaSelect");
     const pasOtroEmpresaBox = document.getElementById("pasOtroEmpresaBox");
@@ -607,7 +613,7 @@
       ultimoRucConsultado = ruc;
 
       pasRucMsg.textContent = "Consultando RUC en SUNAT...";
-      pasRucMsg.className = "text-[11px] font-semibold text-amber-400";
+      pasRucMsg.className = "text-[11px] font-semibold text-amber-700";
       pasRucMsg.classList.remove("hidden");
 
       try {
@@ -616,14 +622,14 @@
         if (resp.ok && data.razonSocial) {
           pasCustomRazon.value = data.razonSocial;
           pasRucMsg.textContent = "✓ Entidad encontrada en SUNAT";
-          pasRucMsg.className = "text-[11px] font-bold text-emerald-400";
+          pasRucMsg.className = "text-[11px] font-bold text-emerald-700";
         } else {
           pasRucMsg.textContent = "No se obtuvo automático. Escribe la Razón Social abajo:";
-          pasRucMsg.className = "text-[11px] font-semibold text-slate-400";
+          pasRucMsg.className = "text-[11px] font-semibold text-slate-500";
         }
       } catch {
         pasRucMsg.textContent = "Sin conexión SUNAT. Escribe la Razón Social manualmente:";
-        pasRucMsg.className = "text-[11px] font-semibold text-slate-400";
+        pasRucMsg.className = "text-[11px] font-semibold text-slate-500";
       }
     }
 
@@ -634,11 +640,11 @@
       btn.addEventListener("click", () => {
         pagoSeleccionado = btn.dataset.pago;
         document.querySelectorAll(".pasPagoBtn").forEach(b => {
-          b.classList.remove("border-emerald-400", "bg-emerald-950/30", "border-amber-400", "bg-amber-950/30");
-          b.classList.add("border-slate-700", "bg-slate-950");
+          b.classList.remove("border-2", "border-[#082022]", "bg-emerald-50/60");
+          b.classList.add("border-slate-300", "bg-[#f8fafa]");
         });
-        btn.classList.remove("border-slate-700", "bg-slate-950");
-        btn.classList.add("border-emerald-400", "bg-emerald-950/30");
+        btn.classList.remove("border-slate-300", "bg-[#f8fafa]");
+        btn.classList.add("border-2", "border-[#082022]", "bg-emerald-50/60");
       });
     });
 
@@ -787,7 +793,7 @@
     });
 
     // -----------------------------------------------------------------------
-    // 4. PESTAÑA 3: CONSULTA PRIVADA DE FACTURAS (FILTRO POR CONTACTO / TICKET)
+    // PESTAÑA 3: CONSULTA PRIVADA DE FACTURAS
     // -----------------------------------------------------------------------
     function enmascararContacto(contacto) {
       const c = String(contacto || "").trim();
@@ -808,7 +814,7 @@
       const rucFiltro = document.getElementById("consultaRucInput").value.replace(/\D/g, "");
 
       if (llaveRaw.length < 4) {
-        box.innerHTML = `<p class="text-xs font-bold text-amber-400 text-center py-3">Ingresa tu número de WhatsApp, correo o código de ticket completo.</p>`;
+        box.innerHTML = `<p class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">Ingresa tu número de WhatsApp, correo o código de ticket completo.</p>`;
         return;
       }
 
@@ -836,8 +842,8 @@
 
       if (!coincidencias.length) {
         box.innerHTML = `
-          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-center space-y-1">
-            <p class="text-xs font-bold text-slate-300">No encontramos comprobantes con esos datos</p>
+          <div class="bg-[#f8fafa] border border-slate-200 rounded-2xl p-4 text-center space-y-1">
+            <p class="text-xs font-extrabold text-[#082022]">No encontramos comprobantes con esos datos</p>
             <p class="text-[11px] text-slate-500">Verifica que sea el mismo WhatsApp, correo o código de ticket con el que se registró tu viaje.</p>
           </div>
         `;
@@ -856,28 +862,28 @@
         );
 
         return `
-          <div class="bg-slate-950 border ${emitida ? "border-emerald-500/40" : "border-amber-500/35"} rounded-2xl p-3.5 space-y-2">
+          <div class="bg-[#f8fafa] border ${emitida ? "border-emerald-300" : "border-amber-200"} rounded-2xl p-3.5 space-y-2">
             <div class="flex items-center justify-between gap-2">
-              <span class="text-[11px] font-black text-slate-300">${ticket} • ${s.fechaTexto || ""}</span>
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black ${emitida ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-amber-500/20 text-amber-300 border border-amber-500/40"}">
+              <span class="text-[11px] font-extrabold text-slate-600">${ticket} • ${s.fechaTexto || ""}</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${emitida ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}">
                 ${emitida ? "✓ FACTURA EMITIDA" : "⏳ EN PROCESO"}
               </span>
             </div>
 
             <div>
-              <div class="text-xs font-black text-white">${s.razonSocial}</div>
-              <div class="text-[11px] text-slate-400">RUC: ${s.ruc} • ${unidadTxt}</div>
+              <div class="text-xs font-extrabold text-[#082022]">${s.razonSocial}</div>
+              <div class="text-[11px] text-slate-500 font-medium">RUC: ${s.ruc} • ${unidadTxt}</div>
             </div>
 
-            <div class="flex items-center justify-between pt-1.5 border-t border-slate-800/80 text-xs">
-              <span class="text-slate-300">${s.ruta}</span>
-              <span class="font-black text-amber-400">S/ ${monto}</span>
+            <div class="flex items-center justify-between pt-1.5 border-t border-slate-200 text-xs">
+              <span class="text-slate-700 font-medium">${s.ruta}</span>
+              <span class="font-extrabold text-[#082022]">S/ ${monto}</span>
             </div>
 
-            <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-              <span>Destino PDF: <b class="text-slate-200">${enmascararContacto(s.contacto)}</b></span>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+              <span>Destino PDF: <b class="text-[#082022]">${enmascararContacto(s.contacto)}</b></span>
               <a href="https://wa.me/${EMPRESA_CONFIG.whatsappCentral}?text=${waConsulta}" target="_blank"
-                class="text-emerald-400 hover:text-emerald-300 font-bold underline">
+                class="text-[#082022] hover:underline font-extrabold">
                 Consultar Central →
               </a>
             </div>
