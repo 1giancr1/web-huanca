@@ -55,12 +55,18 @@
           <option value="20100027292|FERREYROS S.A.">Ferreyros S.A. (20100027292)</option>
           <option value="20389230724|CONFIPETROL ANDINA S.A.">Confipetrol Andina S.A. (20389230724)</option>
           <option value="20507852549|SODEXO PERU S.A.C.">Sodexo Perú S.A.C. (20507852549)</option>
-          <option value="OTRO">Otro (Ingresar RUC y Razón Social manualmente)</option>
+          <option value="OTRO">Otro (Ingresar RUC y autocompletar Razón Social)</option>
         </select>
 
         <div id="otroEmpresaBox" class="hidden mt-2.5 space-y-2 p-3 bg-slate-50 rounded-xl border border-slate-200">
-          <input id="customRuc" type="text" maxlength="11" inputmode="numeric" placeholder="RUC de 11 dígitos (ej. 20601234567)" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
-          <input id="customRazon" type="text" placeholder="Razón Social completa de la empresa" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" />
+          <div class="relative">
+            <input id="customRuc" type="text" maxlength="11" inputmode="numeric" placeholder="Escribe los 11 dígitos del RUC" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold pr-20" />
+            <button id="btnBuscarRuc" type="button" class="absolute right-1.5 top-1.5 bg-slate-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-md hover:bg-slate-700">
+              Buscar
+            </button>
+          </div>
+          <p id="rucStatusMsg" class="hidden text-[11px] font-semibold"></p>
+          <input id="customRazon" type="text" placeholder="Razón Social (se llena sola al poner el RUC)" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium" />
         </div>
       </div>
 
@@ -192,7 +198,7 @@
             Hablar con el WhatsApp de la Central
           </a>
           <button id="btnCerrarRetorno" type="button" class="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-600 font-semibold text-xs hover:bg-slate-50">
-            No deseo / Cerrar
+            No deseo / Volver al inicio
           </button>
         </div>
 
@@ -210,7 +216,7 @@
           <p class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 p-3 rounded-xl">
             ✓ Reserva de retorno enviada a la Central y al grupo de conductores.
           </p>
-          <button id="btnFinalizarTodo" type="button" class="w-full py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Listo, cerrar</button>
+          <button id="btnFinalizarTodo" type="button" class="w-full py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Listo, volver al inicio</button>
         </div>
       </div>
     </div>
@@ -228,6 +234,7 @@
 
     let unidadActual = FLOTA_INICIAL.find(u => u.id === unitId) || FLOTA_INICIAL[0];
     let ultimaSolicitud = null;
+    let ultimoRucConsultado = "";
 
     if (!isFirebaseConfigured) {
       document.getElementById("bannerModo").classList.remove("hidden");
@@ -253,9 +260,52 @@
 
     const empresaSelect = document.getElementById("empresaSelect");
     const otroEmpresaBox = document.getElementById("otroEmpresaBox");
+    const customRuc = document.getElementById("customRuc");
+    const customRazon = document.getElementById("customRazon");
+    const rucStatusMsg = document.getElementById("rucStatusMsg");
+
     empresaSelect.addEventListener("change", () => {
-      otroEmpresaBox.classList.toggle("hidden", empresaSelect.value !== "OTRO");
+      const esOtro = empresaSelect.value === "OTRO";
+      otroEmpresaBox.classList.toggle("hidden", !esOtro);
+      if (esOtro) customRuc.focus();
     });
+
+    async function consultarRucSunat(forzar = false) {
+      const ruc = customRuc.value.replace(/\D/g, "");
+      customRuc.value = ruc;
+      if (ruc.length !== 11) {
+        rucStatusMsg.classList.add("hidden");
+        return;
+      }
+      if (!forzar && ruc === ultimoRucConsultado) return;
+      ultimoRucConsultado = ruc;
+
+      rucStatusMsg.textContent = "Consultando RUC en SUNAT...";
+      rucStatusMsg.className = "text-[11px] font-semibold text-amber-700";
+      rucStatusMsg.classList.remove("hidden");
+
+      try {
+        const resp = await fetch(`/api/ruc?numero=${ruc}`);
+        const data = await resp.json();
+        if (data && data.ok && data.razonSocial) {
+          customRazon.value = data.razonSocial;
+          const extra = data.estado ? ` (${data.estado})` : "";
+          rucStatusMsg.textContent = `✓ Entidad encontrada en SUNAT${extra}`;
+          rucStatusMsg.className = "text-[11px] font-bold text-emerald-700";
+        } else {
+          rucStatusMsg.textContent = "No se obtuvo automático. Escribe la Razón Social abajo:";
+          rucStatusMsg.className = "text-[11px] font-semibold text-slate-600";
+          customRazon.focus();
+        }
+      } catch (e) {
+        rucStatusMsg.textContent = "Sin conexión con SUNAT. Escribe la Razón Social abajo:";
+        rucStatusMsg.className = "text-[11px] font-semibold text-slate-600";
+        customRazon.focus();
+      }
+    }
+
+    customRuc.addEventListener("input", () => consultarRucSunat(false));
+    document.getElementById("btnBuscarRuc").addEventListener("click", () => consultarRucSunat(true));
 
     const rutaSelect = document.getElementById("rutaSelect");
     const customRuta = document.getElementById("customRuta");
@@ -280,8 +330,8 @@
       document.getElementById("errorMsg").classList.add("hidden");
       let ruc = "", razonSocial = "";
       if (empresaSelect.value === "OTRO") {
-        ruc = document.getElementById("customRuc").value.trim();
-        razonSocial = document.getElementById("customRazon").value.trim();
+        ruc = customRuc.value.trim();
+        razonSocial = customRazon.value.trim();
         if (!/^\d{11}$/.test(ruc)) {
           mostrarError("Ingresa un RUC válido de 11 dígitos.");
           return null;
@@ -456,11 +506,11 @@
       document.getElementById("retornoConfirmadoMsg").classList.remove("hidden");
     });
 
-    const cerrarTodo = () => {
-      document.getElementById("modalRetorno").classList.add("hidden");
+    const cerrarTodoYVolverInicio = () => {
+      window.location.href = "/";
     };
-    document.getElementById("btnCerrarRetorno").addEventListener("click", cerrarTodo);
-    document.getElementById("btnFinalizarTodo").addEventListener("click", cerrarTodo);
+    document.getElementById("btnCerrarRetorno").addEventListener("click", cerrarTodoYVolverInicio);
+    document.getElementById("btnFinalizarTodo").addEventListener("click", cerrarTodoYVolverInicio);
   </script>
 </body>
 </html>
