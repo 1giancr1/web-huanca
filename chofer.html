@@ -42,161 +42,283 @@
     <!-- Panel Principal del Conductor -->
     <div id="panelChofer" class="hidden space-y-4">
 
-      <!-- 1. ESTADO DEL CONDUCTOR Y ESTADO DE SU DEUDA -->
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
-        <div class="flex items-start justify-between gap-2">
-          <div>
-            <span id="lblUnidad" class="text-xs font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
-            <h2 id="lblChofer" class="text-lg font-extrabold text-white leading-tight">Conductor</h2>
-            <p id="lblPlaca" class="text-xs text-slate-400 mt-0.5">Placa • Vehículo</p>
-          </div>
-          <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline shrink-0">Cambiar unidad</button>
+      <!-- Cabecera compacta de Unidad Activa -->
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 flex items-center justify-between gap-2">
+        <div>
+          <span id="lblUnidad" class="text-[11px] font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
+          <h2 id="lblChofer" class="text-base font-extrabold text-white leading-tight">Conductor</h2>
+          <p id="lblPlaca" class="text-[11px] text-slate-400">Placa • Vehículo</p>
         </div>
-
-        <!-- Estado Operativo Destacado -->
-        <div id="cardEstadoOperativo" class="rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between">
-          <div>
-            <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">Estado de tu Unidad</span>
-            <span id="lblEstado" class="text-base font-black text-emerald-400">ACTIVO • HABILITADO</span>
-            <p id="lblEstadoDesc" class="text-[11px] text-slate-300 mt-0.5">Puedes operar y generar facturas con normalidad.</p>
-          </div>
-          <div id="iconoEstado" class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0">
-            ✓
-          </div>
-        </div>
-
-        <!-- Estado Detallado de Deuda -->
-        <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Estado de tu Deuda (Retenciones)</span>
-            <span id="badgeNivelDeuda" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">AL DÍA</span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <span class="text-[11px] text-slate-400 block">Saldo pendiente a pagar</span>
-              <span id="lblDeuda" class="text-2xl font-black text-white">S/ 0.00</span>
-            </div>
-            <div class="text-right">
-              <span class="text-[11px] text-slate-400 block">Margen antes de bloqueo</span>
-              <span id="lblMargen" class="text-lg font-extrabold text-emerald-400">S/ 100.00</span>
-            </div>
-          </div>
-
-          <!-- Barra visual hacia el tope de S/ 100 -->
-          <div class="space-y-1">
-            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-              <div id="barraDeuda" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
-            </div>
-            <div class="flex justify-between text-[10px] text-slate-400">
-              <span>S/ 0.00</span>
-              <span id="lblPorcentajeTope">0% del tope</span>
-              <span>Límite: S/ 100.00</span>
-            </div>
-          </div>
-
-          <!-- Desglose rápido de retenciones -->
-          <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-[11px]">
-            <div class="bg-slate-800/70 rounded-xl p-2">
-              <span class="text-slate-400 block text-[10px]">Retención por factura</span>
-              <span id="lblPctRetencion" class="font-bold text-amber-400">22% (cobro directo)</span>
-            </div>
-            <div class="bg-slate-800/70 rounded-xl p-2">
-              <span class="text-slate-400 block text-[10px]">Facturado en tu unidad</span>
-              <span id="lblTotalFacturadoUnidad" class="font-bold text-white">S/ 0.00</span>
-            </div>
-          </div>
-
-          <!-- Botón para ver datos de abono a la S.A.C. -->
-          <button id="btnToggleAbono" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-amber-300 transition">
-            Ver cuentas para abonar mi deuda
-          </button>
-
-          <div id="boxDatosAbono" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-3 text-[11px] space-y-2">
-            <div>
-              <span class="text-slate-400 block">Yape Corporativo S.A.C.:</span>
-              <span id="txtYapeEmpresa" class="font-extrabold text-white">Cargando...</span>
-            </div>
-            <div>
-              <span class="text-slate-400 block">Cuenta Bancaria S.A.C.:</span>
-              <span id="txtCuentaEmpresa" class="font-semibold text-slate-200">Cargando...</span>
-            </div>
-            <a id="btnEnviarVoucherWa" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
-              Enviar comprobante de abono por WhatsApp
-            </a>
-          </div>
-        </div>
-
-        <!-- Alerta de bloqueo si deuda > 100 -->
-        <div id="alertaBloqueo" class="hidden bg-red-950/90 border border-red-500 rounded-2xl p-3.5 text-xs text-red-200 space-y-1">
-          <div class="font-black text-red-400">UNIDAD BLOQUEADA POR SALDO PENDIENTE</div>
-          <p>Superaste el límite de S/ 100.00 en retenciones acumuladas. Regulariza tu abono por Yape o transferencia con Gerencia para volver a habilitar tu unidad.</p>
-        </div>
-
-        <!-- Cola offline -->
-        <div id="colaOfflineBox" class="hidden bg-amber-950/80 border border-amber-500/50 rounded-2xl p-3 text-xs text-amber-200 flex items-center justify-between">
-          <span>Tienes <b id="countOffline">0</b> registro(s) guardados sin señal.</span>
-          <button id="btnSincronizarAhora" type="button" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">Sincronizar</button>
-        </div>
+        <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline shrink-0">Cambiar</button>
       </div>
 
-      <!-- 2. ESTADO DE SOLICITUDES DE FACTURAS GENERADAS EN ESTA UNIDAD -->
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="text-sm font-extrabold text-white">Solicitudes de Facturas de mi Unidad</h3>
-            <p class="text-[11px] text-slate-400">Seguimiento en tiempo real de tus pasajeros</p>
-          </div>
-          <span id="badgeTotalSol" class="text-xs font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full">0</span>
-        </div>
-
-        <!-- Contadores de estado -->
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="bg-slate-900 border border-slate-700 rounded-xl p-2">
-            <span class="text-[10px] text-slate-400 block">Total</span>
-            <span id="statSolTotal" class="text-sm font-black text-white">0</span>
-          </div>
-          <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2">
-            <span class="text-[10px] text-amber-300 block">Pendientes</span>
-            <span id="statSolPendientes" class="text-sm font-black text-amber-400">0</span>
-          </div>
-          <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
-            <span class="text-[10px] text-emerald-300 block">Emitidas</span>
-            <span id="statSolEmitidas" class="text-sm font-black text-emerald-400">0</span>
-          </div>
-        </div>
-
-        <!-- Filtros rápidos -->
-        <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-[11px] font-bold">
-          <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white">Todas</button>
-          <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Pendientes</button>
-          <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Emitidas</button>
-        </div>
-
-        <!-- Lista de solicitudes de la unidad -->
-        <div id="misViajesLista" class="space-y-2.5 text-xs text-slate-400 max-h-96 overflow-y-auto pr-0.5">
-          <p class="text-center py-3">Aún no hay solicitudes de factura registradas en esta unidad.</p>
-        </div>
+      <!-- Alerta Cola Offline Global -->
+      <div id="colaOfflineBox" class="hidden bg-amber-950/90 border border-amber-500/60 rounded-2xl p-3 text-xs text-amber-200 flex items-center justify-between">
+        <span>Tienes <b id="countOffline">0</b> factura(s) guardadas sin señal.</span>
+        <button id="btnSincronizarAhora" type="button" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">Sincronizar</button>
       </div>
 
-      <!-- 3. SUBIR FACTURA DE GRIFO O TALLER -->
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
-        <h3 class="text-sm font-extrabold text-emerald-400">Subir Factura de Grifo o Taller (Con RUC SAC)</h3>
-        <p class="text-[11px] text-slate-400">Pide siempre factura con el RUC de <b>Señor de Huanca Espinar S.A.C.</b> Funciona incluso sin señal en ruta.</p>
-        <select id="gastoTipo" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white">
-          <option value="Combustible / Grifo">Combustible / Grifo</option>
-          <option value="Lubricentro / Cambio de Aceite">Lubricentro / Cambio de Aceite</option>
-          <option value="Repuestos / Taller Mecánico">Repuestos / Taller Mecánico</option>
-          <option value="Llantas / Lavado Corporativo">Llantas / Lavado Corporativo</option>
-        </select>
-        <input id="gastoProveedor" type="text" placeholder="Nombre del Grifo o Taller (Ej. Grifo Primax Espinar)" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white" />
-        <div class="grid grid-cols-2 gap-2.5">
-          <input id="gastoSerie" type="text" placeholder="N° Factura (Ej. F001-4521)" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white" />
-          <input id="gastoMonto" type="number" step="0.01" placeholder="Monto Total S/" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-bold text-white" />
-        </div>
-        <button id="btnGuardarGasto" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-2xl text-xs transition">
-          Registrar Comprobante de Gasto
+      <!-- NAVEGACIÓN POR PESTAÑAS DEL CONDUCTOR -->
+      <div class="grid grid-cols-2 gap-1.5 bg-slate-800 p-1.5 rounded-2xl border border-slate-700 shadow">
+        <button type="button" data-chofer-tab="tabTurno" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-black bg-amber-500 text-slate-950 transition">
+          1. Mi Turno y Deuda
         </button>
+        <button type="button" data-chofer-tab="tabSubirFactura" class="choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700/70 transition flex items-center justify-center gap-1.5">
+          <span>2. Subir Factura</span>
+          <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] px-1.5 py-0.2 rounded-md">Foto</span>
+        </button>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PESTAÑA 1: ESTADO DEL CONDUCTOR, DEUDA Y SOLICITUDES DE FACTURA -->
+      <!-- ================================================================ -->
+      <div id="tabTurno" class="choferTabPanel space-y-4">
+
+        <!-- 1. ESTADO DEL CONDUCTOR Y ESTADO DE SU DEUDA -->
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
+          <!-- Estado Operativo Destacado -->
+          <div id="cardEstadoOperativo" class="rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">Estado de tu Unidad</span>
+              <span id="lblEstado" class="text-base font-black text-emerald-400">ACTIVO • HABILITADO</span>
+              <p id="lblEstadoDesc" class="text-[11px] text-slate-300 mt-0.5">Puedes operar y generar facturas con normalidad.</p>
+            </div>
+            <div id="iconoEstado" class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0">
+              ✓
+            </div>
+          </div>
+
+          <!-- Estado Detallado de Deuda -->
+          <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Estado de tu Deuda (Retenciones)</span>
+              <span id="badgeNivelDeuda" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">AL DÍA</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <span class="text-[11px] text-slate-400 block">Saldo pendiente a pagar</span>
+                <span id="lblDeuda" class="text-2xl font-black text-white">S/ 0.00</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-400 block">Margen antes de bloqueo</span>
+                <span id="lblMargen" class="text-lg font-extrabold text-emerald-400">S/ 100.00</span>
+              </div>
+            </div>
+
+            <!-- Barra visual hacia el tope de S/ 100 -->
+            <div class="space-y-1">
+              <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+                <div id="barraDeuda" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <div class="flex justify-between text-[10px] text-slate-400">
+                <span>S/ 0.00</span>
+                <span id="lblPorcentajeTope">0% del tope</span>
+                <span>Límite: S/ 100.00</span>
+              </div>
+            </div>
+
+            <!-- Desglose rápido de retenciones -->
+            <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-[11px]">
+              <div class="bg-slate-800/70 rounded-xl p-2">
+                <span class="text-slate-400 block text-[10px]">Retención por factura</span>
+                <span id="lblPctRetencion" class="font-bold text-amber-400">22% (cobro directo)</span>
+              </div>
+              <div class="bg-slate-800/70 rounded-xl p-2">
+                <span class="text-slate-400 block text-[10px]">Facturado en tu unidad</span>
+                <span id="lblTotalFacturadoUnidad" class="font-bold text-white">S/ 0.00</span>
+              </div>
+            </div>
+
+            <!-- Botón para ver datos de abono a la S.A.C. -->
+            <button id="btnToggleAbono" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-amber-300 transition">
+              Ver cuentas para abonar mi deuda
+            </button>
+
+            <div id="boxDatosAbono" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-3 text-[11px] space-y-2">
+              <div>
+                <span class="text-slate-400 block">Yape Corporativo S.A.C.:</span>
+                <span id="txtYapeEmpresa" class="font-extrabold text-white">Cargando...</span>
+              </div>
+              <div>
+                <span class="text-slate-400 block">Cuenta Bancaria S.A.C.:</span>
+                <span id="txtCuentaEmpresa" class="font-semibold text-slate-200">Cargando...</span>
+              </div>
+              <a id="btnEnviarVoucherWa" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
+                Enviar comprobante de abono por WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Alerta de bloqueo si deuda > 100 -->
+          <div id="alertaBloqueo" class="hidden bg-red-950/90 border border-red-500 rounded-2xl p-3.5 text-xs text-red-200 space-y-1">
+            <div class="font-black text-red-400">UNIDAD BLOQUEADA POR SALDO PENDIENTE</div>
+            <p>Superaste el límite de S/ 100.00 en retenciones acumuladas. Regulariza tu abono por Yape o transferencia con Gerencia para volver a habilitar tu unidad.</p>
+          </div>
+        </div>
+
+        <!-- 2. ESTADO DE SOLICITUDES DE FACTURAS GENERADAS EN ESTA UNIDAD -->
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-extrabold text-white">Solicitudes de Facturas de mi Unidad</h3>
+              <p class="text-[11px] text-slate-400">Seguimiento en tiempo real de tus pasajeros</p>
+            </div>
+            <span id="badgeTotalSol" class="text-xs font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full">0</span>
+          </div>
+
+          <!-- Contadores de estado -->
+          <div class="grid grid-cols-3 gap-2 text-center">
+            <div class="bg-slate-900 border border-slate-700 rounded-xl p-2">
+              <span class="text-[10px] text-slate-400 block">Total</span>
+              <span id="statSolTotal" class="text-sm font-black text-white">0</span>
+            </div>
+            <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2">
+              <span class="text-[10px] text-amber-300 block">Pendientes</span>
+              <span id="statSolPendientes" class="text-sm font-black text-amber-400">0</span>
+            </div>
+            <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
+              <span class="text-[10px] text-emerald-300 block">Emitidas</span>
+              <span id="statSolEmitidas" class="text-sm font-black text-emerald-400">0</span>
+            </div>
+          </div>
+
+          <!-- Filtros rápidos -->
+          <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-[11px] font-bold">
+            <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white">Todas</button>
+            <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Pendientes</button>
+            <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Emitidas</button>
+          </div>
+
+          <!-- Lista de solicitudes de la unidad -->
+          <div id="misViajesLista" class="space-y-2.5 text-xs text-slate-400 max-h-96 overflow-y-auto pr-0.5">
+            <p class="text-center py-3">Aún no hay solicitudes de factura registradas en esta unidad.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PESTAÑA 2: SUBIR FACTURA CON RUC Y FOTO DEL COMPROBANTE          -->
+      <!-- ================================================================ -->
+      <div id="tabSubirFactura" class="choferTabPanel hidden space-y-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-400">Comprobantes con RUC S.A.C.</span>
+            <h3 class="text-base font-extrabold text-white mt-0.5">Subir Factura y Foto del Comprobante</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Ingresa el RUC del grifo, taller o establecimiento donde sacaste la factura y adjunta su foto clara.
+            </p>
+          </div>
+
+          <!-- 1. Número de RUC con búsqueda automática SUNAT -->
+          <div class="space-y-1.5">
+            <label class="block text-xs font-bold text-slate-200">
+              1. Número de RUC del Establecimiento (11 dígitos)
+            </label>
+            <div class="relative">
+              <input id="gastoRuc" type="text" maxlength="11" inputmode="numeric" placeholder="Ej. 20100047218" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-sm font-bold text-white pr-20 focus:border-emerald-400 focus:outline-none" />
+              <button id="btnBuscarRucGasto" type="button" class="absolute right-1.5 top-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition">
+                Buscar
+              </button>
+            </div>
+            <p id="gastoRucStatus" class="hidden text-[11px] font-semibold"></p>
+          </div>
+
+          <!-- 2. Razón Social / Nombre del establecimiento -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-slate-200">
+              2. Razón Social / Nombre del Grifo o Taller
+            </label>
+            <input id="gastoProveedor" type="text" placeholder="Se llena solo con el RUC o escríbelo aquí" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-xs font-semibold text-white focus:border-emerald-400 focus:outline-none" />
+          </div>
+
+          <!-- 3. Concepto / Tipo de gasto -->
+          <div class="space-y-1">
+            <label class="block text-xs font-bold text-slate-200">
+              3. Concepto de la Factura
+            </label>
+            <select id="gastoTipo" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3.5 py-2.5 text-xs text-white focus:border-emerald-400 focus:outline-none">
+              <option value="Combustible / Grifo">Combustible / Grifo</option>
+              <option value="Lubricentro / Cambio de Aceite">Lubricentro / Cambio de Aceite</option>
+              <option value="Repuestos / Taller Mecánico">Repuestos / Taller Mecánico</option>
+              <option value="Llantas / Lavado Corporativo">Llantas / Lavado Corporativo</option>
+              <option value="Peaje / Cochera / Otros">Peaje / Cochera / Otros</option>
+            </select>
+          </div>
+
+          <!-- 4 y 5. Número de Factura y Monto Total -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <div class="space-y-1">
+              <label class="block text-[11px] font-bold text-slate-200">4. N° de Factura</label>
+              <input id="gastoSerie" type="text" placeholder="Ej. F001-4521" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-semibold text-white uppercase focus:border-emerald-400 focus:outline-none" />
+            </div>
+            <div class="space-y-1">
+              <label class="block text-[11px] font-bold text-slate-200">5. Monto Total (S/)</label>
+              <input id="gastoMonto" type="number" step="0.01" min="0.10" placeholder="0.00" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs font-black text-amber-400 focus:border-emerald-400 focus:outline-none" />
+            </div>
+          </div>
+
+          <div id="previewIgvBox" class="hidden bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 flex justify-between text-[11px]">
+            <span class="text-slate-400">IGV Crédito Fiscal (18%):</span>
+            <span id="lblIgvCalculado" class="font-bold text-emerald-400">S/ 0.00</span>
+          </div>
+
+          <!-- 6. AGREGAR FOTO DE LA FACTURA -->
+          <div class="space-y-2">
+            <label class="block text-xs font-bold text-slate-200">
+              6. Foto de la Factura Física / Electrónica
+            </label>
+
+            <input id="inputFotoFactura" type="file" accept="image/*" class="hidden" />
+
+            <!-- Botón / Zona de captura -->
+            <div id="dropzoneFoto" class="border-2 border-dashed border-slate-600 hover:border-emerald-400 bg-slate-900/80 rounded-2xl p-4 text-center space-y-2.5 transition">
+              <div class="w-11 h-11 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center mx-auto text-xl">
+                📷
+              </div>
+              <div>
+                <p class="text-xs font-bold text-white">Toma una foto o súbela de tu galería</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">Asegúrate de que se vea el RUC, serie y monto total</p>
+              </div>
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <button id="btnTomarCamara" type="button" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition">
+                  Abrir Cámara
+                </button>
+                <button id="btnElegirGaleria" type="button" class="py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs transition">
+                  Galería / Archivo
+                </button>
+              </div>
+            </div>
+
+            <!-- Vista previa de la foto seleccionada -->
+            <div id="previewFotoBox" class="hidden bg-slate-900 border border-emerald-500/50 rounded-2xl p-3 space-y-2.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="font-bold text-emerald-400">✓ Foto lista para enviar</span>
+                <button id="btnQuitarFoto" type="button" class="text-red-400 hover:text-red-300 font-bold underline">
+                  Cambiar / Quitar
+                </button>
+              </div>
+              <img id="imgPreviewFactura" src="" alt="Vista previa de factura" class="w-full max-h-60 object-contain rounded-xl bg-black/50 border border-slate-700" />
+            </div>
+          </div>
+
+          <p id="gastoErrorMsg" class="hidden text-xs font-semibold text-red-400 bg-red-950/70 border border-red-500/40 rounded-xl px-3 py-2"></p>
+
+          <button id="btnGuardarGasto" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-black py-3.5 rounded-2xl text-sm shadow-lg transition">
+            Enviar Factura y Foto a Gerencia
+          </button>
+        </div>
+
+        <!-- Historial de Facturas Subidas por este Conductor -->
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Mis Facturas Subidas</h4>
+            <span id="badgeMisGastos" class="text-[11px] font-black bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full">0</span>
+          </div>
+          <div id="listaMisGastos" class="space-y-2.5 text-xs text-slate-400">
+            <p class="text-center py-2">Aún no has subido fotos de facturas en esta unidad.</p>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -222,9 +344,25 @@
 
     let unidadActiva = null;
     let todasSolicitudes = [];
+    let todosGastos = [];
     let filtroActual = "todas";
     let unsubUnidad = null;
     let unsubViajes = null;
+    let unsubGastos = null;
+    let ultimoRucGastoConsultado = "";
+    let fotoFacturaBase64 = "";
+
+    // Cambio entre pestañas del conductor
+    document.querySelectorAll(".choferTabBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".choferTabBtn").forEach(b => {
+          b.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-extrabold text-slate-300 hover:bg-slate-700/70 transition flex items-center justify-center gap-1.5";
+        });
+        btn.className = "choferTabBtn py-2.5 px-3 rounded-xl text-xs font-black bg-amber-500 text-slate-950 transition flex items-center justify-center gap-1.5";
+        document.querySelectorAll(".choferTabPanel").forEach(p => p.classList.add("hidden"));
+        document.getElementById(btn.dataset.choferTab).classList.remove("hidden");
+      });
+    });
 
     function actualizarEstadoRed() {
       const online = navigator.onLine;
@@ -261,6 +399,132 @@
       });
     });
 
+    // Consulta RUC SUNAT para el formulario de subir factura del chofer
+    const gastoRucInput = document.getElementById("gastoRuc");
+    const gastoProveedorInput = document.getElementById("gastoProveedor");
+    const gastoRucStatus = document.getElementById("gastoRucStatus");
+
+    async function buscarRucEstablecimiento(forzar = false) {
+      const ruc = gastoRucInput.value.replace(/\D/g, "");
+      gastoRucInput.value = ruc;
+      if (ruc.length !== 11) {
+        gastoRucStatus.classList.add("hidden");
+        return;
+      }
+      if (!forzar && ruc === ultimoRucGastoConsultado) return;
+      ultimoRucGastoConsultado = ruc;
+
+      gastoRucStatus.textContent = "Consultando RUC en SUNAT...";
+      gastoRucStatus.className = "text-[11px] font-semibold text-amber-400";
+      gastoRucStatus.classList.remove("hidden");
+
+      try {
+        const resp = await fetch(`/api/ruc?numero=${ruc}`);
+        if (!resp.ok) throw new Error("Sin respuesta");
+        const data = await resp.json();
+        if (data && data.ok && data.razonSocial) {
+          gastoProveedorInput.value = data.razonSocial;
+          gastoRucStatus.textContent = "✓ Entidad encontrada en SUNAT";
+          gastoRucStatus.className = "text-[11px] font-bold text-emerald-400";
+        } else {
+          gastoRucStatus.textContent = "No se obtuvo automático. Escribe el nombre abajo:";
+          gastoRucStatus.className = "text-[11px] font-semibold text-slate-400";
+          gastoProveedorInput.focus();
+        }
+      } catch (e) {
+        gastoRucStatus.textContent = "Sin conexión SUNAT. Escribe el nombre manualmente:";
+        gastoRucStatus.className = "text-[11px] font-semibold text-slate-400";
+        gastoProveedorInput.focus();
+      }
+    }
+
+    gastoRucInput.addEventListener("input", () => buscarRucEstablecimiento(false));
+    document.getElementById("btnBuscarRucGasto").addEventListener("click", () => buscarRucEstablecimiento(true));
+
+    // Cálculo visual de IGV al escribir el monto
+    document.getElementById("gastoMonto").addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value) || 0;
+      const box = document.getElementById("previewIgvBox");
+      if (val > 0) {
+        const igv = val - (val / 1.18);
+        document.getElementById("lblIgvCalculado").textContent = `S/ ${igv.toFixed(2)}`;
+        box.classList.remove("hidden");
+      } else {
+        box.classList.add("hidden");
+      }
+    });
+
+    // Manejo de Cámara / Galería y Compresión de Foto
+    const inputFotoFactura = document.getElementById("inputFotoFactura");
+    const dropzoneFoto = document.getElementById("dropzoneFoto");
+    const previewFotoBox = document.getElementById("previewFotoBox");
+    const imgPreviewFactura = document.getElementById("imgPreviewFactura");
+
+    document.getElementById("btnTomarCamara").addEventListener("click", () => {
+      inputFotoFactura.setAttribute("capture", "environment");
+      inputFotoFactura.click();
+    });
+
+    document.getElementById("btnElegirGaleria").addEventListener("click", () => {
+      inputFotoFactura.removeAttribute("capture");
+      inputFotoFactura.click();
+    });
+
+    function comprimirImagen(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            const maxDim = 900;
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+              if (w > h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL("image/jpeg", 0.65));
+          };
+          img.onerror = reject;
+          img.src = ev.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    inputFotoFactura.addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const comprimida = await comprimirImagen(file);
+        fotoFacturaBase64 = comprimida;
+        imgPreviewFactura.src = comprimida;
+        dropzoneFoto.classList.add("hidden");
+        previewFotoBox.classList.remove("hidden");
+      } catch (err) {
+        alert("No se pudo procesar la foto. Intenta nuevamente.");
+      }
+    });
+
+    document.getElementById("btnQuitarFoto").addEventListener("click", () => {
+      fotoFacturaBase64 = "";
+      inputFotoFactura.value = "";
+      imgPreviewFactura.src = "";
+      previewFotoBox.classList.add("hidden");
+      dropzoneFoto.classList.remove("hidden");
+    });
+
     function renderUnidad(u) {
       unidadActiva = u;
       const deuda = Number(u.deuda || 0);
@@ -273,7 +537,6 @@
       document.getElementById("lblChofer").textContent = u.chofer;
       document.getElementById("lblPlaca").textContent = `${u.placa} • ${u.vehiculo}`;
 
-      // Estado Operativo
       const cardEstado = document.getElementById("cardEstadoOperativo");
       const lblEstado = document.getElementById("lblEstado");
       const lblEstadoDesc = document.getElementById("lblEstadoDesc");
@@ -298,7 +561,6 @@
         alertaBloqueo.classList.add("hidden");
       }
 
-      // Estado de Deuda
       document.getElementById("lblDeuda").textContent = `S/ ${deuda.toFixed(2)}`;
       document.getElementById("lblMargen").textContent = `S/ ${margen.toFixed(2)}`;
       document.getElementById("lblPorcentajeTope").textContent = `${pct}% del tope`;
@@ -402,6 +664,37 @@
       }).join("");
     }
 
+    function renderMisGastos() {
+      if (!unidadActiva) return;
+      const cont = document.getElementById("listaMisGastos");
+      const propios = todosGastos.filter(g => g.unidadId === unidadActiva.id || g.unidadNumero === unidadActiva.numero);
+      document.getElementById("badgeMisGastos").textContent = propios.length;
+
+      if (!propios.length) {
+        cont.innerHTML = `<p class="text-center py-2 text-slate-400">Aún no has subido fotos de facturas en esta unidad.</p>`;
+        return;
+      }
+
+      cont.innerHTML = propios.slice(0, 10).map(g => `
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-3 flex items-center justify-between gap-2.5">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-white text-xs">${g.proveedor}</span>
+              ${g.fotoBase64 ? `<span class="text-[9px] font-black bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded">Con Foto ✓</span>` : ''}
+            </div>
+            <div class="text-[10px] text-slate-400">
+              ${g.ruc ? `RUC: ${g.ruc} • ` : ''}Factura: ${g.serie}
+            </div>
+            <div class="text-[10px] text-slate-500">${g.tipo} • ${g.fechaTexto || ''}</div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-sm font-black text-emerald-400">S/ ${Number(g.monto || 0).toFixed(2)}</div>
+            <div class="text-[10px] text-slate-400">IGV: S/ ${Number(g.igv || 0).toFixed(2)}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
     document.getElementById("btnIngresar").addEventListener("click", () => {
       const uId = selectUnidad.value;
       const dni = document.getElementById("inputDni").value.trim();
@@ -432,9 +725,20 @@
           todasSolicitudes = arr;
           renderMisViajes();
         });
+
+        if (unsubGastos) unsubGastos();
+        unsubGastos = onSnapshot(collection(db, "gastos"), (snap) => {
+          const arr = [];
+          snap.forEach(d => arr.push({ id: d.id, ...d.data() }));
+          arr.sort((a, b) => obtenerTimestampMs(b.createdAt) - obtenerTimestampMs(a.createdAt));
+          todosGastos = arr;
+          renderMisGastos();
+        });
       } else {
         todasSolicitudes = JSON.parse(localStorage.getItem("sh_solicitudes") || "[]");
+        todosGastos = JSON.parse(localStorage.getItem("sh_gastos") || "[]");
         renderMisViajes();
+        renderMisGastos();
       }
       actualizarBadgeCola();
     });
@@ -442,6 +746,7 @@
     document.getElementById("btnSalir").addEventListener("click", () => {
       if (unsubUnidad) unsubUnidad();
       if (unsubViajes) unsubViajes();
+      if (unsubGastos) unsubGastos();
       document.getElementById("panelChofer").classList.add("hidden");
       document.getElementById("loginBox").classList.remove("hidden");
       document.getElementById("inputDni").value = "";
@@ -469,54 +774,104 @@
           await addDoc(collection(db, "gastos"), { ...item, createdAt: serverTimestamp() });
         }
         guardarCola([]);
-        alert("✓ Señal recuperada: Todos tus comprobantes guardados en ruta se enviaron a Gerencia.");
+        alert("✓ Señal recuperada: Todas tus facturas y fotos guardadas en ruta se enviaron a Gerencia.");
       }
     }
     document.getElementById("btnSincronizarAhora").addEventListener("click", sincronizarColaOffline);
 
     document.getElementById("btnGuardarGasto").addEventListener("click", async () => {
       if (!unidadActiva) return;
+      const errBox = document.getElementById("gastoErrorMsg");
+      errBox.classList.add("hidden");
+
+      const ruc = gastoRucInput.value.trim();
+      const proveedor = gastoProveedorInput.value.trim();
       const tipo = document.getElementById("gastoTipo").value;
-      const proveedor = document.getElementById("gastoProveedor").value.trim();
-      const serie = document.getElementById("gastoSerie").value.trim();
+      const serie = document.getElementById("gastoSerie").value.trim().toUpperCase();
       const monto = parseFloat(document.getElementById("gastoMonto").value);
 
-      if (!proveedor || !serie || isNaN(monto) || monto <= 0) {
-        alert("Completa el nombre del grifo/taller, número de factura y monto total.");
+      if (!/^\d{11}$/.test(ruc)) {
+        errBox.textContent = "Ingresa el RUC válido de 11 dígitos del establecimiento.";
+        errBox.classList.remove("hidden");
         return;
       }
+      if (proveedor.length < 3) {
+        errBox.textContent = "Ingresa la Razón Social o nombre del grifo/taller.";
+        errBox.classList.remove("hidden");
+        return;
+      }
+      if (!serie) {
+        errBox.textContent = "Ingresa el número de serie y correlativo de la factura (Ej. F001-4521).";
+        errBox.classList.remove("hidden");
+        return;
+      }
+      if (isNaN(monto) || monto <= 0) {
+        errBox.textContent = "Ingresa un monto total válido.";
+        errBox.classList.remove("hidden");
+        return;
+      }
+      if (!fotoFacturaBase64) {
+        errBox.textContent = "Agrega la foto de la factura antes de enviarla.";
+        errBox.classList.remove("hidden");
+        return;
+      }
+
+      const btn = document.getElementById("btnGuardarGasto");
+      btn.disabled = true;
+      btn.textContent = "Enviando factura y foto...";
 
       const igv = +(monto - (monto / 1.18)).toFixed(2);
       const registroGasto = {
         unidadId: unidadActiva.id,
         unidadNumero: unidadActiva.numero,
         chofer: unidadActiva.chofer,
-        tipo,
+        ruc,
         proveedor,
+        tipo,
         serie,
         monto,
         igv,
+        fotoBase64: fotoFacturaBase64,
         fechaTexto: new Date().toLocaleString("es-PE")
       };
 
-      if (!navigator.onLine || !isFirebaseConfigured) {
-        const cola = obtenerCola();
-        cola.push(registroGasto);
-        guardarCola(cola);
-        if (!isFirebaseConfigured) {
-          const loc = JSON.parse(localStorage.getItem("sh_gastos") || "[]");
-          loc.unshift({ id: "GAS-" + Date.now(), ...registroGasto });
-          localStorage.setItem("sh_gastos", JSON.stringify(loc));
+      try {
+        if (!navigator.onLine || !isFirebaseConfigured) {
+          const cola = obtenerCola();
+          cola.push(registroGasto);
+          guardarCola(cola);
+          if (!isFirebaseConfigured) {
+            const loc = JSON.parse(localStorage.getItem("sh_gastos") || "[]");
+            loc.unshift({ id: "GAS-" + Date.now(), ...registroGasto });
+            localStorage.setItem("sh_gastos", JSON.stringify(loc));
+            todosGastos = loc;
+            renderMisGastos();
+          }
+          alert("✓ Factura y foto guardadas en memoria local (Sin Señal). Se enviarán automáticamente cuando vuelvas a tener internet.");
+        } else {
+          await addDoc(collection(db, "gastos"), { ...registroGasto, createdAt: serverTimestamp() });
+          alert("✓ Factura y foto enviadas correctamente a Gerencia y Contabilidad.");
         }
-        alert("✓ Guardado en memoria local (Modo Sin Señal). Se sincronizará automáticamente al volver a zona con internet.");
-      } else {
-        await addDoc(collection(db, "gastos"), { ...registroGasto, createdAt: serverTimestamp() });
-        alert("✓ Factura de gasto enviada en tiempo real al Contador y Subgerente.");
-      }
 
-      document.getElementById("gastoProveedor").value = "";
-      document.getElementById("gastoSerie").value = "";
-      document.getElementById("gastoMonto").value = "";
+        // Limpiar formulario
+        gastoRucInput.value = "";
+        gastoProveedorInput.value = "";
+        gastoRucStatus.classList.add("hidden");
+        ultimoRucGastoConsultado = "";
+        document.getElementById("gastoSerie").value = "";
+        document.getElementById("gastoMonto").value = "";
+        document.getElementById("previewIgvBox").classList.add("hidden");
+        fotoFacturaBase64 = "";
+        inputFotoFactura.value = "";
+        imgPreviewFactura.src = "";
+        previewFotoBox.classList.add("hidden");
+        dropzoneFoto.classList.remove("hidden");
+      } catch (e) {
+        alert("Error al enviar la factura: " + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Enviar Factura y Foto a Gerencia";
+      }
     });
   </script>
 </body>
