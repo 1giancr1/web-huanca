@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>App Taxista | Señor de Huanca Espinar S.A.C.</title>
+  <title>App Conductor | Señor de Huanca Espinar S.A.C.</title>
   <link rel="manifest" href="/manifest.json" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center py-4 px-3">
 
   <div class="w-full max-w-md space-y-4">
+    <!-- Barra superior -->
     <div class="bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3 flex items-center justify-between">
       <div>
         <h1 class="text-sm font-black text-white">Señor de Huanca Espinar</h1>
-        <p class="text-[11px] text-slate-400">App Oficial del Conductor</p>
+        <p class="text-[11px] text-slate-400">Portal Oficial del Conductor</p>
       </div>
       <div id="badgeConexion" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
@@ -21,6 +22,7 @@
       </div>
     </div>
 
+    <!-- Pantalla de ingreso del conductor -->
     <div id="loginBox" class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-xl">
       <h2 class="text-base font-extrabold text-amber-400">Identificación de Unidad</h2>
       <div>
@@ -37,60 +39,148 @@
       </button>
     </div>
 
+    <!-- Panel Principal del Conductor -->
     <div id="panelChofer" class="hidden space-y-4">
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3">
-        <div class="flex items-center justify-between">
+
+      <!-- 1. ESTADO DEL CONDUCTOR Y ESTADO DE SU DEUDA -->
+      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-4 shadow-lg">
+        <div class="flex items-start justify-between gap-2">
           <div>
             <span id="lblUnidad" class="text-xs font-black uppercase tracking-wider text-amber-400">UNIDAD #01</span>
-            <h2 id="lblChofer" class="text-lg font-extrabold text-white">Conductor</h2>
-            <p id="lblPlaca" class="text-xs text-slate-400">Placa</p>
+            <h2 id="lblChofer" class="text-lg font-extrabold text-white leading-tight">Conductor</h2>
+            <p id="lblPlaca" class="text-xs text-slate-400 mt-0.5">Placa • Vehículo</p>
           </div>
-          <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline">Cambiar</button>
+          <button id="btnSalir" type="button" class="text-xs text-slate-400 hover:text-white underline shrink-0">Cambiar unidad</button>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 pt-2">
-          <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-3">
-            <span class="text-[11px] text-slate-400 block">Deuda por Retenciones</span>
-            <span id="lblDeuda" class="text-xl font-black text-white">S/ 0.00</span>
-            <span class="text-[10px] text-slate-400 block mt-0.5">Tope máx: S/ 100.00</span>
+        <!-- Estado Operativo Destacado -->
+        <div id="cardEstadoOperativo" class="rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between">
+          <div>
+            <span class="text-[10px] uppercase tracking-wider font-bold text-slate-400 block">Estado de tu Unidad</span>
+            <span id="lblEstado" class="text-base font-black text-emerald-400">ACTIVO • HABILITADO</span>
+            <p id="lblEstadoDesc" class="text-[11px] text-slate-300 mt-0.5">Puedes operar y generar facturas con normalidad.</p>
           </div>
-          <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-3 flex flex-col justify-center">
-            <span class="text-[11px] text-slate-400 block">Estado en Flota</span>
-            <span id="lblEstado" class="text-sm font-black text-emerald-400 mt-0.5">ACTIVO</span>
+          <div id="iconoEstado" class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0">
+            ✓
           </div>
         </div>
 
+        <!-- Estado Detallado de Deuda -->
+        <div class="bg-slate-900/90 border border-slate-700 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wide text-slate-300">Estado de tu Deuda (Retenciones)</span>
+            <span id="badgeNivelDeuda" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">AL DÍA</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <span class="text-[11px] text-slate-400 block">Saldo pendiente a pagar</span>
+              <span id="lblDeuda" class="text-2xl font-black text-white">S/ 0.00</span>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-slate-400 block">Margen antes de bloqueo</span>
+              <span id="lblMargen" class="text-lg font-extrabold text-emerald-400">S/ 100.00</span>
+            </div>
+          </div>
+
+          <!-- Barra visual hacia el tope de S/ 100 -->
+          <div class="space-y-1">
+            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+              <div id="barraDeuda" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400">
+              <span>S/ 0.00</span>
+              <span id="lblPorcentajeTope">0% del tope</span>
+              <span>Límite: S/ 100.00</span>
+            </div>
+          </div>
+
+          <!-- Desglose rápido de retenciones -->
+          <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-[11px]">
+            <div class="bg-slate-800/70 rounded-xl p-2">
+              <span class="text-slate-400 block text-[10px]">Retención por factura</span>
+              <span id="lblPctRetencion" class="font-bold text-amber-400">22% (cobro directo)</span>
+            </div>
+            <div class="bg-slate-800/70 rounded-xl p-2">
+              <span class="text-slate-400 block text-[10px]">Facturado en tu unidad</span>
+              <span id="lblTotalFacturadoUnidad" class="font-bold text-white">S/ 0.00</span>
+            </div>
+          </div>
+
+          <!-- Botón para ver datos de abono a la S.A.C. -->
+          <button id="btnToggleAbono" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-bold text-amber-300 transition">
+            Ver cuentas para abonar mi deuda
+          </button>
+
+          <div id="boxDatosAbono" class="hidden bg-slate-800/90 border border-amber-500/30 rounded-xl p-3 text-[11px] space-y-2">
+            <div>
+              <span class="text-slate-400 block">Yape Corporativo S.A.C.:</span>
+              <span id="txtYapeEmpresa" class="font-extrabold text-white">Cargando...</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Cuenta Bancaria S.A.C.:</span>
+              <span id="txtCuentaEmpresa" class="font-semibold text-slate-200">Cargando...</span>
+            </div>
+            <a id="btnEnviarVoucherWa" href="#" target="_blank" class="block w-full text-center py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">
+              Enviar comprobante de abono por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Alerta de bloqueo si deuda > 100 -->
         <div id="alertaBloqueo" class="hidden bg-red-950/90 border border-red-500 rounded-2xl p-3.5 text-xs text-red-200 space-y-1">
           <div class="font-black text-red-400">UNIDAD BLOQUEADA POR SALDO PENDIENTE</div>
-          <p>Superaste el límite de S/ 100.00 en retenciones acumuladas. Regulariza tu abono por Yape o transferencia con Gerencia para volver a recibir carreras.</p>
+          <p>Superaste el límite de S/ 100.00 en retenciones acumuladas. Regulariza tu abono por Yape o transferencia con Gerencia para volver a habilitar tu unidad.</p>
         </div>
 
+        <!-- Cola offline -->
         <div id="colaOfflineBox" class="hidden bg-amber-950/80 border border-amber-500/50 rounded-2xl p-3 text-xs text-amber-200 flex items-center justify-between">
           <span>Tienes <b id="countOffline">0</b> registro(s) guardados sin señal.</span>
           <button id="btnSincronizarAhora" type="button" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[11px]">Sincronizar</button>
         </div>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3">
-        <h3 class="text-sm font-extrabold text-amber-400">Calculadora de Piso Mínimo (Cuidar tu ganancia)</h3>
-        <p class="text-[11px] text-slate-400">Si un ingeniero pide factura por un monto mayor a tu carrera normal, calcula cuánto cobrarle como mínimo:</p>
-        <div class="grid grid-cols-2 gap-2.5">
+      <!-- 2. ESTADO DE SOLICITUDES DE FACTURAS GENERADAS EN ESTA UNIDAD -->
+      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
+        <div class="flex items-center justify-between">
           <div>
-            <label class="text-[11px] text-slate-300 block mb-1">Tu tarifa normal (S/)</label>
-            <input id="calcTarifa" type="number" value="40" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-sm font-bold text-white" />
+            <h3 class="text-sm font-extrabold text-white">Solicitudes de Facturas de mi Unidad</h3>
+            <p class="text-[11px] text-slate-400">Seguimiento en tiempo real de tus pasajeros</p>
           </div>
-          <div>
-            <label class="text-[11px] text-slate-300 block mb-1">Factura que pide (S/)</label>
-            <input id="calcFactura" type="number" value="60" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2 text-sm font-bold text-white" />
+          <span id="badgeTotalSol" class="text-xs font-black bg-amber-500 text-slate-950 px-2.5 py-0.5 rounded-full">0</span>
+        </div>
+
+        <!-- Contadores de estado -->
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="bg-slate-900 border border-slate-700 rounded-xl p-2">
+            <span class="text-[10px] text-slate-400 block">Total</span>
+            <span id="statSolTotal" class="text-sm font-black text-white">0</span>
+          </div>
+          <div class="bg-amber-950/40 border border-amber-500/30 rounded-xl p-2">
+            <span class="text-[10px] text-amber-300 block">Pendientes</span>
+            <span id="statSolPendientes" class="text-sm font-black text-amber-400">0</span>
+          </div>
+          <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-2">
+            <span class="text-[10px] text-emerald-300 block">Emitidas</span>
+            <span id="statSolEmitidas" class="text-sm font-black text-emerald-400">0</span>
           </div>
         </div>
-        <div class="bg-slate-900 border border-emerald-500/40 rounded-2xl p-3">
-          <span class="text-[11px] text-slate-400 block">Cóbrale como mínimo al pasajero:</span>
-          <span id="calcResultado" class="text-base font-black text-emerald-400">S/ 53.20 (Redondea a S/ 54)</span>
+
+        <!-- Filtros rápidos -->
+        <div class="grid grid-cols-3 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-[11px] font-bold">
+          <button type="button" data-filtro="todas" class="filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white">Todas</button>
+          <button type="button" data-filtro="pendiente" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Pendientes</button>
+          <button type="button" data-filtro="emitida" class="filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white">Emitidas</button>
+        </div>
+
+        <!-- Lista de solicitudes de la unidad -->
+        <div id="misViajesLista" class="space-y-2.5 text-xs text-slate-400 max-h-96 overflow-y-auto pr-0.5">
+          <p class="text-center py-3">Aún no hay solicitudes de factura registradas en esta unidad.</p>
         </div>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3">
+      <!-- 3. SUBIR FACTURA DE GRIFO O TALLER -->
+      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-3 shadow-lg">
         <h3 class="text-sm font-extrabold text-emerald-400">Subir Factura de Grifo o Taller (Con RUC SAC)</h3>
         <p class="text-[11px] text-slate-400">Pide siempre factura con el RUC de <b>Señor de Huanca Espinar S.A.C.</b> Funciona incluso sin señal en ruta.</p>
         <select id="gastoTipo" class="w-full rounded-xl bg-slate-900 border border-slate-600 px-3 py-2.5 text-xs text-white">
@@ -109,18 +199,12 @@
         </button>
       </div>
 
-      <div class="bg-slate-800 border border-slate-700 rounded-3xl p-5 space-y-2.5">
-        <h3 class="text-sm font-extrabold text-white">Viajes Facturados en mi Unidad (En Vivo)</h3>
-        <div id="misViajesLista" class="space-y-2 text-xs text-slate-400">
-          <p>Aún no hay viajes registrados en esta unidad.</p>
-        </div>
-      </div>
     </div>
   </div>
 
   <script type="module">
     import {
-      db, doc, onSnapshot, addDoc, collection, query, orderBy, serverTimestamp,
+      db, doc, onSnapshot, addDoc, collection, serverTimestamp,
       isFirebaseConfigured, EMPRESA_CONFIG, FLOTA_INICIAL
     } from "./firebase-config.js";
 
@@ -132,7 +216,13 @@
       selectUnidad.appendChild(opt);
     });
 
+    document.getElementById("txtYapeEmpresa").textContent = EMPRESA_CONFIG.yapeEmpresa;
+    document.getElementById("txtCuentaEmpresa").textContent = EMPRESA_CONFIG.cuentaBCP;
+    document.getElementById("lblPctRetencion").textContent = `${EMPRESA_CONFIG.retencionPorDefecto}% (cobro directo)`;
+
     let unidadActiva = null;
+    let todasSolicitudes = [];
+    let filtroActual = "todas";
     let unsubUnidad = null;
     let unsubViajes = null;
 
@@ -152,57 +242,164 @@
     window.addEventListener("offline", actualizarEstadoRed);
     actualizarEstadoRed();
 
-    function recalcularPiso() {
-      const tarifa = parseFloat(document.getElementById("calcTarifa").value) || 0;
-      const factura = parseFloat(document.getElementById("calcFactura").value) || 0;
-      const retencion = factura * (EMPRESA_CONFIG.retencionPorDefecto / 100);
-      const minimo = tarifa + retencion;
-      document.getElementById("calcResultado").textContent = `S/ ${minimo.toFixed(2)} (Redondea a S/ ${Math.ceil(minimo)})`;
-    }
-    document.getElementById("calcTarifa").addEventListener("input", recalcularPiso);
-    document.getElementById("calcFactura").addEventListener("input", recalcularPiso);
-    recalcularPiso();
+    document.getElementById("btnToggleAbono").addEventListener("click", () => {
+      const box = document.getElementById("boxDatosAbono");
+      const oculto = box.classList.toggle("hidden");
+      document.getElementById("btnToggleAbono").textContent = oculto
+        ? "Ver cuentas para abonar mi deuda"
+        : "Ocultar cuentas de abono";
+    });
+
+    document.querySelectorAll(".filtroSolBtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        filtroActual = btn.dataset.filtro;
+        document.querySelectorAll(".filtroSolBtn").forEach(b => {
+          b.className = "filtroSolBtn py-1.5 rounded-lg text-slate-400 hover:text-white";
+        });
+        btn.className = "filtroSolBtn py-1.5 rounded-lg bg-slate-700 text-white";
+        renderMisViajes();
+      });
+    });
 
     function renderUnidad(u) {
       unidadActiva = u;
+      const deuda = Number(u.deuda || 0);
+      const limite = Number(EMPRESA_CONFIG.limiteDeudaBloqueo || 100);
+      const margen = Math.max(0, limite - deuda);
+      const pct = Math.min(100, Math.round((deuda / limite) * 100));
+      const bloqueado = deuda > limite || u.activo === false;
+
       document.getElementById("lblUnidad").textContent = `UNIDAD #${u.numero}`;
       document.getElementById("lblChofer").textContent = u.chofer;
       document.getElementById("lblPlaca").textContent = `${u.placa} • ${u.vehiculo}`;
-      document.getElementById("lblDeuda").textContent = `S/ ${Number(u.deuda || 0).toFixed(2)}`;
 
-      const bloqueado = Number(u.deuda || 0) > EMPRESA_CONFIG.limiteDeudaBloqueo || u.activo === false;
+      // Estado Operativo
+      const cardEstado = document.getElementById("cardEstadoOperativo");
       const lblEstado = document.getElementById("lblEstado");
+      const lblEstadoDesc = document.getElementById("lblEstadoDesc");
+      const iconoEstado = document.getElementById("iconoEstado");
       const alertaBloqueo = document.getElementById("alertaBloqueo");
+
       if (bloqueado) {
-        lblEstado.textContent = "BLOQUEADO";
-        lblEstado.className = "text-sm font-black text-red-400 mt-0.5";
+        cardEstado.className = "rounded-2xl p-3.5 border bg-red-950/60 border-red-500/60 flex items-center justify-between";
+        lblEstado.textContent = "BLOQUEADO • SUSPENDIDO";
+        lblEstado.className = "text-base font-black text-red-400";
+        lblEstadoDesc.textContent = "Deuda mayor a S/ 100.00. Abona a la S.A.C. para reactivar.";
+        iconoEstado.className = "w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-lg font-black shrink-0";
+        iconoEstado.textContent = "✕";
         alertaBloqueo.classList.remove("hidden");
       } else {
-        lblEstado.textContent = "ACTIVO";
-        lblEstado.className = "text-sm font-black text-emerald-400 mt-0.5";
+        cardEstado.className = "rounded-2xl p-3.5 border bg-emerald-950/50 border-emerald-500/40 flex items-center justify-between";
+        lblEstado.textContent = "ACTIVO • HABILITADO";
+        lblEstado.className = "text-base font-black text-emerald-400";
+        lblEstadoDesc.textContent = "Puedes operar y generar facturas con normalidad.";
+        iconoEstado.className = "w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0";
+        iconoEstado.textContent = "✓";
         alertaBloqueo.classList.add("hidden");
       }
+
+      // Estado de Deuda
+      document.getElementById("lblDeuda").textContent = `S/ ${deuda.toFixed(2)}`;
+      document.getElementById("lblMargen").textContent = `S/ ${margen.toFixed(2)}`;
+      document.getElementById("lblPorcentajeTope").textContent = `${pct}% del tope`;
+
+      const barra = document.getElementById("barraDeuda");
+      const badgeNivel = document.getElementById("badgeNivelDeuda");
+      barra.style.width = `${pct}%`;
+
+      if (bloqueado) {
+        barra.className = "h-full bg-red-500 transition-all duration-300";
+        badgeNivel.textContent = "TOPE SUPERADO";
+        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-red-500/20 text-red-300";
+      } else if (deuda >= limite * 0.7) {
+        barra.className = "h-full bg-amber-500 transition-all duration-300";
+        badgeNivel.textContent = "CERCA AL LÍMITE";
+        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300";
+      } else if (deuda > 0) {
+        barra.className = "h-full bg-sky-400 transition-all duration-300";
+        badgeNivel.textContent = "SALDO PENDIENTE";
+        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300";
+      } else {
+        barra.className = "h-full bg-emerald-500 transition-all duration-300";
+        badgeNivel.textContent = "SIN DEUDA (S/ 0)";
+        badgeNivel.className = "text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300";
+      }
+
+      const waMsg = encodeURIComponent(`Hola Gerencia Señor de Huanca Espinar, soy ${u.chofer} de la Unidad #${u.numero} (${u.placa}). Adjunto comprobante de abono de mi deuda actual (S/ ${deuda.toFixed(2)}).`);
+      document.getElementById("btnEnviarVoucherWa").href = `https://wa.me/${EMPRESA_CONFIG.whatsappCentral}?text=${waMsg}`;
     }
 
-    function renderMisViajes(lista) {
+    function obtenerTimestampMs(val) {
+      if (!val) return 0;
+      if (typeof val === "number") return val;
+      if (typeof val.toMillis === "function") return val.toMillis();
+      if (val.seconds) return val.seconds * 1000;
+      return 0;
+    }
+
+    function renderMisViajes() {
+      if (!unidadActiva) return;
       const cont = document.getElementById("misViajesLista");
-      const propios = lista.filter(v => v.unidadId === unidadActiva.id);
-      if (!propios.length) {
-        cont.innerHTML = `<p>Aún no hay viajes registrados en esta unidad.</p>`;
+      const propios = todasSolicitudes.filter(v => v.unidadId === unidadActiva.id || v.unidadNumero === unidadActiva.numero);
+
+      const total = propios.length;
+      const pendientes = propios.filter(v => v.estado !== "emitida").length;
+      const emitidas = propios.filter(v => v.estado === "emitida").length;
+      const sumaTotal = propios.reduce((acc, v) => acc + Number(v.monto || 0), 0);
+
+      document.getElementById("badgeTotalSol").textContent = total;
+      document.getElementById("statSolTotal").textContent = total;
+      document.getElementById("statSolPendientes").textContent = pendientes;
+      document.getElementById("statSolEmitidas").textContent = emitidas;
+      document.getElementById("lblTotalFacturadoUnidad").textContent = `S/ ${sumaTotal.toFixed(2)}`;
+
+      const filtrados = propios.filter(v => {
+        if (filtroActual === "pendiente") return v.estado !== "emitida";
+        if (filtroActual === "emitida") return v.estado === "emitida";
+        return true;
+      });
+
+      if (!filtrados.length) {
+        cont.innerHTML = `<p class="text-center py-4 text-slate-400">No hay solicitudes de factura en esta vista.</p>`;
         return;
       }
-      cont.innerHTML = propios.slice(0, 6).map(v => `
-        <div class="bg-slate-900 border border-slate-700 rounded-xl p-2.5 flex justify-between items-center">
-          <div>
-            <div class="font-bold text-white">${v.razonSocial}</div>
-            <div class="text-[11px] text-slate-400">${v.ruta} • ${v.fechaTexto}</div>
+
+      const pctRet = Number(EMPRESA_CONFIG.retencionPorDefecto || 22);
+
+      cont.innerHTML = filtrados.map(v => {
+        const monto = Number(v.monto || 0);
+        const esEmitida = v.estado === "emitida";
+        const pagoChofer = v.metodoPago === "conductor";
+        const retencion = +(monto * (pctRet / 100)).toFixed(2);
+
+        return `
+          <div class="bg-slate-900 border ${esEmitida ? 'border-emerald-500/30' : 'border-amber-500/30'} rounded-2xl p-3 space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-black ${esEmitida ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
+                  ${esEmitida ? '✓ FACTURA EMITIDA SUNAT' : '⏳ PENDIENTE DE EMISIÓN'}
+                </span>
+                <div class="font-bold text-white text-xs mt-1">${v.razonSocial}</div>
+                <div class="text-[10px] text-slate-400">RUC: ${v.ruc}</div>
+              </div>
+              <div class="text-right shrink-0">
+                <span class="text-[10px] text-slate-400 block">Monto</span>
+                <span class="text-sm font-black text-amber-400">S/ ${monto.toFixed(2)}</span>
+              </div>
+            </div>
+
+            <div class="text-[11px] text-slate-300 bg-slate-800/70 rounded-xl p-2 space-y-0.5">
+              <div><b>Ruta:</b> ${v.ruta}</div>
+              <div><b>Fecha:</b> ${v.fechaTexto || 'Reciente'}</div>
+              <div class="pt-0.5 ${pagoChofer ? 'text-amber-300' : 'text-emerald-300'} font-semibold">
+                ${pagoChofer
+                  ? `Cobrado por ti • Retención SAC (${pctRet}%): S/ ${retencion.toFixed(2)} ${esEmitida ? '(Sumado a deuda)' : '(Se suma al emitir)'}`
+                  : 'Pagado directo a Cuenta S.A.C. • Sin retención a tu deuda'}
+              </div>
+            </div>
           </div>
-          <div class="text-right">
-            <div class="font-black text-amber-400">S/ ${Number(v.monto).toFixed(2)}</div>
-            <div class="text-[10px] ${v.estado === 'emitida' ? 'text-emerald-400' : 'text-slate-400'}">${v.estado === 'emitida' ? 'Emitida' : 'Pendiente'}</div>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
     }
 
     document.getElementById("btnIngresar").addEventListener("click", () => {
@@ -228,14 +425,16 @@
         });
 
         if (unsubViajes) unsubViajes();
-        unsubViajes = onSnapshot(query(collection(db, "solicitudes"), orderBy("createdAt", "desc")), (snap) => {
+        unsubViajes = onSnapshot(collection(db, "solicitudes"), (snap) => {
           const arr = [];
-          snap.forEach(d => arr.push(d.data()));
-          renderMisViajes(arr);
+          snap.forEach(d => arr.push({ id: d.id, ...d.data() }));
+          arr.sort((a, b) => obtenerTimestampMs(b.createdAt) - obtenerTimestampMs(a.createdAt));
+          todasSolicitudes = arr;
+          renderMisViajes();
         });
       } else {
-        const loc = JSON.parse(localStorage.getItem("sh_solicitudes") || "[]");
-        renderMisViajes(loc);
+        todasSolicitudes = JSON.parse(localStorage.getItem("sh_solicitudes") || "[]");
+        renderMisViajes();
       }
       actualizarBadgeCola();
     });
